@@ -5,8 +5,8 @@
 <meta name="generator" content="quarto-1.7.27">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <meta name="author" content="Ricardo Rey-Sáez">
-<meta name="dcterms.date" content="2025-10-10">
-<meta name="description" content="We often use statistical models without asking what they really are. This post gives a friendly and intuitive explanation of what makes a model statistical, the language it speaks through probability density, and how that language leads to likelihood.">
+<meta name="dcterms.date" content="2025-10-13">
+<meta name="description" content="I learned to fit complex models, yet for a long time I did not think deeply about what modeling means. This post is for people who use models routinely and feel that ideas like probability density or maximum likelihood live in an abstract space you can ignore. Seeing these ideas clearly reveals your data assumptions, helps you build models that better reflect reality, and gives you a practical and informed way to connect theory to data. This is one of those rare topics where a little time now improves everything you do later. So, let’s dive in!">
 <title>What Is a Statistical Model? From Density to Likelihood – Ricardo Rey-Sáez</title>
 <style>
 code{white-space: pre-wrap;}
@@ -146,10 +146,10 @@ window.Quarto = {
 <meta property="og:site_name" content="Ricardo Rey-Sáez">
 <meta name="citation_title" content="What Is a Statistical Model? From Density to Likelihood">
 <meta name="citation_author" content="Ricardo Rey-Sáez">
-<meta name="citation_publication_date" content="2025-10-10">
-<meta name="citation_cover_date" content="2025-10-10">
+<meta name="citation_publication_date" content="2025-10-13">
+<meta name="citation_cover_date" content="2025-10-13">
 <meta name="citation_year" content="2025">
-<meta name="citation_online_date" content="2025-10-10">
+<meta name="citation_online_date" content="2025-10-13">
 <meta name="citation_fulltext_html_url" content="https://ricardoreysaez.github.io/blog/model_definition/">
 <meta name="citation_language" content="en">
 </head>
@@ -358,7 +358,7 @@ window.Quarto = {
       </div> <!-- /container-fluid -->
     </nav></header><!-- content --><header id="title-block-header" class="quarto-title-block default page-columns"><div id="title-block-header-title" class="quarto-title page-columns page-full page-layout-full featured-image p-4" style="background-image: url(featured.png), url(featured.jpg), url(../featured.jpg);">
 <h1 class="title">What Is a Statistical Model? From Density to Likelihood</h1>
-<p class="subtitle lead">An accessible explanation of what makes a model statistical, how it expresses probability through density, and how that same logic leads to likelihood.</p>
+<p class="subtitle lead">Where models learn to speak and we learn to listen using the language of probability.</p>
     <div class="quarto-categories">
         <div class="quarto-category">Statistics</div>
         <div class="quarto-category">Models</div>
@@ -368,7 +368,7 @@ window.Quarto = {
 
 <div>
   <div id="title-block-title-desc" class="description pt-4">
-    We often use statistical models without asking what they really are. This post gives a friendly and intuitive explanation of what makes a model statistical, the language it speaks through probability density, and how that language leads to likelihood.
+    I learned to fit complex models, yet for a long time I did not think deeply about what modeling means. This post is for people who use models routinely and feel that ideas like probability density or maximum likelihood live in an abstract space you can ignore. Seeing these ideas clearly reveals your data assumptions, helps you build models that better reflect reality, and gives you a practical and informed way to connect theory to data. This is one of those rare topics where a little time now improves everything you do later. So, let’s dive in!
   </div>
 </div>
 
@@ -392,7 +392,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 10, 2025</p>
+      <p class="date">October 13, 2025</p>
     </div>
   </div>
   
@@ -437,16 +437,18 @@ window.Quarto = {
 <main class="content quarto-banner-title-block" id="quarto-document-content"><!-- source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/_partials/title-block-link-buttons/title-block.html --><!-- 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title"> 
---><!-- <header id="title-block-header" class="quarto-title-block default page-columns"> --><!-- <div class="quarto-title page-columns page-full featured-image p-4" style="background-image: url(featured.png), url(featured.jpg), url(../featured.jpg);"> --><p><em>Love</em> is probably one of the most familiar words in the world. Ask a room full of people if they know what love is, and almost everyone will say yes. But ask them to define it, and you’ll get as many answers as people in the room, each focusing on different aspects of what it means to love. In fact, we are all aware of this paradox: everyone believes they know what love is, although each person understands it in their own way. The same thing, on a smaller scale, happens with the word <em>model</em> in the scientific community.</p>
-<p>There are many “last names” for the word <em>model</em>, such as <em>statistical</em>, <em>theoretical</em>, <em>computational</em>, or <em>predictive</em>, which make it a bit harder to know exactly what someone means when they use it, especially when they forget to mention which species of model they’re talking about. However, they all share a common idea: a model is a simplified representation of reality, a way to describe how we believe something works.</p>
-<p>Today we’ll talk about the scientist’s favorite child: <strong>the statistical model</strong>, the one that allows us to draw substantive conclusions from data. This post is written for readers with a background in statistics similar to that of a psychology graduate. Some basic familiarity with <code>R</code> will be helpful, but you can follow along even if you’ve never written code before.</p>
+--><!-- <header id="title-block-header" class="quarto-title-block default page-columns"> --><!-- <div class="quarto-title page-columns page-full featured-image p-4" style="background-image: url(featured.png), url(featured.jpg), url(../featured.jpg);"> --><p><em>Love</em> is probably one of the most familiar words in the world. Ask a room full of people if they know what love is, and almost everyone will say yes. But ask them to define it, and you’ll get as many different answers as people in the room, each focusing on different aspects of what it means to love. In fact, we are all aware of this paradox: everyone believes they know what love is, although each person understands it in their own way. The same thing, on a smaller scale, happens with the word <em>model</em> in the scientific community.</p>
+<p>There are many “last names” for the word <em>model</em>, such as <em>statistical</em>, <em>theoretical</em>, <em>computational</em>, or <em>predictive</em>, which makes it a bit harder to know exactly what someone means when they use it, especially when they forget to mention which type of model they’re talking about. However, they all share a common idea: a model is a simplified representation of reality, a way to describe how we believe something works.</p>
+<p>This post is for researchers who already use models and want a clear, friendly look at how they work under the hood. We’ll touch on some technical ideas, like probability density and maximum likelihood, but in a way that feels intuitive and approachable. We will use <code>R</code> to illustrate some of the most important concepts and to recreate the figures, but it is not required to follow this post (at least in the first part). By the end, you may look at your own work differently and you may start asking probabilistic questions about your data. At least, that’s what happened to me.</p>
 <section id="the-statistical-model" class="level2"><h2 class="anchored" data-anchor-id="the-statistical-model">The statistical model</h2>
 <p>The reason we need statistical models is simple: <strong>reality changes.</strong> Not all students perform equally well in statistics, not all patients get better in the same way, and not every day has the same temperature. Even when conditions look identical, the results change. This variability is everywhere and is, in many ways, what makes the world both interesting and complex. Statistical models exist precisely to deal with that variability.</p>
 <section id="a-simple-example-age-and-height" class="level3"><h3 class="anchored" data-anchor-id="a-simple-example-age-and-height">A simple example: age and height</h3>
-<p>Imagine that we measure the height of a group of people and also record their age. In general, we will see that younger children tend to be shorter and that height increases with age. But that relationship is not perfect: two people of the same age can differ by several centimeters. If we wanted to capture that trend with a formula, we could write a simple linear regression model: <span class="math display">\[
+<p>Imagine that we measure the height of a group of people and also record their age. In general, we will see that younger children tend to be shorter and that height increases with age. But that relationship is not perfect: two people of the same age can differ by several centimeters. If we wanted to capture that trend with a formula, we could write a simple linear regression model:</p>
+<p><span class="math display">\[
 \text{Height}_i = \beta_0 + \beta_1 \cdot \text{age}_i + \varepsilon_i
 \]</span></p>
-<p>This small equation expresses a simple idea: height increases with age, but never exactly. There is always a margin of error, represented by <span class="math inline">\(\varepsilon_i\)</span>, which reflects natural variability between people. But this variability, this <span class="math inline">\(\varepsilon_i\)</span>, is not a minor detail. It is what makes this model <em>statistical</em> rather than <em>deterministic</em>. In statistics, we assume that this unexplained part, this variability, follows a certain pattern. The most common way to describe that pattern is to <strong>assume</strong> that the errors follow a normal distribution with mean zero and some standard deviation, which we call <span class="math inline">\(\sigma_\varepsilon\)</span>: <span class="math display">\[
+<p>This small equation expresses a simple idea: height increases with age, but never exactly in the same way. There is always a margin of error, represented by <span class="math inline">\(\varepsilon_i\)</span>, which reflects natural variability between people. But this variability, this <span class="math inline">\(\varepsilon_i\)</span>, is not a minor detail. It is what makes this model <em>statistical</em> rather than <em>deterministic</em>. In statistics, we assume that this unexplained part, this variability, follows a certain pattern. The most common way to describe that pattern is to <strong>assume</strong> that the errors follow a normal distribution with mean zero and some standard deviation, which we call <span class="math inline">\(\sigma_\varepsilon\)</span>:</p>
+<p><span class="math display">\[
 \varepsilon_{i}\sim\mathrm{Normal}\left(\mu = 0,\;\sigma = \sigma_\varepsilon\right)
 \]</span></p>
 <p>This means that, on average, the model does not make systematic errors (because the mean of the errors is zero) and that the variability of those differences can be summarized by a single parameter, <span class="math inline">\(\sigma_\varepsilon\)</span>.</p>
@@ -455,7 +457,7 @@ window.Quarto = {
 \text{Height}_i \sim \mathrm{Normal}\left(\mu =\beta_0+\beta_1\cdot\text{age}_i,\;\sigma = \sigma_\varepsilon\right)
 \]</span></p>
 <p>This notation reads as follows: the height of person <span class="math inline">\(i\)</span> follows a normal distribution whose mean is <span class="math inline">\(\beta_0 + \beta_1 \cdot \text{age}_i\)</span> and whose standard deviation is <span class="math inline">\(\sigma_\varepsilon\)</span>. In other words, the model specifies a <strong>conditional distribution</strong> for height given age. That is, <strong>for each value of age</strong>, height follows a normal distribution with a different mean but <strong>the same dispersion around that mean.</strong> Therefore, people of the same age share the same conditional distribution.</p>
-<p>It may sound abstract, but it becomes much clearer when we draw it. The figure below shows the three conditional distributions of height for ages 5, 10, and 20.</p>
+<p>It may sound abstract, but the figure below makes it much clearer, showing the three conditional distributions of height for ages 5, 10, and 20.</p>
 <div class="cell" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
 <div class="light-content">
 <p><a href="index_files/figure-html/unnamed-chunk-2-1..light.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="index_files/figure-html/unnamed-chunk-2-1..light.svg" class="img-fluid" width="672"></a></p>
@@ -508,7 +510,7 @@ window.Quarto = {
   \right)
 \right)
 \]</span></p>
-<p>It might not make the cover of <em>Nature</em>, but it proves that even procrastination can be elegantly captured by a model.</p>
+<p>That way, I can even tell whether psychologists are the first to run away from this post. It might not make the cover of <em>Nature</em>, but it proves that even procrastination can be elegantly captured by a model.</p>
 </section><section id="choose-your-own-distribution" class="level4"><h4 class="anchored" data-anchor-id="choose-your-own-distribution">Choose your own distribution</h4>
 <p>Although these three regressions are “classical” because they are included in commercial software like SPSS, the modeling idea extends to any probability distribution. For example, if I am analyzing response times in an experimental task, I can use another distribution that fits their asymmetric shape better, such as the <strong>ex-Gaussian distribution</strong>. This distribution represents the convolution of a normal and an exponential distribution, and its parameters are <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\sigma\)</span>, and <span class="math inline">\(\tau\)</span>:</p>
 <p><span class="math display">\[
@@ -528,7 +530,8 @@ window.Quarto = {
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op">(</span><span class="fl">123</span><span class="op">)</span></span>
 <span><span class="va">Y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">100</span>, rate <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We now want to see how three different models assign density values to the same data point under fixed reference parameters. We will use a Normal model (<span class="math inline">\(\mu=1.5\)</span>, <span class="math inline">\(\sigma=1\)</span>), a <span class="math inline">\(\chi^2\)</span> model (<span class="math inline">\(\nu=2\)</span>) and an exponential model (<span class="math inline">\(\lambda=2\)</span>). The Normal and <span class="math inline">\(\chi^2\)</span> parameter values were chosen arbitrarily, simply to illustrate the idea; the exponential one matches the parameter value used to generate the data.</p>
+<p>We now want to see how three different models assign density values to the same data point under fixed reference parameters. For simplicity, we’ll focus on the first observation of our variable as the reference value. The models considered are a Normal (<span class="math inline">\(\mu=1.5\)</span>, <span class="math inline">\(\sigma=1\)</span>), a <span class="math inline">\(\chi^2\)</span> (<span class="math inline">\(\nu=2\)</span>), and an exponential (<span class="math inline">\(\lambda=2\)</span>). The Normal and <span class="math inline">\(\chi^2\)</span> parameter values were chosen arbitrarily, simply to illustrate the idea; the exponential one matches the parameter value used to generate the data.</p>
+<p>In <code>R</code>, <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>, <code><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq()</a></code>, and <code><a href="https://rdrr.io/r/stats/Exponential.html">dexp()</a></code> are density functions that return the value of the probability density at a given point given specific parameter values. The first argument is the point (e.g., <code>Y[1]</code>), and the remaining arguments set the parameters of the distribution (e.g., <code>mean</code> and <code>sd</code> for <code>dnorm</code>, <code>df</code> for <code>dchisq</code>, <code>rate</code> for <code>dexp</code>).</p>
 <div class="cell">
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Compute density values at the same observed point</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
@@ -736,7 +739,7 @@ window.Quarto = {
 </section><section id="extra-beyond-the-grid" class="level2"><h2 class="anchored" data-anchor-id="extra-beyond-the-grid">Extra: beyond the grid</h2>
 <section id="maximum-likelihood-with-optimization-algorithms" class="level3"><h3 class="anchored" data-anchor-id="maximum-likelihood-with-optimization-algorithms">Maximum likelihood with optimization algorithms</h3>
 <p>The grid approach we used is useful for teaching but inefficient in practice. As the number of parameters grows, it quickly becomes computationally impossible. For this reason, maximum likelihood estimation is usually obtained using numerical optimization algorithms.</p>
-<p>We will not go into the details of these methods here, but it is useful to see how they work in practice. The code below shows how to use the optim function in R to estimate the parameters by maximum likelihood for the three models. The results are equivalent to those from the grid search, but this approach can generalize to a much wider range of situations.</p>
+<p>We will not go into the details of these methods here, but it is useful to see how they work in practice. The code below shows how to use the <code>optim</code> function in <code>R</code> to estimate the parameters by maximum likelihood for the three models. The results are equivalent to those from the grid search, but this approach can generalize to a much wider range of situations.</p>
 <div class="cell">
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co"># Log-likelihood functions: gaussian model</span></span>
 <span><span class="va">ll_norm</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">par</span>, <span class="va">y</span><span class="op">)</span><span class="op">{</span></span>
