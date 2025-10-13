@@ -11,7 +11,7 @@
 <description>A personal blog for the things I learn, mostly about R, modelling, and statistical thinking.&lt;br&gt;
 </description>
 <generator>quarto-1.7.27</generator>
-<lastBuildDate>Thu, 09 Oct 2025 22:00:00 GMT</lastBuildDate>
+<lastBuildDate>Sun, 12 Oct 2025 22:00:00 GMT</lastBuildDate>
 <item>
   <title>What Is a Statistical Model? From Density to Likelihood</title>
   <dc:creator>Ricardo Rey-Sáez</dc:creator>
@@ -1895,13 +1895,13 @@ font-style: inherit;">)</span></span></code></pre></div>
 <li id="fn6"><p>However, be careful when the same person asks you what probability is. That’s how most of us die.↩︎</p></li>
 </ol></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rey-sáez2025" class="csl-entry quarto-appendix-citeas">
 Rey-Sáez, Ricardo. 2025. <span>“What Is a Statistical Model? From
-Density to Likelihood.”</span> October 10, 2025. <a href="https://ricardoreysaez.github.io/blog/model_definition/">https://ricardoreysaez.github.io/blog/model_definition/</a>.
+Density to Likelihood.”</span> October 13, 2025. <a href="https://ricardoreysaez.github.io/blog/model_definition/">https://ricardoreysaez.github.io/blog/model_definition/</a>.
 </div></div></section></div> ]]></description>
   <category>Statistics</category>
   <category>Models</category>
   <category>Maximum Likelihood</category>
   <guid>https://ricardoreysaez.github.io/blog/model_definition/</guid>
-  <pubDate>Thu, 09 Oct 2025 22:00:00 GMT</pubDate>
+  <pubDate>Sun, 12 Oct 2025 22:00:00 GMT</pubDate>
   <media:content url="https://ricardoreysaez.github.io/blog/model_definition/cover.svg" medium="image" type="image/svg+xml"/>
 </item>
 </channel>

@@ -1,8 +1,8 @@
 ---
 title: "What Is a Statistical Model? From Density to Likelihood"
-subtitle: "An accessible explanation of what makes a model statistical, how it expresses probability through density, and how that same logic leads to likelihood."
-description: "We often use statistical models without asking what they really are. This post gives a friendly and intuitive explanation of what makes a model statistical, the language it speaks through probability density, and how that language leads to likelihood."
-date: "10/10/2025"
+subtitle: "Where models learn to speak and we learn to listen using the language of probability."
+description: "I learned to fit complex models, yet for a long time I did not think deeply about what modeling means. This post is for people who use models routinely and feel that ideas like probability density or maximum likelihood live in an abstract space you can ignore. Seeing these ideas clearly reveals your data assumptions, helps you build models that better reflect reality, and gives you a practical and informed way to connect theory to data. This is one of those rare topics where a little time now improves everything you do later. So, let’s dive in!"
+date: "10/13/2025"
 image: "cover.svg"
 categories:
   - Statistics
@@ -47,11 +47,11 @@ darksvglite <- function(file, width, height) {
 }
 ```
 
-*Love* is probably one of the most familiar words in the world. Ask a room full of people if they know what love is, and almost everyone will say yes. But ask them to define it, and you’ll get as many answers as people in the room, each focusing on different aspects of what it means to love. In fact, we are all aware of this paradox: everyone believes they know what love is, although each person understands it in their own way. The same thing, on a smaller scale, happens with the word *model* in the scientific community.
+*Love* is probably one of the most familiar words in the world. Ask a room full of people if they know what love is, and almost everyone will say yes. But ask them to define it, and you’ll get as many different answers as people in the room, each focusing on different aspects of what it means to love. In fact, we are all aware of this paradox: everyone believes they know what love is, although each person understands it in their own way. The same thing, on a smaller scale, happens with the word *model* in the scientific community.
 
-There are many “last names” for the word *model*, such as *statistical*, *theoretical*, *computational*, or *predictive*, which make it a bit harder to know exactly what someone means when they use it, especially when they forget to mention which species of model they’re talking about. However, they all share a common idea: a model is a simplified representation of reality, a way to describe how we believe something works.
+There are many “last names” for the word *model*, such as *statistical*, *theoretical*, *computational*, or *predictive*, which makes it a bit harder to know exactly what someone means when they use it, especially when they forget to mention which type of model they’re talking about. However, they all share a common idea: a model is a simplified representation of reality, a way to describe how we believe something works.
 
-Today we’ll talk about the scientist’s favorite child: **the statistical model**, the one that allows us to draw substantive conclusions from data. This post is written for readers with a background in statistics similar to that of a psychology graduate. Some basic familiarity with `R` will be helpful, but you can follow along even if you’ve never written code before.
+This post is for researchers who already use models and want a clear, friendly look at how they work under the hood. We’ll touch on some technical ideas, like probability density and maximum likelihood, but in a way that feels intuitive and approachable. We will use `R` to illustrate some of the most important concepts and to recreate the figures, but it is not required to follow this post (at least in the first part). By the end, you may look at your own work differently and you may start asking probabilistic questions about your data. At least, that’s what happened to me.
 
 ## The statistical model
 
@@ -59,11 +59,15 @@ The reason we need statistical models is simple: **reality changes.** Not all st
 
 ### A simple example: age and height
 
-Imagine that we measure the height of a group of people and also record their age. In general, we will see that younger children tend to be shorter and that height increases with age. But that relationship is not perfect: two people of the same age can differ by several centimeters. If we wanted to capture that trend with a formula, we could write a simple linear regression model: $$
+Imagine that we measure the height of a group of people and also record their age. In general, we will see that younger children tend to be shorter and that height increases with age. But that relationship is not perfect: two people of the same age can differ by several centimeters. If we wanted to capture that trend with a formula, we could write a simple linear regression model: 
+
+$$
 \text{Height}_i = \beta_0 + \beta_1 \cdot \text{age}_i + \varepsilon_i
 $$
 
-This small equation expresses a simple idea: height increases with age, but never exactly. There is always a margin of error, represented by $\varepsilon_i$, which reflects natural variability between people. But this variability, this $\varepsilon_i$, is not a minor detail. It is what makes this model *statistical* rather than *deterministic*. In statistics, we assume that this unexplained part, this variability, follows a certain pattern. The most common way to describe that pattern is to **assume** that the errors follow a normal distribution with mean zero and some standard deviation, which we call $\sigma_\varepsilon$: $$
+This small equation expresses a simple idea: height increases with age, but never exactly in the same way. There is always a margin of error, represented by $\varepsilon_i$, which reflects natural variability between people. But this variability, this $\varepsilon_i$, is not a minor detail. It is what makes this model *statistical* rather than *deterministic*. In statistics, we assume that this unexplained part, this variability, follows a certain pattern. The most common way to describe that pattern is to **assume** that the errors follow a normal distribution with mean zero and some standard deviation, which we call $\sigma_\varepsilon$: 
+
+$$
 \varepsilon_{i}\sim\mathrm{Normal}\left(\mu = 0,\;\sigma = \sigma_\varepsilon\right)
 $$
 
@@ -77,7 +81,7 @@ $$
 
 This notation reads as follows: the height of person $i$ follows a normal distribution whose mean is $\beta_0 + \beta_1 \cdot \text{age}_i$ and whose standard deviation is $\sigma_\varepsilon$. In other words, the model specifies a **conditional distribution** for height given age. That is, **for each value of age**, height follows a normal distribution with a different mean but **the same dispersion around that mean.** Therefore, people of the same age share the same conditional distribution.
 
-It may sound abstract, but it becomes much clearer when we draw it. The figure below shows the three conditional distributions of height for ages 5, 10, and 20.
+It may sound abstract, but the figure below makes it much clearer, showing the three conditional distributions of height for ages 5, 10, and 20.
 
 ```{r}
 #| renderings: [light, dark]
@@ -216,7 +220,7 @@ $$
 \right)
 $$
 
-It might not make the cover of *Nature*, but it proves that even procrastination can be elegantly captured by a model.
+That way, I can even tell whether psychologists are the first to run away from this post. It might not make the cover of *Nature*, but it proves that even procrastination can be elegantly captured by a model.
 
 #### Choose your own distribution
 
@@ -246,7 +250,9 @@ set.seed(123)
 Y <- rexp(n = 100, rate = 2)
 ```
 
-We now want to see how three different models assign density values to the same data point under fixed reference parameters. We will use a Normal model ($\mu=1.5$, $\sigma=1$), a $\chi^2$ model ($\nu=2$) and an exponential model ($\lambda=2$). The Normal and $\chi^2$ parameter values were chosen arbitrarily, simply to illustrate the idea; the exponential one matches the parameter value used to generate the data.
+We now want to see how three different models assign density values to the same data point under fixed reference parameters. For simplicity, we’ll focus on the first observation of our variable as the reference value. The models considered are a Normal ($\mu=1.5$, $\sigma=1$), a $\chi^2$ ($\nu=2$), and an exponential ($\lambda=2$). The Normal and $\chi^2$ parameter values were chosen arbitrarily, simply to illustrate the idea; the exponential one matches the parameter value used to generate the data.
+
+In `R`, `dnorm()`, `dchisq()`, and `dexp()` are density functions that return the value of the probability density at a given point given specific parameter values. The first argument is the point (e.g., `Y[1]`), and the remaining arguments set the parameters of the distribution (e.g., `mean` and `sd` for `dnorm`, `df` for `dchisq`, `rate` for `dexp`).
 
 ```{r}
 # Compute density values at the same observed point
@@ -634,7 +640,7 @@ So if someone asks whether you know what a statistical model is, you can smile a
 
 The grid approach we used is useful for teaching but inefficient in practice. As the number of parameters grows, it quickly becomes computationally impossible. For this reason, maximum likelihood estimation is usually obtained using numerical optimization algorithms.
 
-We will not go into the details of these methods here, but it is useful to see how they work in practice. The code below shows how to use the optim function in R to estimate the parameters by maximum likelihood for the three models. The results are equivalent to those from the grid search, but this approach can generalize to a much wider range of situations.
+We will not go into the details of these methods here, but it is useful to see how they work in practice. The code below shows how to use the `optim` function in `R` to estimate the parameters by maximum likelihood for the three models. The results are equivalent to those from the grid search, but this approach can generalize to a much wider range of situations.
 
 ```{r}
 # Log-likelihood functions: gaussian model
