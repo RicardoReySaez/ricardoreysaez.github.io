@@ -1,0 +1,121 @@
+/*-- scss:defaults --*/
+/* Refined body typography */
+$font-family-base:       "Source Serif 4", serif;          /* body */
+$font-family-sans-serif: system-ui, sans-serif;            /* fallback */
+$font-family-monospace:  "JetBrains Mono", monospace;
+
+$headings-font-family: "Playfair Display", serif;           /* global fallback for headings */
+$headings-font-weight:   600;
+$headings-line-height:   1.25;
+
+$font-size-base:         15.5px;
+$line-height-base:       1.65;
+$paragraph-margin-bottom: .9rem;
+
+/*-- scss:uses --*/
+/* Google Fonts used for body and monospace */
+@import url("https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap");
+
+/* Carelia Upright (display serif for H1) */
+@font-face {
+  font-family: "Carelia Upright";
+  src: url("assets/fonts/Carelia/Carelia-Upright.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Carelia";
+  src: url("assets/fonts/Carelia/Carelia-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Aileron (Heavy for H2–H3) */
+@font-face {
+  font-family: "Aileron";
+  src: url("assets/fonts/Aileron/Aileron-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Aileron";
+  src: url("assets/fonts/Aileron/Aileron-Heavy.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Aileron";
+  src: url("assets/fonts/Aileron/Aileron-HeavyItalic.woff2") format("woff2");
+  font-weight: 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/*-- scss:rules --*/
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Comfortable vertical rhythm */
+p { margin-top: .35rem; margin-bottom: $paragraph-margin-bottom; }
+ul, ol { margin-top: .35rem; margin-bottom: 1rem; }
+
+/* Base headings (kept as a general fallback) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: $headings-font-family;
+  font-weight: $headings-font-weight;
+  line-height: $headings-line-height;
+  letter-spacing: 0.005em;
+  margin-top: 1.5rem;
+  margin-bottom: .55rem;
+}
+h1 { font-size: clamp(1.9rem, 3vw, 2.25rem); }
+h2 { font-size: clamp(1.5rem, 2.4vw, 1.75rem); }
+h3 { font-size: clamp(1.25rem, 2vw, 1.35rem); }
+
+/* Code: monospaced only */
+code, kbd, samp, pre { font-family: $font-family-monospace; }
+pre code { line-height: 1.55; }
+
+/* Theme global rules (kept as fallback) */
+:where(h1, h2, h3, h4, h5, h6),
+:where(.h1, .h2, .h3, .h4, .h5, .h6),
+:where(.quarto-title) :where(.title, h1),
+:where(.about) :where(h1, h2, h3),
+:where(#hero-heading) :where(h1, h2, h3) {
+  font-family: "Playfair Display", serif !important;
+  font-weight: 600;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+
+/* === Specific overrides === */
+
+/* H1: Carelia Upright */
+h1, .quarto-title .title {
+  font-family: "Carelia Upright", "Playfair Display", serif !important;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+}
+
+/* H2 & H3: Aileron Heavy */
+h2, h3 {
+  font-family: "Aileron", system-ui, sans-serif !important;
+  font-weight: 900;
+  letter-spacing: 0.01em;
+  line-height: 1.25;
+}
+
+/* Scales (enlarged H1, consistent H2/H3) */
+h1 {
+  font-size: clamp(2.4rem, 3.5vw, 3rem);
+  padding-bottom: 0.9rem;
+  margin-bottom: 0;
+}
+h2 { font-size: clamp(1.7rem, 2.6vw, 2.1rem); }
+h3 { font-size: clamp(1.35rem, 2.2vw, 1.55rem); }

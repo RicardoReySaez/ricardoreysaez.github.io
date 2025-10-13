@@ -1,0 +1,140 @@
+/* title */
+.title {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1.1em !important;
+}
+
+/* subtitle + Learn More About Me */
+.subtitle {
+  font-family: "Petrona";
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+/* heading, subtitle, and blurb */
+.entity-contents {
+  text-align: right !important;
+  padding: 0 2em 0 2em;
+}
+
+/* blurb */
+.about-contents {
+  padding: 0 0 0 2em !important;
+}
+
+/* social links: block of links */
+.about-entity .about-links {
+  justify-content: flex-end !important;
+  column-gap: 0em !important;
+  font-size: 1.2em !important;
+}
+
+/* social links: individual links */
+.about-entity .about-link {
+  padding: 0.25em 0.25em !important;
+  border: none !important;  
+}
+
+/* Learn More About Me */
+.about-links.subtitle {
+  font-size: 1em !important;
+  font-family: "Red Hat Text";
+  justify-content: flex-end !important;
+}
+
+/* image */
+.about-image {
+  margin-top: -2em;
+  padding: 0 2em 0em 0;
+}
+
+/* // Home
+
+// social links
+.about-entity {
+  // block of links
+  .about-links {
+    column-gap: 0em !important;
+    font-size: 1.2em;
+  }
+  // individual links
+  .about-link {
+    padding: 0.25em 0.25em !important;
+    border: none !important;
+  }
+} */
+
+/* mobile query up for screens up to ~992px wide */
+@media screen and (max-width: 991.98px) {
+    /* move text up & center */
+    .entity-contents {
+      order: 2 !important;
+      margin: 0 0 0 0 !important;
+      padding: 2 0 2 0em !important;
+      text-align: center !important;
+    }
+    
+    .quarto-about-solana {  /* adapta al contenedor padre real */
+      display: flex;
+      flex-direction: column;
+      align-items: center;  /* centra horizontalmente */
+    }
+    
+    .quarto-about-solana, .hero-section {
+      padding-left: 1em;
+      padding-right: 1em;
+    }
+    /* center subtitle */
+    .subtitle {
+      text-align: center !important;
+    }
+
+    /* social links: block of links */
+    .about-entity .about-links {
+      justify-content: center !important;
+      font-size: 1em !important;
+    }
+
+    /* blurb */
+    .about-contents {
+      padding: 0 0 0 0em !important;
+    }
+
+    /* center Learn More About Me */
+    .about-links.subtitle {
+      justify-content: center !important;
+    }
+
+    /* move image up, adjust padding */
+    .about-image {
+      order: 1 !important;
+      margin-top: 1.5em;  /* espacio inferior entre imagen y siguiente contenido */
+      padding: 0 4em 0 4em !important;
+    }
+}
+
+/* Usar siempre el contenedor/posición de Solana */
+img.about-image{
+  display:block;
+  width:100%;
+  height:auto;
+  transition:none !important; /* evita fades del navegador */
+}
+
+/* Modo claro/oscuro: sustituimos visualmente la fuente de la <img> */
+body.quarto-light img.about-image{
+  content: url("../logosRRS/home_light.png");
+}
+
+body.quarto-dark img.about-image{
+  content: url("../logosRRS/home_dark.png");
+}
+
+/* (Opcional) si notas reflujo en la primera pintura, fija el tamaño */
+.quarto-about-solana img.about-image{
+  max-width: 24em; /* debe coincidir con image-width */
+}
+

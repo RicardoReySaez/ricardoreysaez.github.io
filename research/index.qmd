@@ -1,0 +1,51 @@
+---
+title: "Supplementary Reflections <br><br>"
+description: "Every paper leaves something out."
+author: []
+affiliations: []
+# listing:
+#   contents:
+#     - "**/index.qmd"
+#   sort: "date desc"
+#   type: default
+#   categories: false
+#   feed: true
+#   sort-ui: false
+#   filter-ui: false
+#   fields: [title, author, categories, date, image]
+citation: false
+toc: false
+comments: false
+format:
+  html:
+    page-layout: full
+title-block-banner: false
+
+header-includes: |
+  <link rel="stylesheet" href="../assets/listing-default.css">
+  <style>
+    /* Oculta cualquier bloque de metadatos del título (Author/Affiliation/Date) */
+    .quarto-title-meta,
+    .quarto-title .quarto-title-meta,
+    .quarto-title > .quarto-title-meta,
+    dl.quarto-title-meta { 
+      display: none !important; 
+      visibility: hidden !important;
+    }
+    /* Por si el parcial deja un dt suelto con "Author" */
+    .quarto-title-block dl.quarto-title-meta dt,
+    .quarto-title-block .quarto-title-meta dt { 
+      display: none !important; 
+    }
+  </style>
+
+resources:
+  - ../assets/listing-default.css
+---
+
+There are questions that don’t fit the word limit, models that evolve after submission, and explanations that only make sense once everything is published. If I tried to include all those details, I would probably end up writing a paper of disclaimers and lose the reader in an endless maze of footnotes.
+
+Instead, I keep some of those insights here: small reflections and more detailed explanations about specific aspects of my articles that deserve a slower, clearer space. These notes are not extensions of the papers but parallel stories, the parts of research that stay hidden behind results, now given a place to breathe.
+
+
+## 

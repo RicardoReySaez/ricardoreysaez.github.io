@@ -1,0 +1,66 @@
+---
+title: "Ricardo Rey-Sáez"
+pagetitle: "Ricardo Rey-Sáez"
+subtitle: "**PhD Student | Psychometrics | Bayesian Statistics**" 
+image: logosRRS/home_light.png
+image-alt: "Logo with three greek letters: two rhos and one sigma"
+open-graph:
+  title: "Ricardo Rey-Sáez"
+  description: "PhD student in Psychology | Psychometrics and Bayesian statistical modeling"
+  image: docs/assets/img/RRS-social.png
+
+twitter-card:
+  title: "Ricardo Rey-Sáez"
+  description: "PhD student in Psychology | Psychometrics and Bayesian statistical modeling"
+  image: docs/assets/img/RRS-social.png
+
+about:
+  template: solana
+  image-width: 24em
+  id: hero-heading
+  links:
+    - text: "{{< iconify fa6-brands bluesky >}}"
+      aria-label: "Bluesky"
+      href: https://bsky.app/profile/ricardoreysaez.bsky.social
+    - text: "{{< iconify fa6-brands github >}}"
+      href: https://github.com/rreysa
+    - text: "{{< iconify fa6-brands orcid >}}"
+      href: https://orcid.org/0000-0001-6739-2035
+    - text: "{{< iconify fa6-brands researchgate >}}"
+      href: https://www.researchgate.net/profile/Ricardo-Rey-Saez  
+    - text: "{{< iconify fa6-brands twitter >}}"
+      href: https://x.com/RicardoRey_95
+    - text: "{{< iconify fa6-brands youtube >}}"
+      href: https://www.youtube.com/@psicometries
+    - text: "{{< iconify mdi gmail >}}"
+      url: mailto:ricardoreysaez95@gmail.com
+      
+page-layout: full
+
+execute: 
+  freeze: false
+  echo: false
+  warning: false
+
+resources:
+  - assets/index.css
+
+format:
+  html:
+    include-in-header:
+      - text: |
+          <link rel="stylesheet" href="assets/index.css">
+          <link rel="preload" as="image" href="logosRRS/home_light.png">
+          <link rel="preload" as="image" href="logosRRS/home_dark.png">
+---
+
+<br><br>
+
+::: {#hero-heading}
+
+I’m a PhD student in Psychology at Universidad Autónoma de Madrid, where I work on **developing and validating psychometric models for experimental data.** I also enjoy doing outreach in statistics for psychology. 
+
+The most unexpected plot twist in my journey is that, after a long time as a frequentist, I’ve finally surrendered to **the Bayesian dark side of probability.**
+
+:::
+

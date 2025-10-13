@@ -1,0 +1,211 @@
+---
+title: ""
+subtitle: ""
+author: ""
+date: ""
+title-block: false
+format:
+  html:
+    toc: true
+    anchor-sections: false
+    link-external-newwindow: true
+    link-external-icon: false
+  PrettyPDF-pdf:
+    include-in-header:
+      text: |
+        \usepackage{fontawesome5}
+        \usepackage{academicons}
+        \usepackage{hyperref}
+        \usepackage{graphicx}
+        \usepackage{xcolor}
+        \usepackage{microtype}
+        \usepackage{enumitem}
+        \setlist[itemize]{topsep=2pt,itemsep=2pt}
+        \setlength{\parindent}{0pt}
+format-links: [PrettyPDF-pdf]
+resources:
+  - ../assets/cv.css
+---
+
+# Ricardo Rey-Sáez
+
+::: {.content-visible when-format="pdf"}
+\noindent
+\begin{minipage}[t]{0.40\textwidth}
+\vspace{-15pt}\includegraphics[width=\linewidth]{../_extensions/nrennie/PrettyPDF/profile_pic.jpeg}
+\end{minipage}\hfill\qquad\quad
+\begin{minipage}[t]{0.60\textwidth}
+\vspace{0pt}
+\begin{tabular}{@{}ll}
+\faGithub        & \href{https://github.com/rreysa}{rreysa}\\[0.60em]
+\faOrcid         & \href{https://orcid.org/0000-0001-6739-2035}{0000-0001-6739-2035}\\[0.60em]
+\faTwitter       & \href{https://x.com/RicardoRey_95}{@RicardoRey\_95}\\[0.60em]
+\faExternalLink* & \href{https://bsky.app/profile/ricardoreysaez.bsky.social}{ricardoreysaez.bsky.social}\\[0.60em]
+\faYoutube       & \href{https://www.youtube.com/@psicometries}{@psicometries}\\[0.60em]
+\faEnvelope      & \href{mailto:ricardoreysaez95@gmail.com}{ricardoreysaez95@gmail.com}
+\end{tabular}
+\end{minipage}
+:::
+
+::: {.content-visible when-format="html"}
+::: {.btn-group}
+[{{< iconify fa6-brands:twitter >}}](https://x.com/RicardoRey_95){.icon-link}
+[{{< iconify fa6-brands:bluesky >}}](https://bsky.app/profile/ricardoreysaez.bsky.social){.icon-link}
+[{{< iconify fa6-brands:github >}}](https://github.com/rreysa){.icon-link}
+[{{< iconify fa6-brands:orcid >}}](https://orcid.org/0000-0001-6739-2035){.icon-link}
+[{{< iconify fa6-brands:researchgate >}}](https://www.researchgate.net/profile/Ricardo-Rey-Saez){.icon-link}
+[{{< iconify fa6-brands:youtube >}}](https://www.youtube.com/@psicometries){.icon-link}
+[{{< iconify mdi:gmail >}}](mailto:ricardoreysaez95@gmail.com){.icon-link}
+:::
+:::
+
+## {{< iconify fa6-solid:graduation-cap >}} Education
+
+- 2024–present | **Ph.D.** *Psychology*, Universidad Autónoma de Madrid  
+  - Developing and validating psychometric models for the study of individual differences in experimental psychology.
+- 2020–2022 | **M.S.** *Quantitative Research Methods for Behavioral and Health Sciences*, Complutense University of Madrid
+- 2017–2020 | **B.S.** *Psychology*, Complutense University of Madrid
+
+## {{< iconify streamline:global-learning-remix >}} Additional Training
+
+- 2024 | ***Bayesian Cognitive Modeling: A Practical Course***, University of Amsterdam
+- 2023 | ***Practical Introduction to Advances in Exploratory Factor Analysis Applied to Item Analysis***, University of the Basque Country
+- 2022 | ***Introduction to Exploratory Graph Analysis (EGA) with R***, Zaragoza University
+- 2020 | ***Principles, Statistical and Computational Tools for Reproducible Data Science***, Harvard University (HarvardX) | [Verified Certificate](https://courses.edx.org/certificates/d9d5e1f33f6f4c4cb9a43da41912cfa6)
+- 2020 | ***Professional Certificate in Data Science***, Harvard University  
+  - *Data Science: R basics* | [Verified Certificate](https://courses.edx.org/certificates/2d9521b4289a45adb89344b808b6f60b)  
+  - *Data Science: Visualization* | [Verified Certificate](https://courses.edx.org/certificates/025e5081c72a40c79428ca56145281d5)  
+  - *Data Science: Probability* | [Verified Certificate](https://courses.edx.org/certificates/a4747f3de2164ab48da36dc6dbeab1d4)  
+  - *Data Science: Inference and Modeling* | [Verified Certificate](https://courses.edx.org/certificates/09f023dfd1bf4b8b896db4a905670733)  
+  - *Data Science: Productivity Tools* | [Verified Certificate](https://courses.edx.org/certificates/b26c03638c3c46e4a97fcb822f70210c)  
+  - *Data Science: Wrangling* | [Verified Certificate](https://courses.edx.org/certificates/51759921d48a416186b5517318d72135)  
+  - *Data Science: Linear Regression* | [Verified Certificate](https://courses.edx.org/certificates/470c6bb6fe2b4fe8913208d5edda44a3)
+
+## {{< iconify fa6-solid:chalkboard-user >}} Teaching and Educational Activities
+
+- 2025 | **Introduction to Bayesian Psychometrics: Applications to Factor Analysis**  
+  - Seminar instructor, National interfaculty training seminar  
+  - Organized by ASCOFAPSI (Colombian Association of Faculties of Psychology)
+- 2025 | **Beyond Maximum Likelihood: Introduction to Bayesian Factor Analysis**  
+  - Seminar instructor, Master’s program in Quantitative Research Methods  
+  - Organized by Autonomous University of Madrid
+- 2024 | **ChatGPT and Psychometrics: Optimizing the Design, Refinement, and Data Analysis of Measurement Instruments**  
+  - Seminar instructor, Master’s program in Quantitative Research Methods  
+  - Organized by Autonomous University of Madrid
+- 2023–2024 | ***Data Analysis in Psychology***  
+  - Course instructor, Undergraduate program (Bachelor’s in Psychology)  
+  - Organized by Nebrija University
+- 2023 | **Adapting Our Teaching to the Revolution of AI and ChatGPT**  
+  - Workshop instructor, Faculty training  
+  - Organized by Universidad Autónoma de Madrid
+- 2023 | **How can we Adapt Our Teaching to the Revolution of AI and ChatGPT?**  
+  - Workshop instructor, Faculty training  
+  - Organized by University of Costa Rica
+
+## {{< iconify fa6-solid:book >}} Textbooks
+
+- **Rey-Sáez, R.**, & Estrada, E. (2023). ***Análisis de datos con R en Ciencias Sociales y de la Salud***. Editorial Síntesis: <https://www.sintesis.com/libro/analisis-de-datos-con-r-en-ciencias-sociales-y-de-la-salud>
+
+## {{< iconify dashicons:awards >}} Awards
+
+- 2025 | [Best Oral Communication Award](https://sites.google.com/view/xiv-jornadas-aiidi-2025/inicio) | Ibero-American Association for Research on Individual Differences  
+  - Presentation Title: ***New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?***  
+  - Prize: [**MASK-5** Measurement Instrument](https://www.hogrefe-tea.com/public/catalogo/producto/MASK-5-Cuestionario-de-Personalidad-de-los-Big-Five)
+
+- 2024 | [Dissemination and Transfer in Methodology Award](https://www.aemcco.org/listado_noimg.php?Seccion=Premios%20AEMCCO) | Spanish Association of Methodology for Behavioral Sciences  
+  - Project ***Ecuación Triunfo***  
+  - Funding: €1,000
+
+- 2024 | [Julio Olea Grant](https://www.aemcco.org/listado_noimg.php?Seccion=Ayudas%20AEMCCO) | Spanish Association of Methodology for Behavioral Sciences  
+  - Funding to carry out the research project ***The union of psychometrics and experimental psychology: Bayesian hierarchical models with common factors for response times***  
+  - Funding: €2,400
+
+## {{< iconify ooui:articles-rtl >}} Publications
+
+Franco-Martínez, A., **Rey-Sáez, R.**, Shanks, D. R., Soto, D., & Vadillo, M. A. (2024). Replicating the unconscious working memory effect: A multisite preregistered study [stage 1 registered report]. *OSF.*
+
+::: {.content-visible when-format="html"}
+::: {.btn-group role="group" aria-label="Open Science Links"}
+[Data](https://osf.io/xzv9t/files/osfstorage){.btn-sm .btn .btn-primary aria-label="Data"}
+[Code](https://osf.io/xzv9t/files/osfstorage){.btn-sm .btn .btn-primary aria-label="Code"}
+[PDF](https://osf.io/g2dzn){.btn-sm .btn .btn-primary aria-label="PDF"}
+[OSF](https://osf.io/tkyfh){.btn-sm .btn .btn-primary aria-label="OSF project"}
+:::
+:::
+
+Pacheco-Romero, A. M., Martín-García, Ó., **Rey-Sáez, R.**, Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. *Cognition and Emotion, 38*(4), 587–604. [PDF](https://www.tandfonline.com/doi/epdf/10.1080/02699931.2024.2314066?needAccess=true)
+
+::: {.content-visible when-format="html"}
+::: {.btn-group role="group" aria-label="Open Science Links"}
+[Data](https://osf.io/qx4bg){.btn-sm .btn .btn-primary aria-label="Data"}
+[Code](https://osf.io/g5zw9){.btn-sm .btn .btn-primary aria-label="Code"}
+[PDF](https://www.tandfonline.com/doi/epdf/10.1080/02699931.2024.2314066?needAccess=true){.btn-sm .btn .btn-primary aria-label="PDF"}
+[OSF](https://osf.io/qx4bg){.btn-sm .btn .btn-primary aria-label="OSF project"}
+:::
+:::
+
+Gracia, E., Martín-Fernández, M., **Rey-Sáez, R.**, & Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. *Psychology of Violence, 14*(2), 127–136. https://doi.org/10.1037/vio0000497
+
+::: {.content-visible when-format="html"}
+::: {.btn-group role="group" aria-label="Open Science Links"}
+[Data](https://mics.unicef.org/surveys){.btn-sm .btn .btn-primary aria-label="Data"}
+[Code](){.btn-sm .btn .disabled .btn-primary title="code unavailable"}
+[PDF](https://psycnet.apa.org/doiLanding?doi=10.1037%2Fvio0000497){.btn-sm .btn .btn-primary aria-label="PDF"}
+[OSF](){.btn-sm .btn .disabled .btn-primary title="OSF unavailable"}
+:::
+:::
+
+Vega-Sanz, M., **Rey-Sáez, R.**, Berástegui, A., & Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. *American Journal of Perinatology, 41*(S 01), e2870–e2877. https://doi.org/10.1055/s-0043-1776062
+
+::: {.content-visible when-format="html"}
+::: {.btn-group role="group" aria-label="Open Science Links"}
+[Data](){.btn-sm .btn .disabled .btn-primary title="data unavailable"}
+[Code](){.btn-sm .btn .disabled .btn-primary title="code unavailable"}
+[PDF](https://www.thieme-connect.de/products/ejournals/html/10.1055/s-0043-1776062){.btn-sm .btn .btn-primary aria-label="PDF"}
+[OSF](){.btn-sm .btn .disabled .btn-primary title="OSF unavailable"}
+:::
+:::
+
+Franco-Martínez, A., **Rey-Sáez, R.**, & Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. PsyArXiv. https://doi.org/10.31234/osf.io/kmqy5
+
+::: {.content-visible when-format="html"}
+::: {.btn-group role="group" aria-label="Open Science Links"}
+[Data](https://osf.io/f2an4){.btn-sm .btn .btn-primary aria-label="Data"}
+[Code](https://osf.io/f2an4){.btn-sm .btn .btn-primary aria-label="Code"}
+[PDF](https://osf.io/preprints/psyarxiv/kmqy5_v1){.btn-sm .btn .btn-primary aria-label="PDF"}
+[OSF](https://osf.io/7kce5){.btn-sm .btn .btn-primary aria-label="OSF project"}
+:::
+:::
+
+**Rey-Sáez, R.** (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. *R.E.M.A. Revista Electrónica de Metodología Aplicada, 24*(1), 41–44. [PDF](https://reunido.uniovi.es/index.php/Rema/article/view/17634)
+
+::: {.content-visible when-format="html"}
+::: {.btn-group role="group" aria-label="Open Science Links"}
+[Data](){.btn-sm .btn .disabled .btn-primary title="data unavailable"}
+[Code](){.btn-sm .btn .disabled .btn-primary title="code unavailable"}
+[PDF](https://reunido.uniovi.es/index.php/Rema/article/view/17634){.btn-sm .btn .btn-primary aria-label="PDF"}
+[OSF](){.btn-sm .btn .disabled .btn-primary title="OSF unavailable"}
+:::
+:::
+
+## {{< iconify game-icons:teacher >}} Conference Presentations
+
+1. **Rey-Sáez, R.**, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?* [Oral presentation] XIV Conference – Asociación Iberoamericana para la Investigación de las Diferencias Individuales (AIIDI).
+1. **Rey-Sáez, R.**, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *Where psychometrics meets experimental psychology: Bayesian hierarchical factor models for response times.* [Oral presentation] XI Conference – European Congress of Methodology.
+1. **Rey-Sáez, R.**, Revuelta, J., & Vadillo, M. A. (2025). *From random effects to common factors: Latent dimensionality assessment in experimental psychology.* [Oral presentation] XI Conference – European Congress.
+1. **Rey-Sáez, R.**, Garre-Frutos, F., Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2025). *Addressing methodological challenges in unconscious process research: A hierarchical modeling approach.* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
+1. **Rey-Sáez, R.**, Garre-Frutos, F., Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2025). *Hierarchical models in experimental psychology: A solution for measuring unconscious psychological processes.* [Poster presentation] XIV Reunión Científica sobre Atención.
+1. **Rey-Sáez, R.**, Garre-Frutos, F., & Vadillo, M. Ángel. (2024). *What psychometrics can offer to experimental psychology: The multilevel model as the legacy of factor analysis.* [Oral presentation] XVIII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. **Rey-Sáez, R.**, Lecuona, Ó., & Martín-Fernández, M. (2024). *Approximate measurement invariance with multiple groups: A comparison between Bayesian SEM and the alignment method.* [Oral presentation] XVIII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. Lecuona, Ó., **Rey-Sáez, R.**, & Martín-Fernández, Manuel. (2024). *Studying invariance with multiple groups in large datasets: A comparison of bayesian SEM and alignment method.* [Oral presentation] 13th Conference of The International Test Commission.
+1. **Rey-Sáez, R.**, Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2024). *From unconscious to unreliable? Measurement error biases evidence on studies of unconscious processing.* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
+1. Franco-Martínez, A., **Rey-Sáez, R.**, Shanks, D. R., Soto, D., & Vadillo, M. A. (2024). *Advances in “replicating the unconscious working memory effect: A multisite preregistered study.”* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
+1. Pacheco-Romero, A. M., Martín-Gracía, Ó., **Rey-Sáez, R.**, Boemo, T., Blanco, I., & Sánchez-López, Á. (2023). *Affective reactivity to daily events predicts changes in future psychopathology and is modulated by the use of different forms of rumination.* [Oral presentation] International Convention of Psychological Science (ICPS).
+1. Aivar, P., **Rey-Sáez, R.**, & Vadillo, M. A. (2023). *Hard to ignore? Irrelevant distractors cannot be completely suppressed in a contextual cueing task.* [Poster presentation] 23 Annual Meeting of the Vision Sciences Society.
+1. Martin-Garcia, O., **Rey-Saez, R.**, Boemo, T., Pacheco-Romero, A., Blanco, I., & Sanchez-Lopez, A. (2023). *Modulatory role of motivational self-focuses on the relation between perceived stress and momentary affect: An ESM study.* [Oral presentation] Emotions Congress 2023.
+1. Pacheco-Romero, A. M., Martín-Gracía, Ó., **Rey-Sáez, R**., Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2022). *Intra-individual mechanisms of positive affect regulation deficits in depression: An experience sampling study.* [Oral presentation] 52nd European Association for Behavioural; Cognitive Therapies.
+1. **Rey-Sáez, R.**, & Nájera, P. (2022). *Investigando metodología en el multiverso de la academia: Comunidad, recursos y estrategias por y para jóvenes.* [Symposium Organizer] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. **Rey-Sáez, R.** (2022). *Investigación, paso 1: ¿Cómo y dónde busco información? Nuevas herramientas para la detección eficiente de bibliografía de interés.* [Oral presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. **Rey-Sáez, R.** (2022). *Approximate measurement invariance: Assessing the accuracy and sensitivity of alignment optimization under partial invariance with multiple groups.* [Oral presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. Martín-Fernández, M., & **Rey-Sáez, R.** (2022). *Approximate measurement invariance in surveys on attitudes toward intimate partner violence in 12 Latin American countries.* [Poster presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. **Rey-Sáez, R.** (2022). *Approximate measurement invariance in surveys on attitudes toward intimate partner violence in 12 Latin American countries.* [Oral presentation] Research Conference of the Faculty of Psychology, Universidad Autónoma de Madrid

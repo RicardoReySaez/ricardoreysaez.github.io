@@ -1,0 +1,49 @@
+---
+title: "The Uncertainty Notebook"
+description: |
+  A personal blog for the things I learn, mostly about R, modelling, and statistical thinking.<br>
+author: []
+affiliations: []
+listing:
+  contents:
+    - "**/index.qmd"
+  sort: "date desc"
+  type: default
+  categories: true
+  feed: true
+  sort-ui: false
+  filter-ui: false
+  fields: [title, author, categories, date, image, subtitle]
+citation: false
+toc: false
+comments: false
+format:
+  html:
+    page-layout: full
+title-block-banner: false
+
+header-includes: |
+  <link rel="stylesheet" href="../assets/listing-default.css">
+  <style>
+    /* Oculta cualquier bloque de metadatos del título (Author/Affiliation/Date) */
+    .quarto-title-meta,
+    .quarto-title .quarto-title-meta,
+    .quarto-title > .quarto-title-meta,
+    dl.quarto-title-meta { 
+      display: none !important; 
+      visibility: hidden !important;
+    }
+    /* Por si el parcial deja un dt suelto con "Author" */
+    .quarto-title-block dl.quarto-title-meta dt,
+    .quarto-title-block .quarto-title-meta dt { 
+      display: none !important; 
+    }
+  </style>
+
+resources:
+  - ../assets/listing-default.css
+---
+
+
+
+## Posts

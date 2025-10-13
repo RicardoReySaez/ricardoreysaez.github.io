@@ -1,0 +1,57 @@
+/* Bloques de CV como filas */
+.cv { 
+  list-style: none;          /* sin viñetas */
+  margin: 0; 
+  padding-left: 0;
+}
+
+.cv > li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin: .25rem 0;
+}
+
+/* Título a la izquierda */
+.cv-title { 
+  display: inline-block;
+}
+
+/* Fecha a la derecha */
+.cv-date {
+  white-space: nowrap;       /* evita saltos raros en la fecha */
+  font-variant-numeric: tabular-nums;
+  opacity: .8;               /* un poquito más discreta */
+}
+
+/* Descripción/viñetas bajo una fila */
+.cv-notes {
+  margin: .25rem 0 .75rem 0;
+  padding-left: 0;           /* ya no necesitamos sangría grande */
+}
+
+/* Responsive: en pantallas estrechas, fecha debajo */
+@media (max-width: 640px) {
+  .cv > li { 
+    flex-direction: column; 
+    align-items: flex-start; 
+  }
+  .cv-date { margin-top: .1rem; }
+}
+
+.icon-link {
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-link .iconify,
+.icon-link i {
+  font-size: 1.5em;
+  color: inherit;
+}

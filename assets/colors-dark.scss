@@ -1,0 +1,87 @@
+/*-- scss:defaults --*/
+/* Paleta DARK (mapeo directo de --quarto-scss-export-*) */
+
+/* Fondos */
+$spc-bg-00:           #060a0d;
+$spc-bg-0:            #0E171E;   /* body */
+$spc-bg-1:            #16242f;   /* panels / code */
+$spc-bg-2:            #1e3241;   /* opcional por si lo usas */
+
+/* Colores principales */
+$spc-primary:         #FAF0E3;
+$spc-primary-light:   #FFFBF2;
+
+/* Secundarios (acento ámbar) */
+$spc-secondary:       #6BA8A9;
+$spc-secondary-light: #D96E34;
+
+/* Acentos (verde oliva suave) */
+$spc-accent:          #0E171E;
+$spc-accent-light:    #EEF1E0;
+$spc-accent-dark:     #697935;
+
+/* Navbar */
+$spc-navbar-bg:       #0E171E;   /* --navbar-bg */
+$spc-navbar-border:   #FFFBF2;   /* --primary-border-subtle */
+$spc-navbar-fg:    #D96E34;  /* base ORANGE */
+$spc-navbar-hover: #FAF0E3;  /* hover CREAM, tal como te gusta */
+
+/* Footer */
+$spc-footer-bg:         #0E171E;
+$spc-footer-fg:         #FFFBF2;
+$spc-footer-link:       #D96E34;  /* base ORANGE */
+$spc-footer-link-hover: #3E8EBC;  /* hover BLUE */
+
+/* Social / hero & footer icons*/
+$spc-social:       #D96E34;  /* base ORANGE */
+$spc-social-hover: #3E8EBC;  /* hover BLUE */
+
+/* Textos */
+$body-color:          $spc-primary;   /* texto principal */
+$body-secondary:      #9DA3AA;        /* <-- viene de --body-secondary */
+
+/* Hero / Title banner */
+$spc-hero-bg:         transparent;              /* fallback sin imagen */
+$spc-hero-overlay:    rgba($spc-bg-1, .35);     /* velo sutil */
+$spc-hero-text:       $spc-primary;             /* color del título */
+$spc-hero-subtext:    $body-secondary;          /* texto secundario */
+$spc-hero-border:     rgba($spc-hero-text, .12);/* separadores finos */
+
+/* === NAVBAR interactive colors (DARK) === */
+/* Color de hover para TÍTULO y ENLACES de la navbar */
+$spc-navbar-hover:        #FAF0E3               !default;  /* p.ej. #A23E02 */
+$spc-navbar-title-hover:  $spc-navbar-hover     !default;
+
+/* Sombras de la navbar (reposo y hover) */
+$spc-navbar-shadow:       rgba(0, 0, 0, 0.35)    !default;  /* base neutra */
+$spc-navbar-shadow-hover: rgba(#FAF0E3, 0.40) !default; /* sutil ámbar */
+
+.navbar-brand > img.navbar-logo {
+  content: url("logosRRS/navbar_dark.svg");
+  height: 32px;      /* ajusta a tu gusto */
+  width: auto;
+}
+
+/* === CODE surfaces (DARK) === */
+$spc-code-bg:           $spc-bg-1;        /* fondo del chunk */
+$spc-code-fg:           $spc-primary;     /* texto dentro del chunk */
+$spc-code-border:       mix($spc-bg-1, $spc-bg-0, 23%);
+$spc-code-shadow:       rgba(0,0,0,.35);
+$spc-code-bleft:        $spc-bg-1;
+$spc-code-inline-bg:    $spc-accent;      /* inline code */
+$spc-code-inline-fg:    $spc-bg-0;
+
+$spc-gutter-bg:         mix($spc-bg-1, #000, 8%);  /* nº de línea */
+$spc-gutter-fg:         mix($spc-primary, $spc-bg-1, 55%);
+
+$spc-line-hl:           rgba(#3E8EBC, .12); /* resalte de línea al anclar/hover */
+$spc-selection:         rgba(#3E8EBC, .22);
+
+$spc-output-bg:         mix($spc-bg-1, #000, 6%);  /* salida del código */
+$spc-output-fg:         mix($spc-primary, $spc-bg-1, 88%);
+$spc-output-border:     mix($spc-bg-0, $spc-primary, 10%);
+
+$spc-msg-warn-bg:       rgba(#D96E34, .12);
+$spc-msg-warn-fg:       #D96E34;
+$spc-msg-err-bg:        rgba(#ff4d4f, .12);
+$spc-msg-err-fg:        #ff7a7c;

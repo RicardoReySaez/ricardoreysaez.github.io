@@ -1,0 +1,794 @@
+---
+title: "What Is a Statistical Model? From Density to Likelihood"
+subtitle: "An accessible explanation of what makes a model statistical, how it expresses probability through density, and how that same logic leads to likelihood."
+description: "We often use statistical models without asking what they really are. This post gives a friendly and intuitive explanation of what makes a model statistical, the language it speaks through probability density, and how that language leads to likelihood."
+date: "10/10/2025"
+image: "cover.svg"
+categories:
+  - Statistics
+  - Models
+  - Maximum Likelihood
+knitr:
+  opts_chunk:
+    dev: [svglite, darksvglite]
+    fig.ext: [.light.svg, .dark.svg]
+---
+
+```{r echo = FALSE}
+# Antes de usarla, asegurémonos de definir theme_dark_custom
+theme_dark_custom <- function() {
+  # Define un tema oscuro que coincida con tu SCSS (colores de texto, fondo, etc.)
+  theme_minimal(base_size = 14) %+%
+    theme(
+      panel.background = element_rect(fill = "transparent", colour = NA),
+      plot.background = element_rect(fill = "transparent", colour = NA),
+      text = element_text(color = "#FAF0E3"),
+      axis.text = element_text(color = "#FAF0E3"),
+      axis.title = element_text(color = "#FAF0E3"),
+      legend.text = element_text(color = "#FAF0E3"),
+      legend.title = element_text(color = "#FAF0E3"),
+      legend.background = element_rect(fill = "transparent", colour = NA),
+      legend.key = element_rect(fill = "transparent", colour = NA)
+    )
+}
+
+# Ahora la función darksvglite, con on.exit asegurado
+darksvglite <- function(file, width, height) {
+  old_theme <- theme_get()
+  on.exit(theme_set(old_theme), add = TRUE)  # asegura restaurar el tema aunque haya error
+  theme_set(theme_dark_custom())
+  ggsave(
+    filename = file,
+    width = width,
+    height = height,
+    dev = "svg",
+    bg = "transparent"
+  )
+}
+```
+
+*Love* is probably one of the most familiar words in the world. Ask a room full of people if they know what love is, and almost everyone will say yes. But ask them to define it, and you’ll get as many answers as people in the room, each focusing on different aspects of what it means to love. In fact, we are all aware of this paradox: everyone believes they know what love is, although each person understands it in their own way. The same thing, on a smaller scale, happens with the word *model* in the scientific community.
+
+There are many “last names” for the word *model*, such as *statistical*, *theoretical*, *computational*, or *predictive*, which make it a bit harder to know exactly what someone means when they use it, especially when they forget to mention which species of model they’re talking about. However, they all share a common idea: a model is a simplified representation of reality, a way to describe how we believe something works.
+
+Today we’ll talk about the scientist’s favorite child: **the statistical model**, the one that allows us to draw substantive conclusions from data. This post is written for readers with a background in statistics similar to that of a psychology graduate. Some basic familiarity with `R` will be helpful, but you can follow along even if you’ve never written code before.
+
+## The statistical model
+
+The reason we need statistical models is simple: **reality changes.** Not all students perform equally well in statistics, not all patients get better in the same way, and not every day has the same temperature. Even when conditions look identical, the results change. This variability is everywhere and is, in many ways, what makes the world both interesting and complex. Statistical models exist precisely to deal with that variability.
+
+### A simple example: age and height
+
+Imagine that we measure the height of a group of people and also record their age. In general, we will see that younger children tend to be shorter and that height increases with age. But that relationship is not perfect: two people of the same age can differ by several centimeters. If we wanted to capture that trend with a formula, we could write a simple linear regression model: $$
+\text{Height}_i = \beta_0 + \beta_1 \cdot \text{age}_i + \varepsilon_i
+$$
+
+This small equation expresses a simple idea: height increases with age, but never exactly. There is always a margin of error, represented by $\varepsilon_i$, which reflects natural variability between people. But this variability, this $\varepsilon_i$, is not a minor detail. It is what makes this model *statistical* rather than *deterministic*. In statistics, we assume that this unexplained part, this variability, follows a certain pattern. The most common way to describe that pattern is to **assume** that the errors follow a normal distribution with mean zero and some standard deviation, which we call $\sigma_\varepsilon$: $$
+\varepsilon_{i}\sim\mathrm{Normal}\left(\mu = 0,\;\sigma = \sigma_\varepsilon\right)
+$$
+
+This means that, on average, the model does not make systematic errors (because the mean of the errors is zero) and that the variability of those differences can be summarized by a single parameter, $\sigma_\varepsilon$.
+
+Now I am going to do a magic trick. The two equations we just wrote can be summarized in a single, simpler one that reflects the same idea:
+
+$$
+\text{Height}_i \sim \mathrm{Normal}\left(\mu =\beta_0+\beta_1\cdot\text{age}_i,\;\sigma = \sigma_\varepsilon\right)
+$$
+
+This notation reads as follows: the height of person $i$ follows a normal distribution whose mean is $\beta_0 + \beta_1 \cdot \text{age}_i$ and whose standard deviation is $\sigma_\varepsilon$. In other words, the model specifies a **conditional distribution** for height given age. That is, **for each value of age**, height follows a normal distribution with a different mean but **the same dispersion around that mean.** Therefore, people of the same age share the same conditional distribution.
+
+It may sound abstract, but it becomes much clearer when we draw it. The figure below shows the three conditional distributions of height for ages 5, 10, and 20.
+
+```{r}
+#| renderings: [light, dark]
+#| echo: false
+#| message: false
+#| warning: false
+library(ggplot2)
+library(bayesplot)
+
+# Datos
+ages <- c(5, 10, 20)
+means <- c(110, 140, 170)
+sigma <- 6
+x_vals <- seq(80, 190, by = 0.1)
+
+dens_data <- do.call(rbind, lapply(seq_along(ages), function(i) {
+  data.frame(
+    x = x_vals,
+    density = dnorm(x_vals, mean = means[i], sd = sigma),
+    age = factor(paste0(ages[i], " yrs"))
+  )
+}))
+
+# Tema base usando bayesplot
+base_theme <- bayesplot::theme_default(base_size = 16)
+
+# versión clara
+g_light <- ggplot(dens_data, aes(x = x, y = density, color = age, fill = age)) +
+  geom_area(alpha = 0.3, position = "identity") +
+  geom_line(size = 1.2, lineend = "round") +
+  scale_color_manual(values = c("#264653", "#2a9d8f", "#e9c46a")) +
+  scale_fill_manual(values = c("#264653", "#2a9d8f", "#e9c46a")) +
+  labs(
+    title = "Conditional distributions of height given age",
+    x = "Height", y = "Density", color = "Age", fill = "Age"
+  ) +
+  base_theme +
+  theme(
+    panel.background = element_rect(fill = "#FEFBF2", colour = NA),
+    plot.background = element_rect(fill = "#FEFBF2", colour = NA),
+    text = element_text(size = 18),
+    axis.text = element_text(size = 14),
+    axis.title = element_text(size = 16),
+    legend.title = element_text(size = 16),
+    legend.text = element_text(size = 14), 
+    legend.position = "top"
+  )
+
+# versión oscura
+g_dark <- ggplot(dens_data, aes(x = x, y = density, color = age, fill = age)) +
+  geom_area(alpha = 0.3, position = "identity") +
+  geom_line(size = 1.2) +
+  scale_color_manual(values = c("#A8D5BA", "#E9C46A", "#F4A261")) +
+  scale_fill_manual(values = c("#A8D5BA", "#E9C46A", "#F4A261")) +
+  labs(
+    title = "Conditional distributions of height given age",
+    x = "Height", y = "Density", color = "Age", fill = "Age"
+  ) +
+  base_theme +
+  theme(
+    panel.background = element_rect(fill = "#0E171E", colour = NA),
+    plot.background = element_rect(fill = "#0E171E", colour = NA),
+    axis.text = element_text(color = "#FEFBF2", size = 14),
+    axis.title = element_text(color = "#FEFBF2", size = 16),
+    axis.ticks = element_line(color = "#FEFBF2"),
+    axis.line = element_line(color = "#FEFBF2"),
+    legend.text = element_text(color = "#FEFBF2", size = 14),
+    legend.title = element_text(color = "#FEFBF2", size = 16),
+    text = element_text(color = "#FEFBF2", size = 18),
+    legend.position = "top"
+  )
+
+# Imprimir los dos (renderings los capturan)
+g_light
+g_dark
+
+```
+
+What the model tells us is **which** [**ranges of height**]{.underline} **have higher or lower probability given a certain age**[^1]. For instance, for a 20-year-old, the probability of being somewhere around 175 cm is much greater than the probability of being around 100 cm (though the latter is not zero). This is the kind of information the model provides: **a quantitative description of the probability assigned to different ranges of outcomes, given (or not) a set of predictors.**
+
+[^1]: Note that we are **not** talking about the probability of a single, exact value. For continuous variables, that probability is always zero. What continuous models provide instead is a *density*, which tells us how probability is distributed across possible values.
+
+In other words, [**the model speaks the language of probability**]{.underline}, as we will see in more detail later on. And this is, in fact, the fundamental idea of a statistical model: **we assign a probability distribution to our outcome variable, height.** In our example, this distribution is a **conditional distribution**: [**for each age value, height has its own distribution**]{.underline}, **but that is not a requirement.** We can also specify models that do not depend on other variables (often called *unconditional* or *marginal* distributions), although they are usually less informative.
+
+## The components of a statistical model
+
+Since a statistical model is based on assigning a probability distribution to the data, $Y$, it becomes easier to distinguish its components. For example, the regression model above can be written in general form as: 
+$$
+{\color{seagreen}Y_i} \sim {\color{#7E57C2}\mathrm{Normal}}\!\left(
+  {\color{#9a2515}\mu} = {\color{#0197FD}\beta_0} + {\color{#0197FD}\beta_1}\cdot{\color{darkorange}X_i},\,
+  {\color{#9a2515}\sigma} = {\color{#0197FD}\sigma_\varepsilon}
+\right)
+$$
+
+This notation condenses, at a glance, all the components that make up a statistical model:
+
+1.  A [**dependent variable**]{style="color:seagreen;"} and a [**probability distribution**]{style="color:#7E57C2;"},
+2.  The [**parameters**]{style="color:#9a2515;"} of the selected [**probability distribution**]{style="color:#7E57C2;"},
+3.  The [**estimated parameters**]{style="color:#0197FD;"} that sometimes depend on other [**observable**]{style="color:darkorange;"} or [[**latent variables**]{.underline}]{style="color:darkorange;"}
+
+Once you understand the idea of modeling, you can do almost anything. For example, we could model the variance, $\color{#9a2515}{\sigma}$, instead of the mean, $\color{#9a2515}{\mu}$. That would mean we **assume** all people have more or less the same height, regardless of age, and that what changes with age is **the variability of height**.
+
+$$
+{\color{seagreen}Y_i} \sim {\color{#7E57C2}\mathrm{Normal}}\!\left(
+  {\color{#9a2515}\mu} = {\color{#0197FD}\mu_Y},\,
+  {\color{#9a2515}\sigma} = \exp\!\left({\color{#0197FD}\beta_0} + {\color{#0197FD}\beta_1}\cdot{\color{darkorange}X_i}\right)
+\right)
+$$
+
+The exponential function ensures that the standard deviation is not negative. Although a model assuming height does not vary with age would be a candidate for the worst model ever, modeling dispersion can be very useful when there is systematic heteroskedasticity, which is not uncommon in applied research.
+
+#### Changing the distribution: from Normal to Bernoulli
+
+Moving away from the normal distribution does not really change the logic; it lets us choose a model that better fits our data. Imagine flipping a coin with your right hand ($X_i = 1$) or left hand ($X_i = 0$). The outcome can be **heads** ($Y_i=1$) or **tails** ($Y_i=0$). For binary outcomes, a normal model is suboptimal: it can predict values outside \[0, 1\] and doesn’t model probabilities directly. Thus, a better model is
+
+$$
+{\color{seagreen}Y_i} \sim {\color{#7E57C2}\mathrm{Bernoulli}}\!\left(
+  {\color{#9a2515}p} = \frac{1}{1 + \exp\!\left(-\big(
+    {\color{#0197FD}\beta_0} + {\color{#0197FD}\beta_1}\cdot{\color{darkorange}X_i}
+  \big)\right)}
+\right)
+$$
+
+This is the well-known *logistic regression*: modeling a Bernoulli outcome with the logit link. We map the linear predictor, $\beta_0+\beta_1\cdot X_i$, to a valid probability via the logistic function, $\frac{1}{1+\exp(-x)}$, which guarantees values are always between 0 and 1.
+
+#### Modeling counts: Poisson regression
+
+The same applies when we have count data, such as the number of times you have thought about quitting this post to do something more productive. Suppose I know whether you studied psychology or not (our new variable $X_i$). The result is a **Poisson regression model**:
+
+$$
+{\color{seagreen}Y_i} \sim {\color{#7E57C2}\mathrm{Poisson}}\!\left(
+  {\color{#9a2515}\lambda} =
+  \exp\!\left(
+    {\color{#0197FD}\beta_0} + {\color{#0197FD}\beta_1}\cdot{\color{darkorange}X_i}
+  \right)
+\right)
+$$
+
+It might not make the cover of *Nature*, but it proves that even procrastination can be elegantly captured by a model.
+
+#### Choose your own distribution
+
+Although these three regressions are “classical” because they are included in commercial software like SPSS, the modeling idea extends to any probability distribution. For example, if I am analyzing response times in an experimental task, I can use another distribution that fits their asymmetric shape better, such as the **ex-Gaussian distribution**. This distribution represents the convolution of a normal and an exponential distribution, and its parameters are $\mu$, $\sigma$, and $\tau$:
+
+$$
+{\color{seagreen}Y_i} \sim {\color{#7E57C2}\text{ex-Gaussian}}\!\left(
+  {\color{#9a2515}\mu} = {\color{#0197FD}\beta_0} + {\color{#0197FD}\beta_1}\cdot{\color{darkorange}X_i},\,
+  {\color{#9a2515}\sigma} = {\color{#0197FD}\sigma},\,
+  {\color{#9a2515}\tau} = {\color{#0197FD}\tau}
+\right)
+$$
+
+As we’ve seen so far, the logic is always the same: you can switch models as easily as you change shoes. The more models you know, the more options you’ll have to find the one that best fits your data.
+
+## The common language of statistical models
+
+By now, we have seen that statistical models can take many forms. Some describe heights, others probabilities, counts, or reaction times. They can use normal, Bernoulli, Poisson, or ex-Gaussian distributions. No matter how different they look, they all speak the same language: **probability**.
+
+Every model tells us how probability is spread across possible outcomes. With discrete data, the model assigns a probability to each outcome, which is fairly intuitive. With continuous data, individual points have probability zero, so the model specifies a probability density, describing how probability over ranges of values is allocated. Still, the message remains the same: for the same variable and units, higher probability values (with discrete data) or higher density values (with continuous data) correspond to outcomes to which the model assigns greater support, given its parameters and covariates. And this allows us to achieve two of the most fundamental goals in statistics: **identify, within each model,** [**the parameter values that maximize the joint likelihood of the whole dataset**]{.underline}, and [**compare models**]{.underline} by asking **under which model the observed data have higher joint likelihood.**
+
+For example, imagine I have 100 observed values from an exponential distribution with rate $\lambda=2$:
+
+```{r}
+# Simulate exponential distribution values
+set.seed(123)
+Y <- rexp(n = 100, rate = 2)
+```
+
+We now want to see how three different models assign density values to the same data point under fixed reference parameters. We will use a Normal model ($\mu=1.5$, $\sigma=1$), a $\chi^2$ model ($\nu=2$) and an exponential model ($\lambda=2$). The Normal and $\chi^2$ parameter values were chosen arbitrarily, simply to illustrate the idea; the exponential one matches the parameter value used to generate the data.
+
+```{r}
+# Compute density values at the same observed point
+data.frame(
+  normal = dnorm(Y[1], mean = 1.5, sd = 1),
+  chi_sq = dchisq(Y[1], df = 2),
+  exp    = dexp(Y[1], rate = 2)
+)
+```
+
+For this particular observation, the exponential model assigns the highest density (as you’d expect, since it matches the data-generating process), though this won’t necessarily happen for every observation. To make this more intuitive, the plot below displays the three density curves together, with a dotted vertical line showing our observed value. The height of each curve at that line corresponds exactly to the density values we computed with `dnorm()`, `dchisq()` and `dexp()`.
+
+```{r}
+#| renderings: [light, dark]
+#| echo: false
+#| message: false
+#| warning: false
+library(ggplot2)
+library(bayesplot)
+
+# Rango común (paso fino)
+x <- seq(0, 6, by = 0.001)
+
+# Densidades teóricas sobre el rango (vectorizadas)
+dens_df <- rbind(
+  data.frame(x = x, y = dnorm(x, mean = 1.5, sd = 1),          model = "Normal(μ = 1.5, σ = 1)"),
+  data.frame(x = x, y = dchisq(x, df = 2),                    model = "Chi-square(ν = 2)"),
+  data.frame(x = x, y = dexp(x, rate = 2),                    model = "Exponential(λ = 2)")
+)
+dens_df$model <- factor(dens_df$model,
+                        levels = c("Normal(μ = 1.5, σ = 1)",
+                                   "Chi-square(ν = 2)",
+                                   "Exponential(λ = 2)"))
+
+# Tema base
+base_theme <- bayesplot::theme_default(base_size = 16)
+
+# Paletas
+cols_light <- c("Normal(μ = 1.5, σ = 1)"= "#264653",
+                "Chi-square(ν = 2)"    = "#2A9D8F",
+                "Exponential(λ = 2)" = "#E9C46A")
+cols_dark  <- c("Normal(μ = 1.5, σ = 1)"= "#A8D5BA",
+                "Chi-square(ν = 2)"    = "#E9C46A",
+                "Exponential(λ = 2)" = "#F4A261")
+
+## Versión clara (superpuestas como en tu ejemplo)
+g_light <- ggplot(dens_df, aes(x = x, y = y, color = model, fill = model)) +
+  geom_area(alpha = 0.30, position = "identity") +
+  geom_line(linewidth = 1.2, lineend = "round") +
+  scale_color_manual(values = cols_light, name = "Model") +
+  scale_fill_manual(values = cols_light, name = "Model") +
+  coord_cartesian(xlim = c(0, 6), ylim = c(0, max(dens_df$y) * 1.05)) +
+  labs(title = "Density curves under each model",
+       subtitle = "The dotted line represents the observed value",
+       x = "y", y = "Density") +
+  base_theme +
+  theme(
+    panel.background = element_rect(fill = "#FEFBF2", colour = NA),
+    plot.background  = element_rect(fill = "#FEFBF2", colour = NA),
+    legend.position      = c(1, 1),      # (x,y) relativo al panel
+    legend.justification = c(1, 1),      # ancla la esquina sup.-dcha.
+    legend.direction     = "vertical"
+  ) +
+  geom_vline(xintercept = Y[1], linetype = "dotted", linewidth = 0.7, color = "#333333")
+
+## Versión oscura
+g_dark <- ggplot(dens_df, aes(x = x, y = y, color = model, fill = model)) +
+  geom_area(alpha = 0.30, position = "identity") +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = cols_dark, name = "Model") +
+  scale_fill_manual(values = cols_dark, name = "Model") +
+  coord_cartesian(xlim = c(0, 6), ylim = c(0, max(dens_df$y) * 1.05)) +
+  labs(title = "Density curves under each model",
+       subtitle = "The dotted line represents the observed value",
+       x = "y", y = "Density") +
+  base_theme +
+  theme(
+    panel.background = element_rect(fill = "#0E171E", colour = NA),
+    plot.background  = element_rect(fill = "#0E171E", colour = NA),
+    axis.text  = element_text(color = "#FEFBF2"),
+    axis.title = element_text(color = "#FEFBF2"),
+    axis.ticks = element_line(color = "#FEFBF2"),
+    axis.line  = element_line(color = "#FEFBF2"),
+    legend.text  = element_text(color = "#FEFBF2"),
+    legend.title = element_text(color = "#FEFBF2"),
+    text = element_text(color = "#FEFBF2"),
+    legend.position      = c(1, 1),      # (x,y) relativo al panel
+    legend.justification = c(1, 1),      # ancla la esquina sup.-dcha.
+    legend.direction     = "vertical"
+  ) +
+  geom_vline(xintercept = Y[1], linetype = "dotted", linewidth = 0.7, color = "#FEFBF2")
+
+# Render: Quarto capturará ambas versiones
+g_light
+g_dark
+
+```
+
+These three density curves are, in fact, [**the models themselves**]{.underline}. For our [**dependent variable**]{style="color:seagreen;"} (here, y, which takes only one observed value in this simple illustration) we have assigned a a [**probability distribution**]{style="color:#7E57C2;"} (in this case, three different ones), each depending on its own [**parameters**]{style="color:#9a2515;"} (which we deliberately fixed) and [**covariates**]{style="color:darkorange;"} (none in this example).
+
+What matters here isn’t "who wins", but that **each model speaks the same language** at the very same data point: they all return a density that tells us how plausible that value is under each model. Naturally, this depends on the parameter values. We have set $\lambda = 2$ for the exponential model, matching the data-generating rate; within the same model, different parameter values will yield different densities at the same observed point.
+
+```{r}
+# Density values at the same observed point for different rates
+data.frame(
+  exp_l1 = dexp(Y[1], rate = 1),
+  exp_l2 = dexp(Y[1], rate = 2),
+  exp_l3 = dexp(Y[1], rate = 3),
+  exp_l4 = dexp(Y[1], rate = 4),
+  exp_l5 = dexp(Y[1], rate = 5)
+)
+```
+
+The plot below illustrates how the exponential density curve changes as we vary the rate parameter $\lambda$. The dotted vertical line marks the observed value, and the height of each curve at that point corresponds to the density values we just computed. As $\lambda$ increases, the model assigns less probability mass to larger $y$ values and higher density near zero.
+
+```{r}
+#| renderings: [light, dark]
+#| echo: false
+#| message: false
+#| warning: false
+library(ggplot2)
+library(bayesplot)
+
+# Rango y densidades teóricas
+x <- seq(0, 6, by = 0.001)
+rates <- 1:5
+lab_levels <- paste0("λ = ", rates)
+
+dens_df <- do.call(rbind, lapply(rates, function(r) {
+  data.frame(x = x, y = dexp(x, rate = r), lambda = paste0("λ = ", r))
+}))
+dens_df$lambda <- factor(dens_df$lambda, levels = lab_levels)
+
+# Observación
+y1 <- Y[1]
+
+# Tema base
+base_theme <- bayesplot::theme_default(base_size = 16)
+
+# Paletas
+cols_light <- c("λ = 1"="#264653","λ = 2"="#2A9D8F","λ = 3"="#E9C46A","λ = 4"="#F4A261","λ = 5"="#E76F51")
+cols_dark  <- c("λ = 1"="#A8D5BA","λ = 2"="#E9C46A","λ = 3"="#F4A261","λ = 4"="#F77F00","λ = 5"="#FFD166")
+
+y_max <- max(dens_df$y) * 1.05
+
+# --- Versión clara: SOLO líneas ---
+g_light <- ggplot(dens_df, aes(x = x, y = y, color = lambda)) +
+  geom_line(linewidth = 1.2, lineend = "round") +
+  scale_color_manual(values = cols_light, name = "Rate") +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, y_max)) +
+  labs(title = "Exponential density for varying λ",
+       subtitle = "The dotted line represents the observed value",
+       x = "y", y = "Density") +
+  base_theme +
+  theme(
+    panel.background = element_rect(fill = "#FEFBF2", colour = NA),
+    plot.background  = element_rect(fill = "#FEFBF2", colour = NA),
+    legend.position      = c(1, 1),
+    legend.justification = c(1, 1),
+    legend.direction     = "vertical"
+  ) +
+  geom_vline(xintercept = y1, linetype = "dotted", linewidth = 0.7, color = "#333333")
+
+# --- Versión oscura: SOLO líneas ---
+g_dark <- ggplot(dens_df, aes(x = x, y = y, color = lambda)) +
+  geom_line(linewidth = 1.2) +
+  scale_color_manual(values = cols_dark, name = "Rate") +
+  coord_cartesian(xlim = c(0, 1), ylim = c(0, y_max)) +
+  labs(title = "Exponential density for varying λ",
+       subtitle = "The dotted line represents the observed value",
+       x = "y", y = "Density") +
+  base_theme +
+  theme(
+    panel.background = element_rect(fill = "#0E171E", colour = NA),
+    plot.background  = element_rect(fill = "#0E171E", colour = NA),
+    axis.text  = element_text(color = "#FEFBF2"),
+    axis.title = element_text(color = "#FEFBF2"),
+    axis.ticks = element_line(color = "#FEFBF2"),
+    axis.line  = element_line(color = "#FEFBF2"),
+    legend.text  = element_text(color = "#FEFBF2"),
+    legend.title = element_text(color = "#FEFBF2"),
+    text = element_text(color = "#FEFBF2"),
+    legend.position      = c(1, 1),
+    legend.justification = c(1, 1),
+    legend.direction     = "vertical"
+  ) +
+  geom_vline(xintercept = y1, linetype = "dotted", linewidth = 0.7, color = "#FEFBF2")
+
+# Render
+g_light
+g_dark
+
+```
+
+We could keep trying numbers, right? In fact, we could pick the value of $\lambda$ that gives the highest density value for this first observed response. To see this more clearly, we will vary the rate parameter over a dense grid and check, for the first observation, which value gives the largest density. The code below builds the grid, evaluates the exponential density at that data point for each rate, and returns the rate with the highest value.
+
+```{r}
+# Grid with 9000 rate values
+lambda_vals <- seq(1, 10, .001)
+density_vals <- dexp(Y[1], lambda_vals)
+lambda_vals[which.max(density_vals)]
+```
+
+And this value is slightly above the true value of $\lambda = 2$.
+
+Everything we’ve done so far is just for illustration. In practice, [**no one would compare models or estimate parameters using a single observed value**]{.underline}. What we really care about is how the model behaves [**across the entire dataset**]{.underline}. Still, we’ll deliberately stay with this one-point example for a bit longer, since it provides a simple way to introduce the concept of **likelihood**, which is formally defined over the complete dataset.
+
+### Probability, density or likelihood?
+
+Confusion between **likelihood**, **probability**, and **density** is common when one first ventures into statistical modeling. Building on our previous example, we’ll join the infinite number of attempts, in all their versions and languages, to clarify what each of these terms really means.
+
+The difference between probability and density we have already seen:
+
+-   With discrete data, **models assign a probability value** to each possible value.
+-   With continuous data, in contrast, **models assign a density value** to each point, and the probability is obtained by considering ranges of values.
+
+However, the difference between **probability or density** and **likelihood** is not in the number we calculate, but in **what we treat as the free variable.**
+
+In our first example, we fixed all parameter values to arbitrary numbers ($\mu=1.5$, $\sigma=1$, $\nu=2$, $\lambda=2$), acting as omnipotent gods, and calculated the density of one observed value. In statistical jargon, this means [**treating the parameters as fixed values**]{.underline} and [**treating the observed value as a realization of a random variable**]{.underline}. In doing so, we answer the question:
+
+> **What is the probability (or density) of this observed value, given these parameters?**
+
+Here the focus is on the data under a specific parameter value.
+
+In our second example, we did the opposite: we kept the observed value constant and tested many values of the parameter $\lambda$ to see how the density changed. In statistical jargon, this means [**treating the parameter as the variable of interest**]{.underline} and [**treating the data as fixed values**]{.underline}. Now the focus is on the parameter, and we ask:
+
+> **How compatible is each parameter value with the observed data?**
+
+For a fixed observation, $y$, higher density at that point under a given parameter value means higher likelihood, that is, greater compatibility with the data. In fact, we estimated the parameter value that maximized the density; the only difference is that here, instead of calling it density, we say it maximized the likelihood, even though the number is exactly the same[^2].
+
+[^2]: Any outraged reader may address their complaints to Sir Ronald Fisher, or demand that, before naming things, statisticians must submit each new term to a linguistic ethics committee.
+
+In case any reader feels unsure at this point, here’s an even clearer illustration:
+
+```{r}
+dexp(x = 1, rate = 1)
+```
+
+For an exponential model, the density evaluated at $x=1$ given $\lambda = 1$ is 0.3678794. At the same time, the likelihood of $\lambda$ evaluated at $\lambda = 1$ given $x=1$ is the same number: 0.3678794. Same value, different role. You can even tell which side of the story we’re on just by the "[**evaluated at**]{.underline}": it quietly reveals whether we’re treating the data or the parameter as the thing that varies.
+
+### Maximum Likelihood
+
+Trying different parameter values until finding the one that maximizes the likelihood is the basic idea of **Maximum Likelihood Estimation.** The key difference is that likelihood is calculated [**using all the data at once**]{.underline}, rather than a single observation. Still, the logic is exactly the same as what we have done so far: it all builds on how the model assigns a density to each individual observation.
+
+The joint likelihood of $n$ independent and identically distributed observations is **the product of the probabilities/densities of each observation:**
+
+$$
+\mathcal{L}\left({\color{#9a2515}\theta}\mid {\color{seagreen}Y}\right) = \prod^n_{i=1} {\color{#7E57C2}f}\left({\color{seagreen}Y_i}\mid{\color{#9a2515}\theta}\right).
+$$
+
+Here, ${\color{seagreen}Y}$ represents all the observed data, ${\color{#7E57C2}f}\left({\color{seagreen}Y_i}\mid{\color{#9a2515}\theta}\right)$ is the probability density (or probability mass) that the model assigns to the value ${\color{seagreen}Y_i}$, and ${\color{#9a2515}\theta}$ stands for the parameters of the model. For example, the mean and standard deviation in a normal model. For our exponential example:
+
+$$
+\mathcal{L}\left({\color{#9a2515}\lambda}\mid{\color{seagreen}Y}\right)
+= \prod^n_{i=1}
+{\color{#7E57C2}\mathrm{Exponential}}\!\left(
+  {\color{seagreen}Y_i}\mid{\color{#9a2515}\lambda}
+\right)
+$$
+
+Don’t be intimidated by the strange and slightly dramatic look of the equation. Its apparent complexity contrasts with the absolute simplicity of how the very same idea is written in `R`: it’s just the product of the densities of all observations. Assuming $\lambda = 2$:
+
+```{r}
+# Likelihood
+prod(dexp(Y, rate = 2))
+```
+
+Why a product? Because **we assume that all observations are independent.** Under this assumption, **the joint probability** (or joint density) of observing them all together **is the product of the individual probabilities** (or densities). This rule follows directly from Kolmogorov’s axioms together with the definition of independence. However, this product can become extremely small as the sample size grows: multiplying many numbers smaller than one can make the result so close to zero that the computer rounds it to zero, a problem known as **numerical underflow.**
+
+To avoid this, **we work with the logarithm of the likelihood**, which **turns the product into a sum** and keeps the values within a more stable numerical range. Since the logarithm is a monotonic transformation, maximizing the log-likelihood is equivalent to maximizing the likelihood: $$
+\log \mathcal{L}\left({\color{#9a2515}\theta}\mid{\color{seagreen}Y}\right)
+= \sum^n_{i=1}
+\log\,{\color{#7E57C2}f}\!\left(
+  {\color{seagreen}Y_i}\mid{\color{#9a2515}\theta}
+\right)
+$$
+
+For our exponential example, this becomes $$
+\log \mathcal{L}\left({\color{#9a2515}\lambda}\mid{\color{seagreen}Y}\right)
+= \sum^n_{i=1}
+\log\!\left(
+  {\color{#7E57C2}\mathrm{Exponential}}\!\left(
+    {\color{seagreen}Y_i}\mid{\color{#9a2515}\lambda}
+  \right)
+\right)
+$$
+
+As before, what looks heavy in notation turns out to be delightfully simple in `R`. The joint log-likelihood is just the sum of log-densities. For the exponential model evaluated at $\lambda = 2$:
+
+```{r}
+# Log-Likelihood
+sum(dexp(Y, rate = 2, log = TRUE))
+```
+
+We can also illustrate how to compute the joint log-likelihood under different models evaluated at the same reference parameters:
+
+```{r}
+# Compute Log-Likelihoods assuming fixed parameter values
+data.frame(
+  normal = sum(dnorm(Y, mean = 1.5, sd = 1, log = TRUE)),
+  chi_sq = sum(dchisq(Y, df = 2, log = TRUE)),
+  exp    = sum(dexp(Y, rate = 2, log = TRUE))
+)
+```
+
+Here, higher (less negative) values indicate better model fit for these fixed parameter choices.
+
+This is a simple illustration but **not a fair comparison between the three models**, because we have not estimated the parameters using the same data. In fact, [**we have not estimated anything by maximum likelihood yet**]{.underline}. The next code shows how to obtain $\lambda$ for the exponential model and $\nu$[^3] for the $\chi^2$ model by computing the log-likelihood with all the data at once and choosing the value that maximizes it:
+
+[^3]: We’ll let $\nu$ be any positive real number. Although textbooks often introduce $\nu$ as an integer ("degrees of freedom"), the $\chi^2$ family extends smoothly to non-integers and is equivalent to a Gamma distribution with shape = $\nu/2$ and scale = 2. We do this just to keep the example simple and focus on likelihood. (And yes, in `R`, `dchisq()` works for non-integer $\nu$).
+
+```{r}
+# Grids with 49000 rate and nu values
+lambda_vals <- nu_vals <- seq(1, 50, .001)
+
+# Vector to store log-likelihood values
+ll_exp_vals <- ll_chisq_vals <- numeric(length(lambda_vals))
+
+# For loop: compute log-likelihood for each lambda value
+for (i in seq_along(lambda_vals)) {
+  ll_exp_vals[i] <- sum(dexp(Y, rate = lambda_vals[i], log = TRUE))
+  ll_chisq_vals[i] <- sum(dchisq(Y, df = nu_vals[i], log = TRUE))
+}
+
+# Maximum-likelihood lambda estimate
+MLE_lambda <- lambda_vals[which.max(ll_exp_vals)]
+MLE_nu     <- nu_vals[which.max(ll_chisq_vals)]
+```
+
+For the normal distribution, we need to estimate two parameters: $\mu$ and $\sigma$. To keep the illustration consistent with the other two models, we’ll estimate them “by brute force”: we create a matrix with two columns, one for $\mu$ values and one for $\sigma$ values. Each row represents a combination of $\mu$ and $\sigma$ where we evaluate the log-likelihood, and we then select the row that maximizes it.
+
+```{r}
+# Mu and sigma values
+mu_vals <- seq(min(Y), max(Y), .01)
+sigma_vals <- seq(.0001, sd(Y) * 3, .01)
+
+# All combinations of mu and sigma values
+comb_vals <- expand.grid(mu = mu_vals, sigma = sigma_vals)
+
+# Empty vector to save log-likelihood values
+ll_vals <- numeric(nrow(comb_vals))
+
+# Save values for each combination of mu and sigma
+for(i in 1:nrow(comb_vals)){
+  ll_vals[i] <- sum(dnorm(Y, mean = comb_vals[i,1], sd = comb_vals[i,2], log = TRUE))
+}
+
+# Maximum-likelihood estimators
+MLE_mu <- comb_vals[which.max(ll_vals),"mu"]
+MLE_sigma <- comb_vals[which.max(ll_vals),"sigma"]
+```
+
+With the maximum likelihood estimates obtained, we can compute the total log-likelihood for all data under each model using the estimated parameters. The following code returns a table with these three log-likelihoods.
+
+```{r}
+# Compute Log-Likelihoods using ML estimates
+data.frame(
+  normal = sum(dnorm(Y, mean = MLE_mu, sd = MLE_sigma, log = TRUE)),
+  chi_sq = sum(dchisq(Y, df = MLE_nu, log = TRUE)),
+  exp    = sum(dexp(Y, rate = MLE_lambda, log = TRUE))
+)
+```
+
+What we are doing here is informative, but in real applications [**it would not be enough to decide which model fits best**]{.underline}. More robust approaches build precisely on the same idea (the log density as a measure of fit) but extend it through cross-validation or information criteria that penalize model complexity, such as AIC or BIC. The goal here is simply to show how likelihood provides the foundation for these more advanced methods.
+
+## Posterior Reflections[^4]
+
+[^4]: You came here knowing something, you’ve read the post, and now what you knew might have shifted a bit, huh? I know, I know... I’ll see myself out... and wait for you there...
+
+Now that we’ve gone through it all, we can finally say what a statistical model is, both in spirit and in form. Formally, a model is **a collection of probability distributions**, one for each value of its parameters[^5]. Each distribution tells us **how probability is spread across the data we might see**, and it can be evaluated at the data we actually observed. When we hold the data fixed and let the parameters vary, the same object gives us the **likelihood**, which measures **how compatible each parameter value is with what we saw.**
+
+[^5]: Even more formally, a (parametric) statistical model is a family of distributions $\mathcal{M}=\left\{{\color{#7E57C2}f}\left({\color{seagreen}y}\mid{\color{#9a2515}\theta}\right):{\color{#9a2515}\theta}\in{\color{#9a2515}\Theta}\right\}$, where ${\color{#7E57C2}f}\left({\color{seagreen}y}\mid{\color{#9a2515}\theta}\right)$ is a probability density (or mass) function on the **sample space** (the set of all possible values that the data ${\color{seagreen}y}$ can take), and ${\color{#9a2515}\Theta}$ is the **parameter space** (the set of all possible values that the parameters ${\color{#9a2515}\theta}$ can take).
+
+That’s the common language behind every model, from the simplest linear regression to the most elaborate hierarchical model. Once you see that, statistics stops looking like a forest of formulas and starts feeling like what it truly is: a way of reasoning about uncertainty.
+
+When you understand this, the rest of statistics starts to unfold naturally. If a model can assign probability to what we’ve seen, it can help us find the parameter values that make those observations most likely (something we’ve already done throughout this post) and also **quantify how uncertain we are about those estimates** (a step we haven’t explored here). From there, we can evaluate whether **one explanation fits the data better than another**, and even use what we’ve learned to **predict what future data might look like**. It’s the same reasoning, just applied in different directions.
+
+So if someone asks whether you know what a statistical model is, you can smile and say: "*It’s probable, in every sense of the word* [^6]."
+
+[^6]: However, be careful when the same person asks you what probability is. That’s how most of us die.
+
+## Extra: beyond the grid
+
+### Maximum likelihood with optimization algorithms
+
+The grid approach we used is useful for teaching but inefficient in practice. As the number of parameters grows, it quickly becomes computationally impossible. For this reason, maximum likelihood estimation is usually obtained using numerical optimization algorithms.
+
+We will not go into the details of these methods here, but it is useful to see how they work in practice. The code below shows how to use the optim function in R to estimate the parameters by maximum likelihood for the three models. The results are equivalent to those from the grid search, but this approach can generalize to a much wider range of situations.
+
+```{r}
+# Log-likelihood functions: gaussian model
+ll_norm <- function(par, y){
+  mu        <- par[1]
+  sigma     <- exp(par[2])              # sigma > 0
+  sum(dnorm(y, mean = mu, sd = sigma, log = TRUE))
+}
+
+# Log-likelihood functions: exponential model
+ll_exp <- function(par, y){
+  lambda <- exp(par[1])                 # lambda > 0
+  sum(dexp(y, rate = lambda, log = TRUE))
+}
+
+# Log-likelihood functions: chi-square model
+ll_chisq <- function(par, y){
+  nu <- exp(par[1])                     # nu > 0
+  sum(dchisq(y, df = nu, log = TRUE))
+}
+
+# Starting values for the optimizer
+norm_svals <- c(.1,.1)
+exp_svals <- .1 
+chisq.svals <- .1
+
+# ML estimation via optim
+fit_norm  <- optim(norm_svals,  ll_norm,  y = Y, method = "BFGS", 
+                   control = list(fnscale = -1))
+fit_exp   <- optim(exp_svals, ll_exp,   y = Y, method = "BFGS", 
+                   control = list(fnscale = -1))
+fit_chisq <- optim(chisq.svals, ll_chisq, y = Y, method = "BFGS", 
+                   control = list(fnscale = -1))
+
+# Extract MLEs
+MLE_mu     <- fit_norm$par[1]
+MLE_sigma  <- exp(fit_norm$par[2])
+MLE_lambda <- exp(fit_exp$par[1])
+MLE_nu     <- exp(fit_chisq$par[1])
+
+# Log-likelihoods at MLEs
+LL_normal <- fit_norm$value
+LL_exp    <- fit_exp$value
+LL_chisq  <- fit_chisq$value
+
+# Summary table
+MLE_table <- data.frame(
+  model = c("Normal", "Exponential", "Chi-square"),
+  param_1 = c(sprintf("mu = %.6f", MLE_mu),
+              sprintf("lambda = %.6f", MLE_lambda),
+              sprintf("nu = %.6f", MLE_nu)),
+  param_2 = c(sprintf("sigma = %.6f", MLE_sigma), "", ""),
+  logLik  = c(LL_normal, LL_exp, LL_chisq),
+  row.names = NULL
+)
+
+MLE_table
+```
+
+### Closed-form maximum likelihood solutions
+
+If you made it this far, congratulations: we have gone step by step through the full path of maximum likelihood estimation. We have tried values by hand, done grid searches, and used a numerical optimizer. And now, just when it seems we have done it all, comes a small plot twist: in some cases, everything can be solved with a single formula.
+
+It almost sounds unfair, right? After spending so much effort understanding the logic of likelihood, it turns out that for some distributions the exact solution can be written in one line. But that is precisely why the long path is worth it: those formulas are no longer mysterious recipes, but the natural conclusion of a story that now makes sense.
+
+For the Normal and Exponential models, the maximum likelihood estimators have closed-form solutions, meaning they can be obtained directly from the properties of the distributions without iterative algorithms.
+
+For the Normal distribution, the parameters that maximize the likelihood are the sample mean and the sample standard deviation (using $1/n$ instead of $1/(n-1)$ because here we want the value that maximizes the likelihood, not an unbiased estimator):
+
+$$
+\hat\mu_\text{ML}=\frac{1}{n}\cdot\sum^n_{i=1}Y_{i},\qquad \hat\sigma_\text{ML}=\sqrt{\frac{1}{n}\sum^n_{i=1}\left(Y_i-\hat\mu_\text{ML}\right)^2}
+$$
+
+```{r}
+(MLE_mu_closed    <- mean(Y))
+(MLE_sigma_closed <- sqrt(mean((Y - MLE_mu_closed)^2)))
+```
+
+For the Exponential distribution, the maximum likelihood estimator of the rate parameter $\lambda$ is also obtained directly:
+
+$$
+\hat\lambda_\text{ML}=\frac{n}{\sum^n_{i=1}Y_i}
+$$
+
+```{r}
+(MLE_lambda_closed <- length(Y) / sum(Y))
+```
+
+These two expressions exactly match the values we obtained with the optimization algorithm. For the $\chi^2$ distribution, however, there is no closed-form solution, and its estimation necessarily requires numerical methods.
+
+```{r}
+#| eval: false
+#| echo: false
+library(ggplot2)
+library(bayesplot)
+library(svglite)
+
+# ---- Datos ----
+x <- seq(0, 6, by = 0.001)
+
+dens_df <- rbind(
+  data.frame(x = x, y = dnorm(x, mean = 1.5, sd = 0.6),           model = "Normal(μ=1.5, σ=0.6)"),
+  data.frame(x = x, y = dchisq(x, df = 3),                        model = "Chi-square(ν=3)"),
+  data.frame(x = x, y = dgamma(x, shape = 2.2, rate = 1.2),       model = "Gamma(k=2.2, θ≈0.83)"),
+  data.frame(x = x, y = dweibull(x, shape = 3, scale = 3.5),      model = "Weibull(k=3, λ=3.5)"),
+  data.frame(x = x, y = dlnorm(x, meanlog = 0.7, sdlog = 0.35),   model = "Lognormal(μlog=0.7, σlog=0.35)"),
+  data.frame(x = x, y = dbeta(x/5, shape1 = 2.5, shape2 = 3)*1/5, model = "Beta(α=2.5, β=3)")
+)
+
+# ---- Paleta de colores ----
+cols <- c(
+  "Normal(μ=1.5, σ=0.6)"           = "#3E8EBC",  # azul oscuro
+  "Chi-square(ν=3)"                = "#2A9D8F",  # verde azulado
+  "Gamma(k=2.2, θ≈0.83)"           = "#8AB17D",  # verde oliva
+  "Weibull(k=3, λ=3.5)"            = "#E9C46A",  # amarillo cálido
+  "Lognormal(μlog=0.7, σlog=0.35)" = "#E76F51", # rojo-anaranjado
+  "Beta(α=2.5, β=3)"               = "#B56576"   # rosado
+)
+
+# ---- Tema sin ejes ni textos ----
+base_theme <- bayesplot::theme_default(base_size = 16) +
+  theme(
+    panel.background = element_rect(fill = "transparent", colour = NA),
+    plot.background  = element_rect(fill = "transparent", colour = NA),
+    legend.background = element_rect(fill = "transparent", colour = NA),
+    legend.key       = element_rect(fill = "transparent", colour = NA),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.border     = element_blank(),
+    axis.title       = element_blank(),
+    axis.text        = element_blank(),
+    axis.ticks       = element_blank(),
+    axis.line        = element_blank(),  # <--- ejes invisibles
+    legend.position  = "none",
+    plot.title       = element_blank(),
+    plot.subtitle    = element_blank(),
+    plot.caption     = element_blank()
+  )
+
+# ---- Plot ----
+g_overlay <- ggplot(dens_df, aes(x = x, y = y, color = model, fill = model)) +
+  geom_area(alpha = 0.35, position = "identity") +
+  geom_line(linewidth = 1.1, lineend = "round") +
+  scale_color_manual(values = cols) +
+  scale_fill_manual(values = cols) +
+  coord_cartesian(xlim = c(0, 6), ylim = c(0, max(dens_df$y) * 1.05)) +
+  base_theme
+
+g_overlay
+
+# ---- Exportar ----
+ggsave("cover.svg",
+       plot = g_overlay,
+       device = svglite,
+       width = 7, height = 4.5, units = "in",
+       bg = "transparent")
+```

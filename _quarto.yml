@@ -1,0 +1,139 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Ricardo Rey-Sáez"
+  site-url: https://ricardoreysaez.github.io/
+  google-analytics: "G-EX8XBWJEYL"
+  open-graph: true
+  search: true
+  page-navigation: true
+  back-to-top-navigation: true
+  favicon: logosRRS/favicon.svg
+
+  navbar:
+    logo: logosRRS/navbar_light.svg
+    title: "Ricardo Rey-Sáez"
+    right: 
+      - href: index.qmd
+        text: "{{< iconify f7 house-fill >}} Home"
+      - href: about/index.qmd
+        text: "{{< iconify game-icons throne-king >}} About"
+      - href: CV/index.qmd
+        text: "{{< iconify pepicons-pop cv >}} CV"
+      - href: blog/index.qmd
+        text: "{{< iconify carbon qq-plot >}} Blog"
+      - href: research/index.qmd
+        text: "{{< iconify iconoir brain-research >}} Research"
+
+  page-footer:  
+    left: >-
+      &#169; 2025 Ricardo Rey-Sáez &#8729; Made with ❤️, ChatGPT and <a href="https://quarto.org" target="_blank" rel="noopener">Quarto</a>
+    center: |
+      <a class="link-dark me-1" href="https://orcid.org/0000-0001-6739-2035" title="ORCID" target="_blank" rel="noopener">{{< iconify fa6-brands orcid >}}</a>
+      <a class="link-dark me-1" href="https://github.com/rreysa" title="GitHub" target="_blank" rel="noopener">{{< iconify fa6-brands github >}}</a>
+      <a class="link-dark me-1" href="https://www.researchgate.net/profile/Ricardo-Rey-Saez" title="ResearchGate" target="_blank" rel="noopener">{{< iconify fa6-brands researchgate >}}</a>
+      <a class="link-dark me-1" href="https://x.com/RicardoRey_95" title="Twitter/X" target="_blank" rel="noopener">{{< iconify fa6-brands twitter >}}</a>
+      <a class="link-dark me-1" href="https://bsky.app/profile/ricardoreysaez.bsky.social" title="Bluesky" target="_blank" rel="noopener">{{< iconify fa6-brands bluesky >}}</a>
+      <a class="link-dark me-1" href="https://www.youtube.com/@psicometries" title="YouTube" target="_blank" rel="noopener">{{< iconify fa6-brands youtube >}}</a>
+
+format: 
+  html:
+    theme:
+      light:
+        - cosmo
+        - assets/RRS-theme.scss
+        - assets/colors-light.scss
+        - assets/fonts.scss
+      dark: 
+        - cosmo
+        - assets/RRS-theme.scss
+        - assets/colors-dark.scss
+        - assets/fonts.scss
+    code-link: true
+    pagetitle: "{{< meta title >}}"
+    lightbox: true
+    include-after-body:
+      - text: |
+          <script>
+          (function () {
+            function setup() {
+              // Contenedor del botón de cambio de tema
+              const wrap = document.querySelector('.quarto-color-scheme-toggle');
+              if (!wrap || wrap.querySelector('iconify-icon')) return;
+    
+              // Inserta directamente los iconos dentro del botón
+              wrap.innerHTML = `
+                <span class="q-scheme-icons" aria-hidden="true">
+                  <iconify-icon class="icon-sun"  icon="lucide:sun"  width="22" height="22"></iconify-icon>
+                  <iconify-icon class="icon-moon" icon="lucide:moon" width="22" height="22"></iconify-icon>
+                </span>`;
+    
+              // Actualiza visibilidad según modo actual
+              updateIcons();
+    
+              // Escucha cambios de tema
+              wrap.addEventListener('click', () => {
+                setTimeout(updateIcons, 20); // pequeño retardo para transición
+              });
+            }
+    
+            // Muestra/oculta los iconos según el tema activo
+            function updateIcons() {
+              const isDark = document.body.classList.contains('quarto-dark');
+              const sun  = document.querySelector('.q-scheme-icons .icon-sun');
+              const moon = document.querySelector('.q-scheme-icons .icon-moon');
+              if (!sun || !moon) return;
+              sun.style.opacity  = isDark ? 0 : 1;
+              moon.style.opacity = isDark ? 1 : 0;
+            }
+    
+            // Ejecutar al cargar la página
+            (document.readyState === 'loading')
+              ? document.addEventListener('DOMContentLoaded', setup)
+              : setup();
+          })();
+          </script>
+    
+          <style>
+          /* Contenedor general del botón */
+          .navbar .quarto-color-scheme-toggle {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 .2rem;
+            cursor: pointer;
+            position: relative;
+            top: 4px;
+          }
+    
+          /* Contenedor interno de los iconos */
+          .q-scheme-icons {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            width: 1.1rem;
+            height: 1.6rem;
+            transform: translateY(2px);
+          }
+    
+          /* Iconos centrados con transición */
+          .q-scheme-icons iconify-icon {
+            position: absolute;
+            line-height: 1;
+            vertical-align: middle;
+            transition: opacity .25s ease;
+          }
+    
+          /* Sol y luna por defecto */
+          .q-scheme-icons .icon-sun  { opacity: 1; }
+          .q-scheme-icons .icon-moon { opacity: 0; }
+    
+          /* En modo oscuro, intercambiar */
+          body.quarto-dark .q-scheme-icons .icon-sun  { opacity: 0; }
+          body.quarto-dark .q-scheme-icons .icon-moon { opacity: 1; }
+          </style>
+execute: 
+  freeze: auto

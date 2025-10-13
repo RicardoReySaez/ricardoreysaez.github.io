@@ -1,0 +1,1908 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Ricardo Rey-Sáez</title>
+<link>https://ricardoreysaez.github.io/blog/</link>
+<atom:link href="https://ricardoreysaez.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
+<description>A personal blog for the things I learn, mostly about R, modelling, and statistical thinking.&lt;br&gt;
+</description>
+<generator>quarto-1.7.27</generator>
+<lastBuildDate>Thu, 09 Oct 2025 22:00:00 GMT</lastBuildDate>
+<item>
+  <title>What Is a Statistical Model? From Density to Likelihood</title>
+  <dc:creator>Ricardo Rey-Sáez</dc:creator>
+  <link>https://ricardoreysaez.github.io/blog/model_definition/</link>
+  <description><![CDATA[ <!-- source: https://github.com/gadenbuie/garrickadenbuie-com/blob/main/_partials/title-block-link-buttons/title-block.html --><!-- 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title"> 
+--><!-- <header id="title-block-header" class="quarto-title-block default page-columns"> --><!-- <div class="quarto-title page-columns page-full featured-image p-4" style="background-image: url(featured.png), url(featured.jpg), url(../featured.jpg);"> --><p><em>Love</em> is probably one of the most familiar words in the world. Ask a room full of people if they know what love is, and almost everyone will say yes. But ask them to define it, and you’ll get as many answers as people in the room, each focusing on different aspects of what it means to love. In fact, we are all aware of this paradox: everyone believes they know what love is, although each person understands it in their own way. The same thing, on a smaller scale, happens with the word <em>model</em> in the scientific community.</p>
+<p>There are many “last names” for the word <em>model</em>, such as <em>statistical</em>, <em>theoretical</em>, <em>computational</em>, or <em>predictive</em>, which make it a bit harder to know exactly what someone means when they use it, especially when they forget to mention which species of model they’re talking about. However, they all share a common idea: a model is a simplified representation of reality, a way to describe how we believe something works.</p>
+<p>Today we’ll talk about the scientist’s favorite child: <strong>the statistical model</strong>, the one that allows us to draw substantive conclusions from data. This post is written for readers with a background in statistics similar to that of a psychology graduate. Some basic familiarity with <code>R</code> will be helpful, but you can follow along even if you’ve never written code before.</p>
+<section id="the-statistical-model" class="level2"><h2 class="anchored" data-anchor-id="the-statistical-model">The statistical model</h2>
+<p>The reason we need statistical models is simple: <strong>reality changes.</strong> Not all students perform equally well in statistics, not all patients get better in the same way, and not every day has the same temperature. Even when conditions look identical, the results change. This variability is everywhere and is, in many ways, what makes the world both interesting and complex. Statistical models exist precisely to deal with that variability.</p>
+<section id="a-simple-example-age-and-height" class="level3"><h3 class="anchored" data-anchor-id="a-simple-example-age-and-height">A simple example: age and height</h3>
+<p>Imagine that we measure the height of a group of people and also record their age. In general, we will see that younger children tend to be shorter and that height increases with age. But that relationship is not perfect: two people of the same age can differ by several centimeters. If we wanted to capture that trend with a formula, we could write a simple linear regression model: <img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BHeight%7D_i%20=%20%5Cbeta_0%20+%20%5Cbeta_1%20%5Ccdot%20%5Ctext%7Bage%7D_i%20+%20%5Cvarepsilon_i%0A"></p>
+<p>This small equation expresses a simple idea: height increases with age, but never exactly. There is always a margin of error, represented by <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_i">, which reflects natural variability between people. But this variability, this <img src="https://latex.codecogs.com/png.latex?%5Cvarepsilon_i">, is not a minor detail. It is what makes this model <em>statistical</em> rather than <em>deterministic</em>. In statistics, we assume that this unexplained part, this variability, follows a certain pattern. The most common way to describe that pattern is to <strong>assume</strong> that the errors follow a normal distribution with mean zero and some standard deviation, which we call <img src="https://latex.codecogs.com/png.latex?%5Csigma_%5Cvarepsilon">: <img src="https://latex.codecogs.com/png.latex?%0A%5Cvarepsilon_%7Bi%7D%5Csim%5Cmathrm%7BNormal%7D%5Cleft(%5Cmu%20=%200,%5C;%5Csigma%20=%20%5Csigma_%5Cvarepsilon%5Cright)%0A"></p>
+<p>This means that, on average, the model does not make systematic errors (because the mean of the errors is zero) and that the variability of those differences can be summarized by a single parameter, <img src="https://latex.codecogs.com/png.latex?%5Csigma_%5Cvarepsilon">.</p>
+<p>Now I am going to do a magic trick. The two equations we just wrote can be summarized in a single, simpler one that reflects the same idea:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BHeight%7D_i%20%5Csim%20%5Cmathrm%7BNormal%7D%5Cleft(%5Cmu%20=%5Cbeta_0+%5Cbeta_1%5Ccdot%5Ctext%7Bage%7D_i,%5C;%5Csigma%20=%20%5Csigma_%5Cvarepsilon%5Cright)%0A"></p>
+<p>This notation reads as follows: the height of person <img src="https://latex.codecogs.com/png.latex?i"> follows a normal distribution whose mean is <img src="https://latex.codecogs.com/png.latex?%5Cbeta_0%20+%20%5Cbeta_1%20%5Ccdot%20%5Ctext%7Bage%7D_i"> and whose standard deviation is <img src="https://latex.codecogs.com/png.latex?%5Csigma_%5Cvarepsilon">. In other words, the model specifies a <strong>conditional distribution</strong> for height given age. That is, <strong>for each value of age</strong>, height follows a normal distribution with a different mean but <strong>the same dispersion around that mean.</strong> Therefore, people of the same age share the same conditional distribution.</p>
+<p>It may sound abstract, but it becomes much clearer when we draw it. The figure below shows the three conditional distributions of height for ages 5, 10, and 20.</p>
+<div class="cell" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
+<div class="light-content">
+<p><a href="index_files/figure-html/unnamed-chunk-2-1..light.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-1"><img src="https://ricardoreysaez.github.io/blog/model_definition/index_files/figure-html/unnamed-chunk-2-1..light.svg" class="img-fluid" width="672"></a></p>
+</div>
+<div class="dark-content">
+<p><a href="index_files/figure-html/unnamed-chunk-2-2..light.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-2"><img src="https://ricardoreysaez.github.io/blog/model_definition/index_files/figure-html/unnamed-chunk-2-2..light.svg" class="img-fluid" width="672"></a></p>
+</div>
+</div>
+<p>What the model tells us is <strong>which</strong> <u><strong>ranges of height</strong></u> <strong>have higher or lower probability given a certain age</strong><sup>1</sup>. For instance, for a 20-year-old, the probability of being somewhere around 175 cm is much greater than the probability of being around 100 cm (though the latter is not zero). This is the kind of information the model provides: <strong>a quantitative description of the probability assigned to different ranges of outcomes, given (or not) a set of predictors.</strong></p>
+<p>In other words, <u><strong>the model speaks the language of probability</strong></u>, as we will see in more detail later on. And this is, in fact, the fundamental idea of a statistical model: <strong>we assign a probability distribution to our outcome variable, height.</strong> In our example, this distribution is a <strong>conditional distribution</strong>: <u><strong>for each age value, height has its own distribution</strong></u>, <strong>but that is not a requirement.</strong> We can also specify models that do not depend on other variables (often called <em>unconditional</em> or <em>marginal</em> distributions), although they are usually less informative.</p>
+</section></section><section id="the-components-of-a-statistical-model" class="level2"><h2 class="anchored" data-anchor-id="the-components-of-a-statistical-model">The components of a statistical model</h2>
+<p>Since a statistical model is based on assigning a probability distribution to the data, <img src="https://latex.codecogs.com/png.latex?Y">, it becomes easier to distinguish its components. For example, the regression model above can be written in general form as: <img src="https://latex.codecogs.com/png.latex?%0A%7B%5Ccolor%7Bseagreen%7DY_i%7D%20%5Csim%20%7B%5Ccolor%7B#7E57C2%7D%5Cmathrm%7BNormal%7D%7D%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7B#9a2515%7D%5Cmu%7D%20=%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_0%7D%20+%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_1%7D%5Ccdot%7B%5Ccolor%7Bdarkorange%7DX_i%7D,%5C,%0A%20%20%7B%5Ccolor%7B#9a2515%7D%5Csigma%7D%20=%20%7B%5Ccolor%7B#0197FD%7D%5Csigma_%5Cvarepsilon%7D%0A%5Cright)%0A"></p>
+<p>This notation condenses, at a glance, all the components that make up a statistical model:</p>
+<ol type="1">
+<li>A <span style="color:seagreen;"><strong>dependent variable</strong></span> and a <span style="color:#7E57C2;"><strong>probability distribution</strong></span>,</li>
+<li>The <span style="color:#9a2515;"><strong>parameters</strong></span> of the selected <span style="color:#7E57C2;"><strong>probability distribution</strong></span>,</li>
+<li>The <span style="color:#0197FD;"><strong>estimated parameters</strong></span> that sometimes depend on other <span style="color:darkorange;"><strong>observable</strong></span> or <span style="color:darkorange;"><u><strong>latent variables</strong></u></span>
+</li>
+</ol>
+<p>Once you understand the idea of modeling, you can do almost anything. For example, we could model the variance, <img src="https://latex.codecogs.com/png.latex?%5Ccolor%7B#9a2515%7D%7B%5Csigma%7D">, instead of the mean, <img src="https://latex.codecogs.com/png.latex?%5Ccolor%7B#9a2515%7D%7B%5Cmu%7D">. That would mean we <strong>assume</strong> all people have more or less the same height, regardless of age, and that what changes with age is <strong>the variability of height</strong>.</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%7B%5Ccolor%7Bseagreen%7DY_i%7D%20%5Csim%20%7B%5Ccolor%7B#7E57C2%7D%5Cmathrm%7BNormal%7D%7D%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7B#9a2515%7D%5Cmu%7D%20=%20%7B%5Ccolor%7B#0197FD%7D%5Cmu_Y%7D,%5C,%0A%20%20%7B%5Ccolor%7B#9a2515%7D%5Csigma%7D%20=%20%5Cexp%5C!%5Cleft(%7B%5Ccolor%7B#0197FD%7D%5Cbeta_0%7D%20+%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_1%7D%5Ccdot%7B%5Ccolor%7Bdarkorange%7DX_i%7D%5Cright)%0A%5Cright)%0A"></p>
+<p>The exponential function ensures that the standard deviation is not negative. Although a model assuming height does not vary with age would be a candidate for the worst model ever, modeling dispersion can be very useful when there is systematic heteroskedasticity, which is not uncommon in applied research.</p>
+<section id="changing-the-distribution-from-normal-to-bernoulli" class="level4"><h4 class="anchored" data-anchor-id="changing-the-distribution-from-normal-to-bernoulli">Changing the distribution: from Normal to Bernoulli</h4>
+<p>Moving away from the normal distribution does not really change the logic; it lets us choose a model that better fits our data. Imagine flipping a coin with your right hand (<img src="https://latex.codecogs.com/png.latex?X_i%20=%201">) or left hand (<img src="https://latex.codecogs.com/png.latex?X_i%20=%200">). The outcome can be <strong>heads</strong> (<img src="https://latex.codecogs.com/png.latex?Y_i=1">) or <strong>tails</strong> (<img src="https://latex.codecogs.com/png.latex?Y_i=0">). For binary outcomes, a normal model is suboptimal: it can predict values outside [0, 1] and doesn’t model probabilities directly. Thus, a better model is</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%7B%5Ccolor%7Bseagreen%7DY_i%7D%20%5Csim%20%7B%5Ccolor%7B#7E57C2%7D%5Cmathrm%7BBernoulli%7D%7D%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7B#9a2515%7Dp%7D%20=%20%5Cfrac%7B1%7D%7B1%20+%20%5Cexp%5C!%5Cleft(-%5Cbig(%0A%20%20%20%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_0%7D%20+%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_1%7D%5Ccdot%7B%5Ccolor%7Bdarkorange%7DX_i%7D%0A%20%20%5Cbig)%5Cright)%7D%0A%5Cright)%0A"></p>
+<p>This is the well-known <em>logistic regression</em>: modeling a Bernoulli outcome with the logit link. We map the linear predictor, <img src="https://latex.codecogs.com/png.latex?%5Cbeta_0+%5Cbeta_1%5Ccdot%20X_i">, to a valid probability via the logistic function, <img src="https://latex.codecogs.com/png.latex?%5Cfrac%7B1%7D%7B1+%5Cexp(-x)%7D">, which guarantees values are always between 0 and 1.</p>
+</section><section id="modeling-counts-poisson-regression" class="level4"><h4 class="anchored" data-anchor-id="modeling-counts-poisson-regression">Modeling counts: Poisson regression</h4>
+<p>The same applies when we have count data, such as the number of times you have thought about quitting this post to do something more productive. Suppose I know whether you studied psychology or not (our new variable <img src="https://latex.codecogs.com/png.latex?X_i">). The result is a <strong>Poisson regression model</strong>:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%7B%5Ccolor%7Bseagreen%7DY_i%7D%20%5Csim%20%7B%5Ccolor%7B#7E57C2%7D%5Cmathrm%7BPoisson%7D%7D%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%20=%0A%20%20%5Cexp%5C!%5Cleft(%0A%20%20%20%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_0%7D%20+%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_1%7D%5Ccdot%7B%5Ccolor%7Bdarkorange%7DX_i%7D%0A%20%20%5Cright)%0A%5Cright)%0A"></p>
+<p>It might not make the cover of <em>Nature</em>, but it proves that even procrastination can be elegantly captured by a model.</p>
+</section><section id="choose-your-own-distribution" class="level4"><h4 class="anchored" data-anchor-id="choose-your-own-distribution">Choose your own distribution</h4>
+<p>Although these three regressions are “classical” because they are included in commercial software like SPSS, the modeling idea extends to any probability distribution. For example, if I am analyzing response times in an experimental task, I can use another distribution that fits their asymmetric shape better, such as the <strong>ex-Gaussian distribution</strong>. This distribution represents the convolution of a normal and an exponential distribution, and its parameters are <img src="https://latex.codecogs.com/png.latex?%5Cmu">, <img src="https://latex.codecogs.com/png.latex?%5Csigma">, and <img src="https://latex.codecogs.com/png.latex?%5Ctau">:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%7B%5Ccolor%7Bseagreen%7DY_i%7D%20%5Csim%20%7B%5Ccolor%7B#7E57C2%7D%5Ctext%7Bex-Gaussian%7D%7D%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7B#9a2515%7D%5Cmu%7D%20=%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_0%7D%20+%20%7B%5Ccolor%7B#0197FD%7D%5Cbeta_1%7D%5Ccdot%7B%5Ccolor%7Bdarkorange%7DX_i%7D,%5C,%0A%20%20%7B%5Ccolor%7B#9a2515%7D%5Csigma%7D%20=%20%7B%5Ccolor%7B#0197FD%7D%5Csigma%7D,%5C,%0A%20%20%7B%5Ccolor%7B#9a2515%7D%5Ctau%7D%20=%20%7B%5Ccolor%7B#0197FD%7D%5Ctau%7D%0A%5Cright)%0A"></p>
+<p>As we’ve seen so far, the logic is always the same: you can switch models as easily as you change shoes. The more models you know, the more options you’ll have to find the one that best fits your data.</p>
+</section></section><section id="the-common-language-of-statistical-models" class="level2"><h2 class="anchored" data-anchor-id="the-common-language-of-statistical-models">The common language of statistical models</h2>
+<p>By now, we have seen that statistical models can take many forms. Some describe heights, others probabilities, counts, or reaction times. They can use normal, Bernoulli, Poisson, or ex-Gaussian distributions. No matter how different they look, they all speak the same language: <strong>probability</strong>.</p>
+<p>Every model tells us how probability is spread across possible outcomes. With discrete data, the model assigns a probability to each outcome, which is fairly intuitive. With continuous data, individual points have probability zero, so the model specifies a probability density, describing how probability over ranges of values is allocated. Still, the message remains the same: for the same variable and units, higher probability values (with discrete data) or higher density values (with continuous data) correspond to outcomes to which the model assigns greater support, given its parameters and covariates. And this allows us to achieve two of the most fundamental goals in statistics: <strong>identify, within each model,</strong> <u><strong>the parameter values that maximize the joint likelihood of the whole dataset</strong></u>, and <u><strong>compare models</strong></u> by asking <strong>under which model the observed data have higher joint likelihood.</strong></p>
+<p>For example, imagine I have 100 observed values from an exponential distribution with rate <img src="https://latex.codecogs.com/png.latex?%5Clambda=2">:</p>
+<div class="cell">
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Simulate exponential distribution values</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">123</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">rexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>n <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+</div>
+<p>We now want to see how three different models assign density values to the same data point under fixed reference parameters. We will use a Normal model (<img src="https://latex.codecogs.com/png.latex?%5Cmu=1.5">, <img src="https://latex.codecogs.com/png.latex?%5Csigma=1">), a <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2"> model (<img src="https://latex.codecogs.com/png.latex?%5Cnu=2">) and an exponential model (<img src="https://latex.codecogs.com/png.latex?%5Clambda=2">). The Normal and <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2"> parameter values were chosen arbitrarily, simply to illustrate the idea; the exponential one matches the parameter value used to generate the data.</p>
+<div class="cell">
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compute density values at the same observed point</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  normal <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, mean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, sd <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  chi_sq <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  exp    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     normal   chi_sq       exp
+1 0.2230692 0.404942 0.8604411</code></pre>
+</div>
+</div>
+<p>For this particular observation, the exponential model assigns the highest density (as you’d expect, since it matches the data-generating process), though this won’t necessarily happen for every observation. To make this more intuitive, the plot below displays the three density curves together, with a dotted vertical line showing our observed value. The height of each curve at that line corresponds exactly to the density values we computed with <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>, <code><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq()</a></code> and <code><a href="https://rdrr.io/r/stats/Exponential.html">dexp()</a></code>.</p>
+<div class="cell" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
+<div class="light-content">
+<p><a href="index_files/figure-html/unnamed-chunk-5-1..light.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-3"><img src="https://ricardoreysaez.github.io/blog/model_definition/index_files/figure-html/unnamed-chunk-5-1..light.svg" class="img-fluid" width="672"></a></p>
+</div>
+<div class="dark-content">
+<p><a href="index_files/figure-html/unnamed-chunk-5-2..light.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-4"><img src="https://ricardoreysaez.github.io/blog/model_definition/index_files/figure-html/unnamed-chunk-5-2..light.svg" class="img-fluid" width="672"></a></p>
+</div>
+</div>
+<p>These three density curves are, in fact, <u><strong>the models themselves</strong></u>. For our <span style="color:seagreen;"><strong>dependent variable</strong></span> (here, y, which takes only one observed value in this simple illustration) we have assigned a a <span style="color:#7E57C2;"><strong>probability distribution</strong></span> (in this case, three different ones), each depending on its own <span style="color:#9a2515;"><strong>parameters</strong></span> (which we deliberately fixed) and <span style="color:darkorange;"><strong>covariates</strong></span> (none in this example).</p>
+<p>What matters here isn’t “who wins”, but that <strong>each model speaks the same language</strong> at the very same data point: they all return a density that tells us how plausible that value is under each model. Naturally, this depends on the parameter values. We have set <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%202"> for the exponential model, matching the data-generating rate; within the same model, different parameter values will yield different densities at the same observed point.</p>
+<div class="cell">
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Density values at the same observed point for different rates</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  exp_l1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  exp_l2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  exp_l3 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  exp_l4 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  exp_l5 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    exp_l1    exp_l2    exp_l3    exp_l4    exp_l5
+1 0.655912 0.8604411 0.8465605 0.7403589 0.6070129</code></pre>
+</div>
+</div>
+<p>The plot below illustrates how the exponential density curve changes as we vary the rate parameter <img src="https://latex.codecogs.com/png.latex?%5Clambda">. The dotted vertical line marks the observed value, and the height of each curve at that point corresponds to the density values we just computed. As <img src="https://latex.codecogs.com/png.latex?%5Clambda"> increases, the model assigns less probability mass to larger <img src="https://latex.codecogs.com/png.latex?y"> values and higher density near zero.</p>
+<div class="cell" data-renderings="[&quot;light&quot;,&quot;dark&quot;]">
+<div class="light-content">
+<p><a href="index_files/figure-html/unnamed-chunk-7-1..light.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-5"><img src="https://ricardoreysaez.github.io/blog/model_definition/index_files/figure-html/unnamed-chunk-7-1..light.svg" class="img-fluid" width="672"></a></p>
+</div>
+<div class="dark-content">
+<p><a href="index_files/figure-html/unnamed-chunk-7-2..light.svg" class="lightbox" data-gallery="quarto-lightbox-gallery-6"><img src="https://ricardoreysaez.github.io/blog/model_definition/index_files/figure-html/unnamed-chunk-7-2..light.svg" class="img-fluid" width="672"></a></p>
+</div>
+</div>
+<p>We could keep trying numbers, right? In fact, we could pick the value of <img src="https://latex.codecogs.com/png.latex?%5Clambda"> that gives the highest density value for this first observed response. To see this more clearly, we will vary the rate parameter over a dense grid and check, for the first observation, which value gives the largest density. The code below builds the grid, evaluates the exponential density at that data point for each rate, and returns the rate with the highest value.</p>
+<div class="cell">
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Grid with 9000 rate values</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">10</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.001</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">density_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">density_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.371</code></pre>
+</div>
+</div>
+<p>And this value is slightly above the true value of <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%202">.</p>
+<p>Everything we’ve done so far is just for illustration. In practice, <u><strong>no one would compare models or estimate parameters using a single observed value</strong></u>. What we really care about is how the model behaves <u><strong>across the entire dataset</strong></u>. Still, we’ll deliberately stay with this one-point example for a bit longer, since it provides a simple way to introduce the concept of <strong>likelihood</strong>, which is formally defined over the complete dataset.</p>
+<section id="probability-density-or-likelihood" class="level3"><h3 class="anchored" data-anchor-id="probability-density-or-likelihood">Probability, density or likelihood?</h3>
+<p>Confusion between <strong>likelihood</strong>, <strong>probability</strong>, and <strong>density</strong> is common when one first ventures into statistical modeling. Building on our previous example, we’ll join the infinite number of attempts, in all their versions and languages, to clarify what each of these terms really means.</p>
+<p>The difference between probability and density we have already seen:</p>
+<ul>
+<li>With discrete data, <strong>models assign a probability value</strong> to each possible value.</li>
+<li>With continuous data, in contrast, <strong>models assign a density value</strong> to each point, and the probability is obtained by considering ranges of values.</li>
+</ul>
+<p>However, the difference between <strong>probability or density</strong> and <strong>likelihood</strong> is not in the number we calculate, but in <strong>what we treat as the free variable.</strong></p>
+<p>In our first example, we fixed all parameter values to arbitrary numbers (<img src="https://latex.codecogs.com/png.latex?%5Cmu=1.5">, <img src="https://latex.codecogs.com/png.latex?%5Csigma=1">, <img src="https://latex.codecogs.com/png.latex?%5Cnu=2">, <img src="https://latex.codecogs.com/png.latex?%5Clambda=2">), acting as omnipotent gods, and calculated the density of one observed value. In statistical jargon, this means <u><strong>treating the parameters as fixed values</strong></u> and <u><strong>treating the observed value as a realization of a random variable</strong></u>. In doing so, we answer the question:</p>
+<blockquote class="blockquote">
+<p><strong>What is the probability (or density) of this observed value, given these parameters?</strong></p>
+</blockquote>
+<p>Here the focus is on the data under a specific parameter value.</p>
+<p>In our second example, we did the opposite: we kept the observed value constant and tested many values of the parameter <img src="https://latex.codecogs.com/png.latex?%5Clambda"> to see how the density changed. In statistical jargon, this means <u><strong>treating the parameter as the variable of interest</strong></u> and <u><strong>treating the data as fixed values</strong></u>. Now the focus is on the parameter, and we ask:</p>
+<blockquote class="blockquote">
+<p><strong>How compatible is each parameter value with the observed data?</strong></p>
+</blockquote>
+<p>For a fixed observation, <img src="https://latex.codecogs.com/png.latex?y">, higher density at that point under a given parameter value means higher likelihood, that is, greater compatibility with the data. In fact, we estimated the parameter value that maximized the density; the only difference is that here, instead of calling it density, we say it maximized the likelihood, even though the number is exactly the same<sup>2</sup>.</p>
+<p>In case any reader feels unsure at this point, here’s an even clearer illustration:</p>
+<div class="cell">
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>x <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3678794</code></pre>
+</div>
+</div>
+<p>For an exponential model, the density evaluated at <img src="https://latex.codecogs.com/png.latex?x=1"> given <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%201"> is 0.3678794. At the same time, the likelihood of <img src="https://latex.codecogs.com/png.latex?%5Clambda"> evaluated at <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%201"> given <img src="https://latex.codecogs.com/png.latex?x=1"> is the same number: 0.3678794. Same value, different role. You can even tell which side of the story we’re on just by the “<u><strong>evaluated at</strong></u>”: it quietly reveals whether we’re treating the data or the parameter as the thing that varies.</p>
+</section><section id="maximum-likelihood" class="level3"><h3 class="anchored" data-anchor-id="maximum-likelihood">Maximum Likelihood</h3>
+<p>Trying different parameter values until finding the one that maximizes the likelihood is the basic idea of <strong>Maximum Likelihood Estimation.</strong> The key difference is that likelihood is calculated <u><strong>using all the data at once</strong></u>, rather than a single observation. Still, the logic is exactly the same as what we have done so far: it all builds on how the model assigns a density to each individual observation.</p>
+<p>The joint likelihood of <img src="https://latex.codecogs.com/png.latex?n"> independent and identically distributed observations is <strong>the product of the probabilities/densities of each observation:</strong></p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathcal%7BL%7D%5Cleft(%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D%5Cmid%20%7B%5Ccolor%7Bseagreen%7DY%7D%5Cright)%20=%20%5Cprod%5En_%7Bi=1%7D%20%7B%5Ccolor%7B#7E57C2%7Df%7D%5Cleft(%7B%5Ccolor%7Bseagreen%7DY_i%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D%5Cright).%0A"></p>
+<p>Here, <img src="https://latex.codecogs.com/png.latex?%7B%5Ccolor%7Bseagreen%7DY%7D"> represents all the observed data, <img src="https://latex.codecogs.com/png.latex?%7B%5Ccolor%7B#7E57C2%7Df%7D%5Cleft(%7B%5Ccolor%7Bseagreen%7DY_i%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D%5Cright)"> is the probability density (or probability mass) that the model assigns to the value <img src="https://latex.codecogs.com/png.latex?%7B%5Ccolor%7Bseagreen%7DY_i%7D">, and <img src="https://latex.codecogs.com/png.latex?%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D"> stands for the parameters of the model. For example, the mean and standard deviation in a normal model. For our exponential example:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathcal%7BL%7D%5Cleft(%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%5Cmid%7B%5Ccolor%7Bseagreen%7DY%7D%5Cright)%0A=%20%5Cprod%5En_%7Bi=1%7D%0A%7B%5Ccolor%7B#7E57C2%7D%5Cmathrm%7BExponential%7D%7D%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7Bseagreen%7DY_i%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%0A%5Cright)%0A"></p>
+<p>Don’t be intimidated by the strange and slightly dramatic look of the equation. Its apparent complexity contrasts with the absolute simplicity of how the very same idea is written in <code>R</code>: it’s just the product of the densities of all observations. Assuming <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%202">:</p>
+<div class="cell">
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Likelihood</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/prod.html">prod</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4.875431e-16</code></pre>
+</div>
+</div>
+<p>Why a product? Because <strong>we assume that all observations are independent.</strong> Under this assumption, <strong>the joint probability</strong> (or joint density) of observing them all together <strong>is the product of the individual probabilities</strong> (or densities). This rule follows directly from Kolmogorov’s axioms together with the definition of independence. However, this product can become extremely small as the sample size grows: multiplying many numbers smaller than one can make the result so close to zero that the computer rounds it to zero, a problem known as <strong>numerical underflow.</strong></p>
+<p>To avoid this, <strong>we work with the logarithm of the likelihood</strong>, which <strong>turns the product into a sum</strong> and keeps the values within a more stable numerical range. Since the logarithm is a monotonic transformation, maximizing the log-likelihood is equivalent to maximizing the likelihood: <img src="https://latex.codecogs.com/png.latex?%0A%5Clog%20%5Cmathcal%7BL%7D%5Cleft(%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D%5Cmid%7B%5Ccolor%7Bseagreen%7DY%7D%5Cright)%0A=%20%5Csum%5En_%7Bi=1%7D%0A%5Clog%5C,%7B%5Ccolor%7B#7E57C2%7Df%7D%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7Bseagreen%7DY_i%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D%0A%5Cright)%0A"></p>
+<p>For our exponential example, this becomes <img src="https://latex.codecogs.com/png.latex?%0A%5Clog%20%5Cmathcal%7BL%7D%5Cleft(%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%5Cmid%7B%5Ccolor%7Bseagreen%7DY%7D%5Cright)%0A=%20%5Csum%5En_%7Bi=1%7D%0A%5Clog%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7B#7E57C2%7D%5Cmathrm%7BExponential%7D%7D%5C!%5Cleft(%0A%20%20%20%20%7B%5Ccolor%7Bseagreen%7DY_i%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%0A%20%20%5Cright)%0A%5Cright)%0A"></p>
+<p>As before, what looks heavy in notation turns out to be delightfully simple in <code>R</code>. The joint log-likelihood is just the sum of log-densities. For the exponential model evaluated at <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%202">:</p>
+<div class="cell">
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Log-Likelihood</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -35.25715</code></pre>
+</div>
+</div>
+<p>We can also illustrate how to compute the joint log-likelihood under different models evaluated at the same reference parameters:</p>
+<div class="cell">
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compute Log-Likelihoods assuming fixed parameter values</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  normal <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, mean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1.5</span>, sd <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  chi_sq <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  exp    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     normal    chi_sq       exp
+1 -152.9833 -95.45769 -35.25715</code></pre>
+</div>
+</div>
+<p>Here, higher (less negative) values indicate better model fit for these fixed parameter choices.</p>
+<p>This is a simple illustration but <strong>not a fair comparison between the three models</strong>, because we have not estimated the parameters using the same data. In fact, <u><strong>we have not estimated anything by maximum likelihood yet</strong></u>. The next code shows how to obtain <img src="https://latex.codecogs.com/png.latex?%5Clambda"> for the exponential model and <img src="https://latex.codecogs.com/png.latex?%5Cnu"><sup>3</sup> for the <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2"> model by computing the log-likelihood with all the data at once and choosing the value that maximizes it:</p>
+<div class="cell">
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Grids with 49000 rate and nu values</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nu_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">50</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.001</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Vector to store log-likelihood values</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_exp_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_chisq_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># For loop: compute log-likelihood for each lambda value</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_exp_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_chisq_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nu_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Maximum-likelihood lambda estimate</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_lambda</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_exp_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_nu</span>     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nu_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_chisq_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+</div>
+<p>For the normal distribution, we need to estimate two parameters: <img src="https://latex.codecogs.com/png.latex?%5Cmu"> and <img src="https://latex.codecogs.com/png.latex?%5Csigma">. To keep the illustration consistent with the other two models, we’ll estimate them “by brute force”: we create a matrix with two columns, one for <img src="https://latex.codecogs.com/png.latex?%5Cmu"> values and one for <img src="https://latex.codecogs.com/png.latex?%5Csigma"> values. Each row represents a combination of <img src="https://latex.codecogs.com/png.latex?%5Cmu"> and <img src="https://latex.codecogs.com/png.latex?%5Csigma"> where we evaluate the log-likelihood, and we then select the row that maximizes it.</p>
+<div class="cell">
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Mu and sigma values</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mu_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Extremes.html">min</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.01</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sigma_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.0001</span>, <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/sd.html">sd</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">*</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.01</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># All combinations of mu and sigma values</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comb_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>mu <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mu_vals</span>, sigma <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sigma_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Empty vector to save log-likelihood values</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_vals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comb_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Save values for each combination of mu and sigma</span></span>
+<span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">for</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">in</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">:</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comb_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, mean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comb_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, sd <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comb_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">i</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Maximum-likelihood estimators</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_mu</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comb_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mu"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_sigma</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">comb_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_vals</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sigma"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span></code></pre></div>
+</div>
+<p>With the maximum likelihood estimates obtained, we can compute the total log-likelihood for all data under each model using the estimated parameters. The following code returns a table with these three log-likelihoods.</p>
+<div class="cell">
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Compute Log-Likelihoods using ML estimates</span></span>
+<span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  normal <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, mean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_mu</span>, sd <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_sigma</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  chi_sq <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_nu</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  exp    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_lambda</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     normal    chi_sq       exp
+1 -75.87007 -59.26746 -35.15573</code></pre>
+</div>
+</div>
+<p>What we are doing here is informative, but in real applications <u><strong>it would not be enough to decide which model fits best</strong></u>. More robust approaches build precisely on the same idea (the log density as a measure of fit) but extend it through cross-validation or information criteria that penalize model complexity, such as AIC or BIC. The goal here is simply to show how likelihood provides the foundation for these more advanced methods.</p>
+</section></section><section id="posterior-reflections4" class="level2"><h2 class="anchored" data-anchor-id="posterior-reflections4">Posterior Reflections<sup>4</sup>
+</h2>
+<p>Now that we’ve gone through it all, we can finally say what a statistical model is, both in spirit and in form. Formally, a model is <strong>a collection of probability distributions</strong>, one for each value of its parameters<sup>5</sup>. Each distribution tells us <strong>how probability is spread across the data we might see</strong>, and it can be evaluated at the data we actually observed. When we hold the data fixed and let the parameters vary, the same object gives us the <strong>likelihood</strong>, which measures <strong>how compatible each parameter value is with what we saw.</strong></p>
+<p>That’s the common language behind every model, from the simplest linear regression to the most elaborate hierarchical model. Once you see that, statistics stops looking like a forest of formulas and starts feeling like what it truly is: a way of reasoning about uncertainty.</p>
+<p>When you understand this, the rest of statistics starts to unfold naturally. If a model can assign probability to what we’ve seen, it can help us find the parameter values that make those observations most likely (something we’ve already done throughout this post) and also <strong>quantify how uncertain we are about those estimates</strong> (a step we haven’t explored here). From there, we can evaluate whether <strong>one explanation fits the data better than another</strong>, and even use what we’ve learned to <strong>predict what future data might look like</strong>. It’s the same reasoning, just applied in different directions.</p>
+<p>So if someone asks whether you know what a statistical model is, you can smile and say: “<em>It’s probable, in every sense of the word</em> <sup>6</sup>.”</p>
+</section><section id="extra-beyond-the-grid" class="level2"><h2 class="anchored" data-anchor-id="extra-beyond-the-grid">Extra: beyond the grid</h2>
+<section id="maximum-likelihood-with-optimization-algorithms" class="level3"><h3 class="anchored" data-anchor-id="maximum-likelihood-with-optimization-algorithms">Maximum likelihood with optimization algorithms</h3>
+<p>The grid approach we used is useful for teaching but inefficient in practice. As the number of parameters grows, it quickly becomes computationally impossible. For this reason, maximum likelihood estimation is usually obtained using numerical optimization algorithms.</p>
+<p>We will not go into the details of these methods here, but it is useful to see how they work in practice. The code below shows how to use the optim function in R to estimate the parameters by maximum likelihood for the three models. The results are equivalent to those from the grid search, but this approach can generalize to a much wider range of situations.</p>
+<div class="cell">
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Log-likelihood functions: gaussian model</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_norm</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mu</span>        <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sigma</span>     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>              <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># sigma &gt; 0</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span>, mean <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">mu</span>, sd <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">sigma</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Log-likelihood functions: exponential model</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_exp</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>                 <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># lambda &gt; 0</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span>, rate <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">lambda</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Log-likelihood functions: chi-square model</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_chisq</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">function</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">{</span></span>
+<span>  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nu</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>                     <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># nu &gt; 0</span></span>
+<span>  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">y</span>, df <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">nu</span>, log <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">}</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Starting values for the optimizer</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">norm_svals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.1</span>,<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">exp_svals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.1</span> </span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">chisq.svals</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">.1</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># ML estimation via optim</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_norm</span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/optim.html">optim</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">norm_svals</span>,  <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_norm</span>,  y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, method <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BFGS"</span>, </span>
+<span>                   control <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>fnscale <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_exp</span>   <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/optim.html">optim</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">exp_svals</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_exp</span>,   y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, method <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BFGS"</span>, </span>
+<span>                   control <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>fnscale <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_chisq</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/stats/optim.html">optim</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">chisq.svals</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">ll_chisq</span>, y <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span>, method <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"BFGS"</span>, </span>
+<span>                   control <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span>fnscale <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Extract MLEs</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_mu</span>     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_norm</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_sigma</span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_norm</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_lambda</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_exp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_nu</span>     <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/Log.html">exp</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_chisq</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">par</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">]</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Log-likelihoods at MLEs</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">LL_normal</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_norm</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">value</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">LL_exp</span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_exp</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">value</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">LL_chisq</span>  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">fit_chisq</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">$</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">value</span></span>
+<span></span>
+<span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Summary table</span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_table</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span></span>
+<span>  model <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Normal"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Exponential"</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Chi-square"</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  param_1 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mu = %.6f"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_mu</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>              <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"lambda = %.6f"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_lambda</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>              <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"nu = %.6f"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_nu</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  param_2 <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sprintf.html">sprintf</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"sigma = %.6f"</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_sigma</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span>, <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">""</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  logLik  <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">LL_normal</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">LL_exp</span>, <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">LL_chisq</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span>,</span>
+<span>  row.names <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">=</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">NULL</span></span>
+<span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span>
+<span></span>
+<span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_table</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        model           param_1          param_2    logLik
+1      Normal     mu = 0.522859 sigma = 0.516706 -75.86575
+2 Exponential lambda = 1.912560                  -35.15572
+3  Chi-square     nu = 1.040636                  -59.26745</code></pre>
+</div>
+</div>
+</section><section id="closed-form-maximum-likelihood-solutions" class="level3"><h3 class="anchored" data-anchor-id="closed-form-maximum-likelihood-solutions">Closed-form maximum likelihood solutions</h3>
+<p>If you made it this far, congratulations: we have gone step by step through the full path of maximum likelihood estimation. We have tried values by hand, done grid searches, and used a numerical optimizer. And now, just when it seems we have done it all, comes a small plot twist: in some cases, everything can be solved with a single formula.</p>
+<p>It almost sounds unfair, right? After spending so much effort understanding the logic of likelihood, it turns out that for some distributions the exact solution can be written in one line. But that is precisely why the long path is worth it: those formulas are no longer mysterious recipes, but the natural conclusion of a story that now makes sense.</p>
+<p>For the Normal and Exponential models, the maximum likelihood estimators have closed-form solutions, meaning they can be obtained directly from the properties of the distributions without iterative algorithms.</p>
+<p>For the Normal distribution, the parameters that maximize the likelihood are the sample mean and the sample standard deviation (using <img src="https://latex.codecogs.com/png.latex?1/n"> instead of <img src="https://latex.codecogs.com/png.latex?1/(n-1)"> because here we want the value that maximizes the likelihood, not an unbiased estimator):</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%5Cmu_%5Ctext%7BML%7D=%5Cfrac%7B1%7D%7Bn%7D%5Ccdot%5Csum%5En_%7Bi=1%7DY_%7Bi%7D,%5Cqquad%20%5Chat%5Csigma_%5Ctext%7BML%7D=%5Csqrt%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%5En_%7Bi=1%7D%5Cleft(Y_i-%5Chat%5Cmu_%5Ctext%7BML%7D%5Cright)%5E2%7D%0A"></p>
+<div class="cell">
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_mu_closed</span>    <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5228594</code></pre>
+</div>
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_sigma_closed</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">-</span> <span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_mu_closed</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">^</span><span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.5167061</code></pre>
+</div>
+</div>
+<p>For the Exponential distribution, the maximum likelihood estimator of the rate parameter <img src="https://latex.codecogs.com/png.latex?%5Clambda"> is also obtained directly:</p>
+<p><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%5Clambda_%5Ctext%7BML%7D=%5Cfrac%7Bn%7D%7B%5Csum%5En_%7Bi=1%7DY_i%7D%0A"></p>
+<div class="cell">
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">MLE_lambda_closed</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span> <span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">(</span><span class="va" style="color: #111111;
+background-color: null;
+font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">)</span></span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.91256</code></pre>
+</div>
+</div>
+<p>These two expressions exactly match the values we obtained with the optimization algorithm. For the <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2"> distribution, however, there is no closed-form solution, and its estimation necessarily requires numerical methods.</p>
+
+
+</section></section><a onclick="window.scrollTo(0, 0); return false;" id="quarto-back-to-top"><i class="bi bi-arrow-up"></i> Back to top</a><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<ol>
+<li id="fn1"><p>Note that we are <strong>not</strong> talking about the probability of a single, exact value. For continuous variables, that probability is always zero. What continuous models provide instead is a <em>density</em>, which tells us how probability is distributed across possible values.↩︎</p></li>
+<li id="fn2"><p>Any outraged reader may address their complaints to Sir Ronald Fisher, or demand that, before naming things, statisticians must submit each new term to a linguistic ethics committee.↩︎</p></li>
+<li id="fn3"><p>We’ll let <img src="https://latex.codecogs.com/png.latex?%5Cnu"> be any positive real number. Although textbooks often introduce <img src="https://latex.codecogs.com/png.latex?%5Cnu"> as an integer (“degrees of freedom”), the <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2"> family extends smoothly to non-integers and is equivalent to a Gamma distribution with shape = <img src="https://latex.codecogs.com/png.latex?%5Cnu/2"> and scale = 2. We do this just to keep the example simple and focus on likelihood. (And yes, in <code>R</code>, <code><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq()</a></code> works for non-integer <img src="https://latex.codecogs.com/png.latex?%5Cnu">).↩︎</p></li>
+<li id="fn4"><p>You came here knowing something, you’ve read the post, and now what you knew might have shifted a bit, huh? I know, I know… I’ll see myself out… and wait for you there…↩︎</p></li>
+<li id="fn5"><p>Even more formally, a (parametric) statistical model is a family of distributions <img src="https://latex.codecogs.com/png.latex?%5Cmathcal%7BM%7D=%5Cleft%5C%7B%7B%5Ccolor%7B#7E57C2%7Df%7D%5Cleft(%7B%5Ccolor%7Bseagreen%7Dy%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D%5Cright):%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D%5Cin%7B%5Ccolor%7B#9a2515%7D%5CTheta%7D%5Cright%5C%7D">, where <img src="https://latex.codecogs.com/png.latex?%7B%5Ccolor%7B#7E57C2%7Df%7D%5Cleft(%7B%5Ccolor%7Bseagreen%7Dy%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D%5Cright)"> is a probability density (or mass) function on the <strong>sample space</strong> (the set of all possible values that the data <img src="https://latex.codecogs.com/png.latex?%7B%5Ccolor%7Bseagreen%7Dy%7D"> can take), and <img src="https://latex.codecogs.com/png.latex?%7B%5Ccolor%7B#9a2515%7D%5CTheta%7D"> is the <strong>parameter space</strong> (the set of all possible values that the parameters <img src="https://latex.codecogs.com/png.latex?%7B%5Ccolor%7B#9a2515%7D%5Ctheta%7D"> can take).↩︎</p></li>
+<li id="fn6"><p>However, be careful when the same person asks you what probability is. That’s how most of us die.↩︎</p></li>
+</ol></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-rey-sáez2025" class="csl-entry quarto-appendix-citeas">
+Rey-Sáez, Ricardo. 2025. <span>“What Is a Statistical Model? From
+Density to Likelihood.”</span> October 10, 2025. <a href="https://ricardoreysaez.github.io/blog/model_definition/">https://ricardoreysaez.github.io/blog/model_definition/</a>.
+</div></div></section></div> ]]></description>
+  <category>Statistics</category>
+  <category>Models</category>
+  <category>Maximum Likelihood</category>
+  <guid>https://ricardoreysaez.github.io/blog/model_definition/</guid>
+  <pubDate>Thu, 09 Oct 2025 22:00:00 GMT</pubDate>
+  <media:content url="https://ricardoreysaez.github.io/blog/model_definition/cover.svg" medium="image" type="image/svg+xml"/>
+</item>
+</channel>
+</rss>
