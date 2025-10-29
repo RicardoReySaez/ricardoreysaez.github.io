@@ -3,7 +3,8 @@
 
 ### ricardoreysaez.github.io <img src="docs/logosRRS/home_light.png#gh-light-mode-only" align="right" width="180" alt="ρρΣ logo light"> <img src="docs/logosRRS/home_dark.png#gh-dark-mode-only" align="right" width="180" alt="ρρΣ logo dark">
 
-This repository contains the source code for my professional academic website: [rreysa.github.io](https://rreysa.github.io).  
+This repository contains the source code for my professional academic website: [ricardoreysaez.github.io](https://ricardoreysaez.github.io).  
+
 Like any project, it didn’t appear out of nowhere. It builds on the generosity of others who have shared their own designs and code.
 
 ---
@@ -51,14 +52,13 @@ Typography, spacing, and iconography have been fine-tuned for clarity and visual
 
 ## 📄 License and Reuse
 
-All [**blog posts**](/blog) are released under a  
-[**Creative Commons Attribution–ShareAlike 4.0 International License**](http://creativecommons.org/licenses/by-sa/4.0/).
+All [**blog posts**](/blog) are released under a  [**Creative Commons Attribution–ShareAlike 4.0 International License**](http://creativecommons.org/licenses/by-sa/4.0/).
 
 You’re welcome to reuse, adapt, or remix any of the **code and structure** in this repository, provided you include appropriate attribution and share your adaptations under the same license.
 
 For citation or reference, please use:  
-**Rey-Saéz, R. (2025). _rreysa.github.io: Academic Website_. GitHub Repository.**  
-[https://github.com/rreysa/rreysa.github.io](https://github.com/rreysa/rreysa.github.io)
+
+**Rey-Saéz, R. (2025). _ricardoreysaez.github.io: Academic Website_. GitHub Repository.**  [https://github.com/RicardoReySaez/ricardoreysaez.github.io](https://github.com/RicardoReySaez/ricardoreysaez.github.io)
 
 ---
 
@@ -68,7 +68,6 @@ For questions, collaborations, or a friendly chat about Bayesian models, psychom
 
 📧 [ricardoreysaez95@gmail.com](mailto:ricardoreysaez95@gmail.com)  
 🐦 [Twitter/X](https://x.com/RicardoRey_95)  
-🔗 [ORCID](https://orcid.org/0000-0000-0000-0000)
 
 ---
 
