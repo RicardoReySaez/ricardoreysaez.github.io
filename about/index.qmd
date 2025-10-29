@@ -85,7 +85,8 @@ That perspective changed the way I understood research. Measurement stopped bein
 
 ::: {.light-content}
 
-![Diagram of a Bayesian hierarchical model applied in our replication study on the unconscious working memory effect.](../Model diagrams/pdf_cropped/page_005.png){style="width:90%; height:auto; display:block; margin:2em auto 2.5em auto;"}
+[![Diagram of a Bayesian hierarchical model applied in our replication study on the unconscious working memory effect.](../Model diagrams/pdf_cropped/page_005.png){style="width:90%; height:auto; display:block; margin:2em auto 2.5em auto;"}]
+
 
 :::
 

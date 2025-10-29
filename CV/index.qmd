@@ -104,7 +104,7 @@ resources:
 
 ## {{< iconify fa6-solid:book >}} Textbooks
 
-- **Rey-Sáez, R.**, & Estrada, E. (2023). ***Análisis de datos con R en Ciencias Sociales y de la Salud***. Editorial Síntesis: <https://www.sintesis.com/libro/analisis-de-datos-con-r-en-ciencias-sociales-y-de-la-salud>
+- [**Rey-Sáez, R.**]{.underline}, & Estrada, E. (2023). ***Análisis de datos con R en Ciencias Sociales y de la Salud***. Editorial Síntesis: <https://www.sintesis.com/libro/analisis-de-datos-con-r-en-ciencias-sociales-y-de-la-salud>
 
 ## {{< iconify dashicons:awards >}} Awards
 
@@ -122,18 +122,18 @@ resources:
 
 ## {{< iconify ooui:articles-rtl >}} Publications
 
-Franco-Martínez, A., **Rey-Sáez, R.**, Shanks, D. R., Soto, D., & Vadillo, M. A. (2024). Replicating the unconscious working memory effect: A multisite preregistered study [stage 1 registered report]. *OSF.*
+Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, Shanks, D. R., Soto, D., & Vadillo, M. A. (*in press*). Replicating the unconscious working memory effect: A multisite preregistered study. *Neuroscience of Consciousness*. https://doi.org/10.1093/nc/niaf046
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
-[Data](https://osf.io/xzv9t/files/osfstorage){.btn-sm .btn .btn-primary aria-label="Data"}
-[Code](https://osf.io/xzv9t/files/osfstorage){.btn-sm .btn .btn-primary aria-label="Code"}
-[PDF](https://osf.io/g2dzn){.btn-sm .btn .btn-primary aria-label="PDF"}
-[OSF](https://osf.io/tkyfh){.btn-sm .btn .btn-primary aria-label="OSF project"}
+[Data](https://osf.io/xzv9t/overview){.btn-sm .btn .btn-primary aria-label="Data"}
+[Code](https://osf.io/xzv9t/overview){.btn-sm .btn .btn-primary aria-label="Code"}
+[PDF](https://osf.io/preprints/psyarxiv/sj7fz_v1){.btn-sm .btn .btn-primary aria-label="PDF"}
+[OSF](https://osf.io/xzv9t){.btn-sm .btn .btn-primary aria-label="OSF project"}
 :::
 :::
 
-Pacheco-Romero, A. M., Martín-García, Ó., **Rey-Sáez, R.**, Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. *Cognition and Emotion, 38*(4), 587–604. [PDF](https://www.tandfonline.com/doi/epdf/10.1080/02699931.2024.2314066?needAccess=true)
+Pacheco-Romero, A. M., Martín-García, Ó., [**Rey-Sáez, R.**]{.underline}, Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. *Cognition and Emotion, 38*(4), 587–604. [PDF](https://www.tandfonline.com/doi/epdf/10.1080/02699931.2024.2314066?needAccess=true)
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -144,7 +144,7 @@ Pacheco-Romero, A. M., Martín-García, Ó., **Rey-Sáez, R.**, Boemo, T., Blanc
 :::
 :::
 
-Gracia, E., Martín-Fernández, M., **Rey-Sáez, R.**, & Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. *Psychology of Violence, 14*(2), 127–136. https://doi.org/10.1037/vio0000497
+Gracia, E., Martín-Fernández, M., [**Rey-Sáez, R.**]{.underline}, & Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. *Psychology of Violence, 14*(2), 127–136. https://doi.org/10.1037/vio0000497
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -155,7 +155,7 @@ Gracia, E., Martín-Fernández, M., **Rey-Sáez, R.**, & Yount, K. M. (2024). At
 :::
 :::
 
-Vega-Sanz, M., **Rey-Sáez, R.**, Berástegui, A., & Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. *American Journal of Perinatology, 41*(S 01), e2870–e2877. https://doi.org/10.1055/s-0043-1776062
+Vega-Sanz, M., [**Rey-Sáez, R.**]{.underline}, Berástegui, A., & Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. *American Journal of Perinatology, 41*(S 01), e2870–e2877. https://doi.org/10.1055/s-0043-1776062
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -166,7 +166,7 @@ Vega-Sanz, M., **Rey-Sáez, R.**, Berástegui, A., & Sánchez-López, Á. (2024)
 :::
 :::
 
-Franco-Martínez, A., **Rey-Sáez, R.**, & Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. PsyArXiv. https://doi.org/10.31234/osf.io/kmqy5
+Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, & Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. PsyArXiv. https://doi.org/10.31234/osf.io/kmqy5
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -177,7 +177,7 @@ Franco-Martínez, A., **Rey-Sáez, R.**, & Castillejo, I. (2023). The seven wond
 :::
 :::
 
-**Rey-Sáez, R.** (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. *R.E.M.A. Revista Electrónica de Metodología Aplicada, 24*(1), 41–44. [PDF](https://reunido.uniovi.es/index.php/Rema/article/view/17634)
+[**Rey-Sáez, R.**]{.underline} (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. *R.E.M.A. Revista Electrónica de Metodología Aplicada, 24*(1), 41–44. [PDF](https://reunido.uniovi.es/index.php/Rema/article/view/17634)
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -190,22 +190,22 @@ Franco-Martínez, A., **Rey-Sáez, R.**, & Castillejo, I. (2023). The seven wond
 
 ## {{< iconify game-icons:teacher >}} Conference Presentations
 
-1. **Rey-Sáez, R.**, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?* [Oral presentation] XIV Conference – Asociación Iberoamericana para la Investigación de las Diferencias Individuales (AIIDI).
-1. **Rey-Sáez, R.**, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *Where psychometrics meets experimental psychology: Bayesian hierarchical factor models for response times.* [Oral presentation] XI Conference – European Congress of Methodology.
-1. **Rey-Sáez, R.**, Revuelta, J., & Vadillo, M. A. (2025). *From random effects to common factors: Latent dimensionality assessment in experimental psychology.* [Oral presentation] XI Conference – European Congress.
-1. **Rey-Sáez, R.**, Garre-Frutos, F., Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2025). *Addressing methodological challenges in unconscious process research: A hierarchical modeling approach.* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
-1. **Rey-Sáez, R.**, Garre-Frutos, F., Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2025). *Hierarchical models in experimental psychology: A solution for measuring unconscious psychological processes.* [Poster presentation] XIV Reunión Científica sobre Atención.
-1. **Rey-Sáez, R.**, Garre-Frutos, F., & Vadillo, M. Ángel. (2024). *What psychometrics can offer to experimental psychology: The multilevel model as the legacy of factor analysis.* [Oral presentation] XVIII Congreso de Metodología de las Ciencias Sociales y de la Salud.
-1. **Rey-Sáez, R.**, Lecuona, Ó., & Martín-Fernández, M. (2024). *Approximate measurement invariance with multiple groups: A comparison between Bayesian SEM and the alignment method.* [Oral presentation] XVIII Congreso de Metodología de las Ciencias Sociales y de la Salud.
-1. Lecuona, Ó., **Rey-Sáez, R.**, & Martín-Fernández, Manuel. (2024). *Studying invariance with multiple groups in large datasets: A comparison of bayesian SEM and alignment method.* [Oral presentation] 13th Conference of The International Test Commission.
-1. **Rey-Sáez, R.**, Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2024). *From unconscious to unreliable? Measurement error biases evidence on studies of unconscious processing.* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
-1. Franco-Martínez, A., **Rey-Sáez, R.**, Shanks, D. R., Soto, D., & Vadillo, M. A. (2024). *Advances in “replicating the unconscious working memory effect: A multisite preregistered study.”* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
-1. Pacheco-Romero, A. M., Martín-Gracía, Ó., **Rey-Sáez, R.**, Boemo, T., Blanco, I., & Sánchez-López, Á. (2023). *Affective reactivity to daily events predicts changes in future psychopathology and is modulated by the use of different forms of rumination.* [Oral presentation] International Convention of Psychological Science (ICPS).
-1. Aivar, P., **Rey-Sáez, R.**, & Vadillo, M. A. (2023). *Hard to ignore? Irrelevant distractors cannot be completely suppressed in a contextual cueing task.* [Poster presentation] 23 Annual Meeting of the Vision Sciences Society.
-1. Martin-Garcia, O., **Rey-Saez, R.**, Boemo, T., Pacheco-Romero, A., Blanco, I., & Sanchez-Lopez, A. (2023). *Modulatory role of motivational self-focuses on the relation between perceived stress and momentary affect: An ESM study.* [Oral presentation] Emotions Congress 2023.
-1. Pacheco-Romero, A. M., Martín-Gracía, Ó., **Rey-Sáez, R**., Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2022). *Intra-individual mechanisms of positive affect regulation deficits in depression: An experience sampling study.* [Oral presentation] 52nd European Association for Behavioural; Cognitive Therapies.
-1. **Rey-Sáez, R.**, & Nájera, P. (2022). *Investigando metodología en el multiverso de la academia: Comunidad, recursos y estrategias por y para jóvenes.* [Symposium Organizer] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
-1. **Rey-Sáez, R.** (2022). *Investigación, paso 1: ¿Cómo y dónde busco información? Nuevas herramientas para la detección eficiente de bibliografía de interés.* [Oral presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
-1. **Rey-Sáez, R.** (2022). *Approximate measurement invariance: Assessing the accuracy and sensitivity of alignment optimization under partial invariance with multiple groups.* [Oral presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
-1. Martín-Fernández, M., & **Rey-Sáez, R.** (2022). *Approximate measurement invariance in surveys on attitudes toward intimate partner violence in 12 Latin American countries.* [Poster presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
-1. **Rey-Sáez, R.** (2022). *Approximate measurement invariance in surveys on attitudes toward intimate partner violence in 12 Latin American countries.* [Oral presentation] Research Conference of the Faculty of Psychology, Universidad Autónoma de Madrid
+1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?* [Oral presentation] XIV Conference – Asociación Iberoamericana para la Investigación de las Diferencias Individuales (AIIDI).
+1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *Where psychometrics meets experimental psychology: Bayesian hierarchical factor models for response times.* [Oral presentation] XI Conference – European Congress of Methodology.
+1. [**Rey-Sáez, R.**]{.underline}, Revuelta, J., & Vadillo, M. A. (2025). *From random effects to common factors: Latent dimensionality assessment in experimental psychology.* [Oral presentation] XI Conference – European Congress.
+1. [**Rey-Sáez, R.**]{.underline}, Garre-Frutos, F., Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2025). *Addressing methodological challenges in unconscious process research: A hierarchical modeling approach.* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
+1. [**Rey-Sáez, R.**]{.underline}, Garre-Frutos, F., Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2025). *Hierarchical models in experimental psychology: A solution for measuring unconscious psychological processes.* [Poster presentation] XIV Reunión Científica sobre Atención.
+1. [**Rey-Sáez, R.**]{.underline}, Garre-Frutos, F., & Vadillo, M. Ángel. (2024). *What psychometrics can offer to experimental psychology: The multilevel model as the legacy of factor analysis.* [Oral presentation] XVIII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. [**Rey-Sáez, R.**]{.underline}, Lecuona, Ó., & Martín-Fernández, M. (2024). *Approximate measurement invariance with multiple groups: A comparison between Bayesian SEM and the alignment method.* [Oral presentation] XVIII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. Lecuona, Ó., [**Rey-Sáez, R.**]{.underline}, & Martín-Fernández, Manuel. (2024). *Studying invariance with multiple groups in large datasets: A comparison of bayesian SEM and alignment method.* [Oral presentation] 13th Conference of The International Test Commission.
+1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Castillejo, I., & Vadillo, M. A. (2024). *From unconscious to unreliable? Measurement error biases evidence on studies of unconscious processing.* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
+1. Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, Shanks, D. R., Soto, D., & Vadillo, M. A. (2024). *Advances in “replicating the unconscious working memory effect: A multisite preregistered study.”* [Poster presentation] 27 Annual Meeting of the Association for Scientific Studies of Consciousness.
+1. Pacheco-Romero, A. M., Martín-Gracía, Ó., [**Rey-Sáez, R.**]{.underline}, Boemo, T., Blanco, I., & Sánchez-López, Á. (2023). *Affective reactivity to daily events predicts changes in future psychopathology and is modulated by the use of different forms of rumination.* [Oral presentation] International Convention of Psychological Science (ICPS).
+1. Aivar, P., [**Rey-Sáez, R.**]{.underline}, & Vadillo, M. A. (2023). *Hard to ignore? Irrelevant distractors cannot be completely suppressed in a contextual cueing task.* [Poster presentation] 23 Annual Meeting of the Vision Sciences Society.
+1. Martin-Garcia, O., [**Rey-Sáez, R.**]{.underline}, Boemo, T., Pacheco-Romero, A., Blanco, I., & Sanchez-Lopez, A. (2023). *Modulatory role of motivational self-focuses on the relation between perceived stress and momentary affect: An ESM study.* [Oral presentation] Emotions Congress 2023.
+1. Pacheco-Romero, A. M., Martín-Gracía, Ó., [**Rey-Sáez, R.**]{.underline}., Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2022). *Intra-individual mechanisms of positive affect regulation deficits in depression: An experience sampling study.* [Oral presentation] 52nd European Association for Behavioural; Cognitive Therapies.
+1. [**Rey-Sáez, R.**]{.underline}, & Nájera, P. (2022). *Investigando metodología en el multiverso de la academia: Comunidad, recursos y estrategias por y para jóvenes.* [Symposium Organizer] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. [**Rey-Sáez, R.**]{.underline} (2022). *Investigación, paso 1: ¿Cómo y dónde busco información? Nuevas herramientas para la detección eficiente de bibliografía de interés.* [Oral presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. [**Rey-Sáez, R.**]{.underline} (2022). *Approximate measurement invariance: Assessing the accuracy and sensitivity of alignment optimization under partial invariance with multiple groups.* [Oral presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. Martín-Fernández, M., & [**Rey-Sáez, R.**]{.underline} (2022). *Approximate measurement invariance in surveys on attitudes toward intimate partner violence in 12 Latin American countries.* [Poster presentation] XVII Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. [**Rey-Sáez, R.**]{.underline} (2022). *Approximate measurement invariance in surveys on attitudes toward intimate partner violence in 12 Latin American countries.* [Oral presentation] Research Conference of the Faculty of Psychology, Universidad Autónoma de Madrid
