@@ -82,7 +82,9 @@ resources:
   - *Data Science: Linear Regression* | [Verified Certificate](https://courses.edx.org/certificates/470c6bb6fe2b4fe8913208d5edda44a3)
 
 ## {{< iconify fa6-solid:chalkboard-user >}} Teaching and Educational Activities
-
+- 2025 | **Meta-analysis, Latent Class and Latent Profile Analysis**  
+  - Lead instructor, Advanced Statistical Training for Researchers  
+  - Organized by Deusto FamilyPsych, Deusto University
 - 2025 | **Introduction to Bayesian Psychometrics: Applications to Factor Analysis**  
   - Seminar instructor, National interfaculty training seminar  
   - Organized by ASCOFAPSI (Colombian Association of Faculties of Psychology)
@@ -122,7 +124,18 @@ resources:
 
 ## {{< iconify ooui:articles-rtl >}} Publications
 
-Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, Shanks, D. R., Soto, D., & Vadillo, M. A. (*in press*). Replicating the unconscious working memory effect: A multisite preregistered study. *Neuroscience of Consciousness*. https://doi.org/10.1093/nc/niaf046
+[**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J. & Vadillo, M. A. (2025, December 29). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. *PsyArxiv*. <https://doi.org/10.31234/osf.io/gv6k7_v1>
+
+::: {.content-visible when-format="html"}
+::: {.btn-group role="group" aria-label="Open Science Links"}
+[Data](https://osf.io/5dutv/files/osfstorage){.btn-sm .btn .btn-primary aria-label="Data"}
+[Code](https://osf.io/5dutv/files/osfstorage){.btn-sm .btn .btn-primary aria-label="Code"}
+[PDF](https://osf.io/preprints/psyarxiv/gv6k7_v1){.btn-sm .btn .btn-primary aria-label="PDF"}
+[OSF](https://osf.io/5dutv/overview){.btn-sm .btn .btn-primary aria-label="OSF project"}
+:::
+:::
+
+Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, Shanks, D. R., Soto, D., & Vadillo, M. A. (*in press*). Replicating the unconscious working memory effect: A multisite preregistered study. *Neuroscience of Consciousness*. <https://doi.org/10.1093/nc/niaf046>
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
