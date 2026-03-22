@@ -32,6 +32,8 @@ about:
       href: https://x.com/RicardoRey_95
     - text: "{{< iconify fa6-brands youtube >}}"
       href: https://www.youtube.com/@psicometries
+    - text: "{{< iconify academicons google-scholar >}}"
+      href: https://scholar.google.com/citations?user=SxTNYh4AAAAJ&hl
     - text: "{{< iconify mdi gmail >}}"
       url: mailto:ricardoreysaez95@gmail.com
       

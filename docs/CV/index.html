@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.27">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
 
-<title>quarto-input7e77d62c85f8ce0e – Ricardo Rey-Sáez</title>
+<title>quarto-input1e19870f9d42491d – Ricardo Rey-Sáez</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,17 +34,18 @@ ul.task-list li input[type="checkbox"] {
 <link href="../logosRRS/favicon.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c4fb88a7599af4a42f865486fd59166e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-53407440417a42589bb34d3db63da45b.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c4fb88a7599af4a42f865486fd59166e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-17272e19d34237b4445191b00a44da21.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-5d0bb37017ba0a20362ccd77de87586e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-17272e19d34237b4445191b00a44da21.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-45a6b78c17cd6d62274d9d2feb9953d0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-ea3b4445e8606fefb2b206bb39935713.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-45a6b78c17cd6d62274d9d2feb9953d0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-8c35ff85f976965d12a4325831ee74ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-7519690125f7929e610e3ea9fd9637d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-8c35ff85f976965d12a4325831ee74ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -107,7 +108,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    window.setColorSchemeToggle = (alternate) => {
+    const setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -140,7 +141,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      window.setColorSchemeToggle(alternate)
+      setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -180,7 +181,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    window.hasAlternateSentinel = () => {
+    const hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -208,7 +209,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(darkModeDefault) {
+      if(authorPrefersDark) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -231,20 +232,22 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
         changeGiscusTheme();
       }
     };
-    const darkModeDefault = false;
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !window.hasAlternateSentinel();
+      let toAlternate = !hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (window.hasAlternateSentinel()) {
+    if (hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -257,7 +260,8 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../logosRRS/navbar_light.svg" alt="" class="navbar-logo">
+    <img src="../logosRRS/navbar_light.svg" alt="" class="navbar-logo light-content">
+    <img src="../logosRRS/navbar_light.svg" alt="" class="navbar-logo dark-content">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Ricardo Rey-Sáez</span>
@@ -329,7 +333,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
 <section id="ricardo-rey-sáez" class="level1">
 <h1>Ricardo Rey-Sáez</h1>
 <div class="btn-group">
-<p><a href="https://x.com/RicardoRey_95" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:twitter" aria-label="Icon twitter from fa6-brands Iconify.design set." title="Icon twitter from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://bsky.app/profile/ricardoreysaez.bsky.social" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="Icon bluesky from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://github.com/rreysa" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:github" aria-label="Icon github from fa6-brands Iconify.design set." title="Icon github from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://orcid.org/0000-0001-6739-2035" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:orcid" aria-label="Icon orcid from fa6-brands Iconify.design set." title="Icon orcid from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://www.researchgate.net/profile/Ricardo-Rey-Saez" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:researchgate" aria-label="Icon researchgate from fa6-brands Iconify.design set." title="Icon researchgate from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://www.youtube.com/@psicometries" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:youtube" aria-label="Icon youtube from fa6-brands Iconify.design set." title="Icon youtube from fa6-brands Iconify.design set."></iconify-icon></a> <a href="mailto:ricardoreysaez95@gmail.com" class="icon-link"><iconify-icon role="img" inline="" icon="mdi:gmail" aria-label="Icon gmail from mdi Iconify.design set." title="Icon gmail from mdi Iconify.design set."></iconify-icon></a></p>
+<p><a href="https://x.com/RicardoRey_95" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:twitter" aria-label="Icon twitter from fa6-brands Iconify.design set." title="Icon twitter from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://bsky.app/profile/ricardoreysaez.bsky.social" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="Icon bluesky from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://github.com/rreysa" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:github" aria-label="Icon github from fa6-brands Iconify.design set." title="Icon github from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://orcid.org/0000-0001-6739-2035" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:orcid" aria-label="Icon orcid from fa6-brands Iconify.design set." title="Icon orcid from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://www.researchgate.net/profile/Ricardo-Rey-Saez" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:researchgate" aria-label="Icon researchgate from fa6-brands Iconify.design set." title="Icon researchgate from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://www.youtube.com/@psicometries" class="icon-link"><iconify-icon role="img" inline="" icon="fa6-brands:youtube" aria-label="Icon youtube from fa6-brands Iconify.design set." title="Icon youtube from fa6-brands Iconify.design set."></iconify-icon></a> <a href="https://scholar.google.com/citations?user=SxTNYh4AAAAJ&amp;hl" class="icon-link"><iconify-icon role="img" inline="" icon="academicons:google-scholar" aria-label="Icon google-scholar from academicons Iconify.design set." title="Icon google-scholar from academicons Iconify.design set."></iconify-icon></a> <a href="mailto:ricardoreysaez95@gmail.com" class="icon-link"><iconify-icon role="img" inline="" icon="mdi:gmail" aria-label="Icon gmail from mdi Iconify.design set." title="Icon gmail from mdi Iconify.design set."></iconify-icon></a></p>
 </div>
 <section id="education" class="level2">
 <h2 data-anchor-id="education"><iconify-icon role="img" inline="" icon="fa6-solid:graduation-cap" aria-label="Icon graduation-cap from fa6-solid Iconify.design set." title="Icon graduation-cap from fa6-solid Iconify.design set."></iconify-icon> Education</h2>
@@ -445,13 +449,21 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
 </section>
 <section id="publications" class="level2">
 <h2 data-anchor-id="publications"><iconify-icon role="img" inline="" icon="ooui:articles-rtl" aria-label="Icon articles-rtl from ooui Iconify.design set." title="Icon articles-rtl from ooui Iconify.design set."></iconify-icon> Publications</h2>
+<p>Garre-Frutos, F., Martínez-López, P., Ariza, A., <u><strong>Rey-Sáez, R.</strong></u>, Luque, D., Vadillo, M. A., &amp; González, F. (2026, March 22). Explicit knowledge modulates Pavlovian attentional biases. <em>PsyArxiv</em>. <a href="https://doi.org/10.31234/osf.io/uwge3_v2" class="uri">https://doi.org/10.31234/osf.io/uwge3_v2</a></p>
+<div class="btn-group" role="group" aria-label="Open Science Links">
+<p><a href="https://osf.io/xzs9f/files/osfstorage" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/xzs9f/files/osfstorage" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://doi.org/10.31234/osf.io/uwge3_v2" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/xzs9f/overview" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
+</div>
+<p><u><strong>Rey-Sáez, R.</strong></u>, &amp; Revuelta, J. (2026, March 5). An Efficient Rotation-Sign-Permutation Algorithm to Solve Rotational Indeterminacy in Bayesian Exploratory Factor Analysis. <em>PsyArxiv</em>. <a href="https://doi.org/10.31234/osf.io/6drsw_v2" class="uri">https://doi.org/10.31234/osf.io/6drsw_v2</a></p>
+<div class="btn-group" role="group" aria-label="Open Science Links">
+<p><a href="https://osf.io/4nyd7/files/osfstorage" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/4nyd7/files/osfstorage" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://doi.org/10.31234/osf.io/6drsw_v2" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/4nyd7/overview" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
+</div>
 <p><u><strong>Rey-Sáez, R.</strong></u>, Franco-Martínez, A., Revuelta, J. &amp; Vadillo, M. A. (2025, December 29). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. <em>PsyArxiv</em>. <a href="https://doi.org/10.31234/osf.io/gv6k7_v1" class="uri">https://doi.org/10.31234/osf.io/gv6k7_v1</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
 <p><a href="https://osf.io/5dutv/files/osfstorage" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/5dutv/files/osfstorage" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://osf.io/preprints/psyarxiv/gv6k7_v1" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/5dutv/overview" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
 </div>
-<p>Franco-Martínez, A., <u><strong>Rey-Sáez, R.</strong></u>, Shanks, D. R., Soto, D., &amp; Vadillo, M. A. (<em>in press</em>). Replicating the unconscious working memory effect: A multisite preregistered study. <em>Neuroscience of Consciousness</em>. <a href="https://doi.org/10.1093/nc/niaf046" class="uri">https://doi.org/10.1093/nc/niaf046</a></p>
+<p>Franco-Martínez, A., <u><strong>Rey-Sáez, R.</strong></u>, Shanks, D. R., Soto, D., &amp; Vadillo, M. A. (2026). Replicating the unconscious working memory effect: A multisite preregistered study. <em>Neuroscience of Consciousness</em>. <a href="https://doi.org/10.1093/nc/niaf046" class="uri">https://doi.org/10.1093/nc/niaf046</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
-<p><a href="https://osf.io/xzv9t/overview" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/xzv9t/overview" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://osf.io/preprints/psyarxiv/sj7fz_v1" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/xzv9t" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
+<p><a href="https://osf.io/xzv9t/overview" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/xzv9t/overview" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://doi.org/10.1093/nc/niaf046" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/xzv9t" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
 </div>
 <p>Pacheco-Romero, A. M., Martín-García, Ó., <u><strong>Rey-Sáez, R.</strong></u>, Boemo, T., Blanco, I., Vázquez, C., &amp; Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. <em>Cognition and Emotion, 38</em>(4), 587–604. <a href="https://www.tandfonline.com/doi/epdf/10.1080/02699931.2024.2314066?needAccess=true">PDF</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
@@ -517,7 +529,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    window.setColorSchemeToggle(window.hasAlternateSentinel())
+    setColorSchemeToggle(hasAlternateSentinel())
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
@@ -560,13 +572,14 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
@@ -920,7 +933,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
 <p>© 2025 Ricardo Rey-Sáez ∙ Made with ❤️, ChatGPT and <a href="https://quarto.org" target="_blank" rel="noopener">Quarto</a></p>
 </div>   
     <div class="nav-footer-center">
-<p><a class="link-dark me-1" href="https://orcid.org/0000-0001-6739-2035" title="ORCID" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:orcid" aria-label="Icon orcid from fa6-brands Iconify.design set." title="Icon orcid from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://github.com/rreysa" title="GitHub" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:github" aria-label="Icon github from fa6-brands Iconify.design set." title="Icon github from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://www.researchgate.net/profile/Ricardo-Rey-Saez" title="ResearchGate" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:researchgate" aria-label="Icon researchgate from fa6-brands Iconify.design set." title="Icon researchgate from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://x.com/RicardoRey_95" title="Twitter/X" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:twitter" aria-label="Icon twitter from fa6-brands Iconify.design set." title="Icon twitter from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://bsky.app/profile/ricardoreysaez.bsky.social" title="Bluesky" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="Icon bluesky from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://www.youtube.com/@psicometries" title="YouTube" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:youtube" aria-label="Icon youtube from fa6-brands Iconify.design set." title="Icon youtube from fa6-brands Iconify.design set."></iconify-icon></a></p>
+<p><a class="link-dark me-1" href="https://orcid.org/0000-0001-6739-2035" title="ORCID" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:orcid" aria-label="Icon orcid from fa6-brands Iconify.design set." title="Icon orcid from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://github.com/rreysa" title="GitHub" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:github" aria-label="Icon github from fa6-brands Iconify.design set." title="Icon github from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://www.researchgate.net/profile/Ricardo-Rey-Saez" title="ResearchGate" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:researchgate" aria-label="Icon researchgate from fa6-brands Iconify.design set." title="Icon researchgate from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://x.com/RicardoRey_95" title="Twitter/X" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:twitter" aria-label="Icon twitter from fa6-brands Iconify.design set." title="Icon twitter from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://bsky.app/profile/ricardoreysaez.bsky.social" title="Bluesky" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:bluesky" aria-label="Icon bluesky from fa6-brands Iconify.design set." title="Icon bluesky from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://www.youtube.com/@psicometries" title="YouTube" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="fa6-brands:youtube" aria-label="Icon youtube from fa6-brands Iconify.design set." title="Icon youtube from fa6-brands Iconify.design set."></iconify-icon></a> <a class="link-dark me-1" href="https://scholar.google.com/citations?user=SxTNYh4AAAAJ&amp;hl" title="Google Scholar" target="_blank" rel="noopener"><iconify-icon role="img" inline="" icon="academicons:google-scholar" aria-label="Icon google-scholar from academicons Iconify.design set." title="Icon google-scholar from academicons Iconify.design set."></iconify-icon></a></p>
 </div>
     <div class="nav-footer-right">
       &nbsp;

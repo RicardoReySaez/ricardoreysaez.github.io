@@ -37,6 +37,7 @@ website:
       <a class="link-dark me-1" href="https://x.com/RicardoRey_95" title="Twitter/X" target="_blank" rel="noopener">{{< iconify fa6-brands twitter >}}</a>
       <a class="link-dark me-1" href="https://bsky.app/profile/ricardoreysaez.bsky.social" title="Bluesky" target="_blank" rel="noopener">{{< iconify fa6-brands bluesky >}}</a>
       <a class="link-dark me-1" href="https://www.youtube.com/@psicometries" title="YouTube" target="_blank" rel="noopener">{{< iconify fa6-brands youtube >}}</a>
+      <a class="link-dark me-1" href="https://scholar.google.com/citations?user=SxTNYh4AAAAJ&hl" title="Google Scholar" target="_blank" rel="noopener">{{< iconify academicons google-scholar >}}</a>
 
 format: 
   html:
