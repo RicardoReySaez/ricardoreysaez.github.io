@@ -4,6 +4,10 @@ subtitle: ""
 author: ""
 date: ""
 title-block: false
+# PDF-only toggle:
+#   true  = include nested bullet-list details
+#   false = omit nested bullet-list details
+cv-include-list-details: false
 format:
   html:
     toc: true
@@ -11,6 +15,8 @@ format:
     link-external-newwindow: true
     link-external-icon: false
   PrettyPDF-pdf:
+    filters:
+      - cv-pdf.lua
     include-in-header:
       text: |
         \usepackage{fontawesome5}
@@ -20,7 +26,10 @@ format:
         \usepackage{xcolor}
         \usepackage{microtype}
         \usepackage{enumitem}
-        \setlist[itemize]{topsep=2pt,itemsep=2pt}
+        \setlist[itemize,1]{topsep=3pt,itemsep=2pt,parsep=0pt,partopsep=0pt}
+        \setlist[itemize,2]{topsep=0pt,itemsep=0pt,parsep=0pt,partopsep=0pt}
+        \setlist[enumerate,1]{topsep=3pt,itemsep=1pt,parsep=0pt,partopsep=0pt}
+        \renewcommand{\tightlist}{\setlength{\parskip}{0pt}\setlength{\parsep}{0pt}}
         \setlength{\parindent}{0pt}
 format-links: [PrettyPDF-pdf]
 resources:
@@ -63,7 +72,7 @@ resources:
 
 ## {{< iconify fa6-solid:graduation-cap >}} Education
 
-- 2024–present | **Ph.D.** *Psychology*, Universidad Autónoma de Madrid  
+- 2024–present | **Ph.D.** *Psychology*, Universidad Autónoma de Madrid
   - Developing and validating psychometric models for the study of individual differences in experimental psychology.
 - 2020–2022 | **M.S.** *Quantitative Research Methods for Behavioral and Health Sciences*, Complutense University of Madrid
 - 2017–2020 | **B.S.** *Psychology*, Complutense University of Madrid
@@ -74,36 +83,36 @@ resources:
 - 2023 | ***Practical Introduction to Advances in Exploratory Factor Analysis Applied to Item Analysis***, University of the Basque Country
 - 2022 | ***Introduction to Exploratory Graph Analysis (EGA) with R***, Zaragoza University
 - 2020 | ***Principles, Statistical and Computational Tools for Reproducible Data Science***, Harvard University (HarvardX) | [Verified Certificate](https://courses.edx.org/certificates/d9d5e1f33f6f4c4cb9a43da41912cfa6)
-- 2020 | ***Professional Certificate in Data Science***, Harvard University  
-  - *Data Science: R basics* | [Verified Certificate](https://courses.edx.org/certificates/2d9521b4289a45adb89344b808b6f60b)  
-  - *Data Science: Visualization* | [Verified Certificate](https://courses.edx.org/certificates/025e5081c72a40c79428ca56145281d5)  
-  - *Data Science: Probability* | [Verified Certificate](https://courses.edx.org/certificates/a4747f3de2164ab48da36dc6dbeab1d4)  
-  - *Data Science: Inference and Modeling* | [Verified Certificate](https://courses.edx.org/certificates/09f023dfd1bf4b8b896db4a905670733)  
-  - *Data Science: Productivity Tools* | [Verified Certificate](https://courses.edx.org/certificates/b26c03638c3c46e4a97fcb822f70210c)  
-  - *Data Science: Wrangling* | [Verified Certificate](https://courses.edx.org/certificates/51759921d48a416186b5517318d72135)  
+- 2020 | ***Professional Certificate in Data Science***, Harvard University
+  - *Data Science: R basics* | [Verified Certificate](https://courses.edx.org/certificates/2d9521b4289a45adb89344b808b6f60b)
+  - *Data Science: Visualization* | [Verified Certificate](https://courses.edx.org/certificates/025e5081c72a40c79428ca56145281d5)
+  - *Data Science: Probability* | [Verified Certificate](https://courses.edx.org/certificates/a4747f3de2164ab48da36dc6dbeab1d4)
+  - *Data Science: Inference and Modeling* | [Verified Certificate](https://courses.edx.org/certificates/09f023dfd1bf4b8b896db4a905670733)
+  - *Data Science: Productivity Tools* | [Verified Certificate](https://courses.edx.org/certificates/b26c03638c3c46e4a97fcb822f70210c)
+  - *Data Science: Wrangling* | [Verified Certificate](https://courses.edx.org/certificates/51759921d48a416186b5517318d72135)
   - *Data Science: Linear Regression* | [Verified Certificate](https://courses.edx.org/certificates/470c6bb6fe2b4fe8913208d5edda44a3)
 
 ## {{< iconify fa6-solid:chalkboard-user >}} Teaching and Educational Activities
-- 2025 | **Meta-analysis, Latent Class and Latent Profile Analysis**  
-  - Lead instructor, Advanced Statistical Training for Researchers  
+- 2025 | **Meta-analysis, Latent Class and Latent Profile Analysis**
+  - Lead instructor, Advanced Statistical Training for Researchers
   - Organized by Deusto FamilyPsych, Deusto University
-- 2025 | **Introduction to Bayesian Psychometrics: Applications to Factor Analysis**  
-  - Seminar instructor, National interfaculty training seminar  
+- 2025 | **Introduction to Bayesian Psychometrics: Applications to Factor Analysis**
+  - Seminar instructor, National interfaculty training seminar
   - Organized by ASCOFAPSI (Colombian Association of Faculties of Psychology)
-- 2025 | **Beyond Maximum Likelihood: Introduction to Bayesian Factor Analysis**  
-  - Seminar instructor, Master’s program in Quantitative Research Methods  
+- 2025 | **Beyond Maximum Likelihood: Introduction to Bayesian Factor Analysis**
+  - Seminar instructor, Master’s program in Quantitative Research Methods
   - Organized by Autonomous University of Madrid
-- 2024 | **ChatGPT and Psychometrics: Optimizing the Design, Refinement, and Data Analysis of Measurement Instruments**  
-  - Seminar instructor, Master’s program in Quantitative Research Methods  
+- 2024 | **ChatGPT and Psychometrics: Optimizing the Design, Refinement, and Data Analysis of Measurement Instruments**
+  - Seminar instructor, Master’s program in Quantitative Research Methods
   - Organized by Autonomous University of Madrid
-- 2023–2024 | ***Data Analysis in Psychology***  
-  - Course instructor, Undergraduate program (Bachelor’s in Psychology)  
+- 2023–2024 | ***Data Analysis in Psychology***
+  - Course instructor, Undergraduate program (Bachelor’s in Psychology)
   - Organized by Nebrija University
-- 2023 | **Adapting Our Teaching to the Revolution of AI and ChatGPT**  
-  - Workshop instructor, Faculty training  
+- 2023 | **Adapting Our Teaching to the Revolution of AI and ChatGPT**
+  - Workshop instructor, Faculty training
   - Organized by Universidad Autónoma de Madrid
-- 2023 | **How can we Adapt Our Teaching to the Revolution of AI and ChatGPT?**  
-  - Workshop instructor, Faculty training  
+- 2023 | **How can we Adapt Our Teaching to the Revolution of AI and ChatGPT?**
+  - Workshop instructor, Faculty training
   - Organized by University of Costa Rica
 
 ## {{< iconify fa6-solid:book >}} Textbooks
@@ -112,19 +121,35 @@ resources:
 
 ## {{< iconify dashicons:awards >}} Awards
 
-- 2025 | [Best Oral Communication Award](https://sites.google.com/view/xiv-jornadas-aiidi-2025/inicio) | Ibero-American Association for Research on Individual Differences  
-  - Presentation Title: ***New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?***  
+- 2025 | [Best Oral Communication Award](https://sites.google.com/view/xiv-jornadas-aiidi-2025/inicio) | Ibero-American Association for Research on Individual Differences
+  - Presentation Title: ***New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?***
   - Prize: [**MASK-5** Measurement Instrument](https://www.hogrefe-tea.com/public/catalogo/producto/MASK-5-Cuestionario-de-Personalidad-de-los-Big-Five)
 
-- 2024 | [Dissemination and Transfer in Methodology Award](https://www.aemcco.org/listado_noimg.php?Seccion=Premios%20AEMCCO) | Spanish Association of Methodology for Behavioral Sciences  
-  - Project ***Ecuación Triunfo***  
+- 2024 | [Dissemination and Transfer in Methodology Award](https://www.aemcco.org/listado_noimg.php?Seccion=Premios%20AEMCCO) | Spanish Association of Methodology for Behavioral Sciences
+  - Project ***Ecuación Triunfo***
   - Funding: €1,000
 
-- 2024 | [Julio Olea Grant](https://www.aemcco.org/listado_noimg.php?Seccion=Ayudas%20AEMCCO) | Spanish Association of Methodology for Behavioral Sciences  
-  - Funding to carry out the research project ***The union of psychometrics and experimental psychology: Bayesian hierarchical models with common factors for response times***  
+- 2024 | [Julio Olea Grant](https://www.aemcco.org/listado_noimg.php?Seccion=Ayudas%20AEMCCO) | Spanish Association of Methodology for Behavioral Sciences
+  - Funding to carry out the research project ***The union of psychometrics and experimental psychology: Bayesian hierarchical models with common factors for response times***
   - Funding: €2,400
 
 ## {{< iconify ooui:articles-rtl >}} Publications
+
+::: {.content-visible when-format="pdf"}
+
+1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J. & Vadillo, M. A. (in press). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. *Psychological Methods*. <https://doi.org/10.31234/osf.io/gv6k7_v2>
+1. Garre-Frutos, F., Martínez-López, P., Ariza, A., [**Rey-Sáez, R.**]{.underline}, Luque, D., Vadillo, M. A., & González, F. (2026, March 22). Explicit knowledge modulates Pavlovian attentional biases. *PsyArxiv*. <https://doi.org/10.31234/osf.io/uwge3_v2>
+1. [**Rey-Sáez, R.**]{.underline}, & Revuelta, J. (2026, March 5). An Efficient Rotation-Sign-Permutation Algorithm to Solve Rotational Indeterminacy in Bayesian Exploratory Factor Analysis. *PsyArxiv*. <https://doi.org/10.31234/osf.io/6drsw_v2>
+1. Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, Shanks, D. R., Soto, D., & Vadillo, M. A. (2026). Replicating the unconscious working memory effect: A multisite preregistered study. *Neuroscience of Consciousness*. <https://doi.org/10.1093/nc/niaf046>
+1. Pacheco-Romero, A. M., Martín-García, Ó., [**Rey-Sáez, R.**]{.underline}, Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. *Cognition and Emotion, 38*(4), 587–604. <https://doi.org/10.1080/02699931.2024.2314066>
+1. Gracia, E., Martín-Fernández, M., [**Rey-Sáez, R.**]{.underline}, & Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. *Psychology of Violence, 14*(2), 127–136. <https://doi.org/10.1037/vio0000497>
+1. Vega-Sanz, M., [**Rey-Sáez, R.**]{.underline}, Berástegui, A., & Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. *American Journal of Perinatology, 41*(S 01), e2870–e2877. <https://doi.org/10.1055/s-0043-1776062>
+1. Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, & Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. PsyArXiv. <https://doi.org/10.31234/osf.io/kmqy5>
+1. [**Rey-Sáez, R.**]{.underline} (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. *R.E.M.A. Revista Electrónica de Metodología Aplicada, 24*(1), 41–44. <https://reunido.uniovi.es/index.php/Rema/article/view/17634>
+
+:::
+
+::: {.content-visible when-format="html"}
 
 [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J. & Vadillo, M. A. (in press). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. *Psychological Methods*.
 
@@ -222,11 +247,15 @@ Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, & Castillejo, I. (2023). 
 [Code](){.btn-sm .btn .disabled .btn-primary title="code unavailable"}
 [PDF](https://reunido.uniovi.es/index.php/Rema/article/view/17634){.btn-sm .btn .btn-primary aria-label="PDF"}
 [OSF](){.btn-sm .btn .disabled .btn-primary title="OSF unavailable"}
+::: 
 :::
+
 :::
 
 ## {{< iconify game-icons:teacher >}} Conference Presentations
 
+1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2026). *A Multilevel Psychometric Framework for Experimental Tasks: The Generalized Hierarchical Factor Model* [Oral presentation] 15th International Multilevel Conference.
+1. Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline} & Vadillo, M. A. (2026) *How do I start planning my multisite project? A tutorial on multilevel simulation-based power and sensitivity analysis* [Oral presentation] 15th International Multilevel Conference.
 1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?* [Oral presentation] XIV Conference – Asociación Iberoamericana para la Investigación de las Diferencias Individuales (AIIDI).
 1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *Where psychometrics meets experimental psychology: Bayesian hierarchical factor models for response times.* [Oral presentation] XI Conference – European Congress of Methodology.
 1. [**Rey-Sáez, R.**]{.underline}, Revuelta, J., & Vadillo, M. A. (2025). *From random effects to common factors: Latent dimensionality assessment in experimental psychology.* [Oral presentation] XI Conference – European Congress.
