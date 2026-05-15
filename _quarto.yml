@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: docs
+  resources:
+    - assets/**
+    - logosRRS/**
+    - "Model diagrams/**"
 
 website:
   title: "Ricardo Rey-Sáez"

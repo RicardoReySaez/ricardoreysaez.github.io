@@ -7,12 +7,12 @@ image-alt: "Logo with three greek letters: two rhos and one sigma"
 open-graph:
   title: "Ricardo Rey-Sáez"
   description: "PhD student in Psychology | Psychometrics and Bayesian statistical modeling"
-  image: docs/assets/img/RRS-social.png
+  image: assets/img/RRS-social.png
 
 twitter-card:
   title: "Ricardo Rey-Sáez"
   description: "PhD student in Psychology | Psychometrics and Bayesian statistical modeling"
-  image: docs/assets/img/RRS-social.png
+  image: assets/img/RRS-social.png
 
 about:
   template: solana

@@ -1,14 +1,14 @@
 [
   {
-    "listing": "/blog/index.html",
-    "items": [
-      "/blog/model_definition/index.html"
-    ]
-  },
-  {
     "listing": "/research/index.html",
     "items": [
       "/research/example_research_note/index.html"
+    ]
+  },
+  {
+    "listing": "/blog/index.html",
+    "items": [
+      "/blog/model_definition/index.html"
     ]
   }
 ]

@@ -1,0 +1,36 @@
+title: "Curriculum Vitae"
+subtitle: ""
+author: ""
+date: ""
+title-block: false
+# PDF-only toggle:
+#   true  = include nested bullet-list details
+#   false = omit nested bullet-list details
+cv-include-list-details: true
+# Shared AwesomeCV PDF header/contact metadata.
+# Edit these values to change docs/CV/CV_RRS.pdf without touching the template.
+awesomecv-first-name: Ricardo
+awesomecv-last-name: Rey-Sáez
+awesomecv-tagline: Psychometrics · Experimental Psychology · Bayesian Modeling
+awesomecv-role: Ph.D. Candidate
+awesomecv-affiliation: Universidad Autónoma de Madrid
+awesomecv-photo: profile_pic.jpeg
+awesomecv-lab-label: Cognition, Attention and Learning Lab
+awesomecv-lab-url: https://calluam.wordpress.com/quienes-somos/
+awesomecv-about: "My research sits somewhere between Bayesian modelling, psychometrics, and experimental psychology. More specifically, I am interested in developing measurement models that can capture individual differences in how people perform on experimental tasks."
+awesomecv-website-label: personal website
+awesomecv-website-url: https://ricardoreysaez.github.io
+awesomecv-email: ricardoreysaez95@gmail.com
+awesomecv-orcid: 0000-0001-6739-2035
+awesomecv-scholar-label: Google Scholar
+awesomecv-scholar-url: "https://scholar.google.com/citations?user=SxTNYh4AAAAJ&hl"
+awesomecv-researchgate-label: Ricardo-Rey-Saez
+awesomecv-researchgate-url: https://www.researchgate.net/profile/Ricardo-Rey-Saez
+awesomecv-github-label: rreysa
+awesomecv-github-url: https://github.com/rreysa
+awesomecv-twitter-label: 'RicardoRey\_95'
+awesomecv-twitter-url: https://x.com/RicardoRey_95
+awesomecv-bluesky-label: Bluesky
+awesomecv-bluesky-url: https://bsky.app/profile/ricardoreysaez.bsky.social
+awesomecv-youtube-label: YouTube
+awesomecv-youtube-url: https://www.youtube.com/@psicometries

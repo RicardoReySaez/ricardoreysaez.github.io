@@ -1,0 +1,10 @@
+---
+metadata-files:
+  - _cv-metadata.yml
+format:
+  AwesomeCV-pdf: default
+resources:
+  - ../assets/cv.css
+---
+
+{{< include _includes/cv-body.qmd >}}

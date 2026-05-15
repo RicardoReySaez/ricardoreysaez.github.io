@@ -1,0 +1,12 @@
+title: AwesomeCV
+author: Ricardo Rey-Sáez
+version: 0.1.0
+contributes:
+  formats:
+    pdf:
+      output-file: CV_RRS.pdf
+      pdf-engine: lualatex
+      template: ../../../CV/awesomecv/awesomecv-template.tex
+      filters:
+        - ../../../CV/awesomecv/awesomecv.lua
+      toc: false

@@ -1,0 +1,184 @@
+\PassOptionsToPackage{unicode}{hyperref}
+\documentclass[11pt,a4paper]{awesomecv/awesome-cv}
+
+\usepackage{amsmath}
+\usepackage{iftex}
+\ifLuaTeX
+  \usepackage{luacolor}
+  \usepackage[soul]{lua-ul}
+\else
+  \usepackage{soul}
+\fi
+\usepackage{eso-pic}
+\usepackage{graphicx}
+\usepackage{tikz}
+\usepackage{xstring}
+
+\setlength{\emergencystretch}{3em}
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+\geometry{left=1.75cm, top=1.45cm, right=3.95cm, bottom=1.75cm, footskip=.55cm}
+
+\definecolor{rrsInk}{HTML}{0E171E}
+\definecolor{rrsDeepBlue}{HTML}{002642}
+\definecolor{rrsNavBlue}{HTML}{10335B}
+\definecolor{rrsLinkBlue}{HTML}{3E8EBC}
+\definecolor{rrsSoftBlue}{HTML}{B4C8DC}
+\definecolor{rrsMutedBlue}{HTML}{2E4963}
+\definecolor{rrsPaper}{HTML}{FEFBF2}
+
+\pagecolor{rrsPaper}
+\colorlet{awesome}{rrsLinkBlue}
+\colorlet{text}{rrsInk}
+\colorlet{darktext}{rrsInk}
+\colorlet{graytext}{rrsMutedBlue}
+\colorlet{lighttext}{rrsSoftBlue}
+\hypersetup{colorlinks=true, allcolors=rrsLinkBlue}
+\urlstyle{same}
+
+\AddToShipoutPictureBG{%
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{\dimexpr\paperwidth-2.7cm},0){%
+      \color{rrsNavBlue}\rule{2.7cm}{\LenToUnit\paperheight}%
+    }%
+  }%
+  \AtPageLowerLeft{%
+    \put(\LenToUnit{\dimexpr\paperwidth-2.38cm},\LenToUnit{\dimexpr\paperheight-2.75cm}){%
+      \includegraphics[width=2.05cm]{../LogosRRS/home_light.png}%
+    }%
+  }%
+}
+
+\setbool{acvSectionColorHighlight}{false}
+\renewcommand{\acvHeaderSocialSep}{\quad{\color{rrsSoftBlue}\textbar}\quad}
+\renewcommand{\acvHeaderAfterSocialSkip}{4mm}
+\renewcommand{\acvHeaderAfterNameSkip}{2.2mm}
+\renewcommand{\acvHeaderAfterPositionSkip}{1.45mm}
+\renewcommand{\acvHeaderAfterAddressSkip}{0mm}
+\renewcommand{\acvSectionTopSkip}{2.5mm}
+\renewcommand{\acvSectionContentTopSkip}{4mm}
+\renewcommand*{\headerfirstnamestyle}[1]{{\fontsize{32pt}{1em}\headerfontlight\color{rrsMutedBlue} #1}}
+\renewcommand*{\headerlastnamestyle}[1]{{\fontsize{32pt}{1em}\headerfont\bfseries\color{rrsInk} #1}}
+\renewcommand*{\headerpositionstyle}[1]{{\fontsize{8.2pt}{1em}\bodyfont\scshape\color{rrsLinkBlue} #1}}
+\renewcommand*{\headeraddressstyle}[1]{{\fontsize{8.55pt}{1.05em}\bodyfontlight\upshape\color{rrsMutedBlue} #1}}
+\renewcommand*{\headersocialstyle}[1]{{\fontsize{6.8pt}{1em}\headerfont\color{rrsInk} #1}}
+\renewcommand*{\footerstyle}[1]{{\fontsize{7.2pt}{1em}\bodyfontlight\upshape\color{rrsMutedBlue} #1}}
+\newcommand*{\rrscandidatestyle}[1]{{\fontsize{8.45pt}{1em}\bodyfont\scshape\color{rrsInk} #1}}
+\newcommand*{\rrssectiontitle}[1]{%
+  \StrLeft{#1}{3}[\rrsSectionStart]%
+  \StrGobbleLeft{#1}{3}[\rrsSectionRest]%
+  {\color{rrsLinkBlue}\rrsSectionStart}{\color{rrsInk}\rrsSectionRest}%
+}
+\renewcommand*{\sectionstyle}[1]{{\fontsize{16pt}{1em}\bodyfont\bfseries\rrssectiontitle{#1}}}
+\renewcommand{\section}[1]{%
+  \vspace{\acvSectionTopSkip}
+  \sectionstyle{#1}
+  \phantomsection
+  \color{rrsSoftBlue}\vhrulefill{0.9pt}
+}
+\newcommand*{\rrslistfont}{\fontsize{8.5pt}{1.22em}\bodyfontlight\color{rrsInk}\selectfont}
+\newcommand*{\rrsdetailfont}{\fontsize{8.35pt}{1.18em}\bodyfontlight\color{rrsInk}\selectfont}
+\setlist[enumerate,1]{leftmargin=1.35em, labelsep=0.45em, itemsep=0.65mm, topsep=0.4mm, label=\textcolor{rrsInk}{\arabic*.}, before=\rrslistfont}
+\renewenvironment{cvitems}{%
+  \vspace{-2.8mm}
+  \begin{justify}
+  \begin{itemize}[leftmargin=1.8ex, itemsep=0mm, topsep=0mm, parsep=0pt, partopsep=0pt]
+    \rrsdetailfont
+    \renewcommand{\labelitemi}{\textcolor{rrsInk}{\scriptsize\raisebox{0.35ex}{\textbullet}}}
+}{%
+  \end{itemize}
+  \end{justify}
+  \vspace{-0.15mm}
+}
+
+\newlength{\rrsEntryDateWidth}
+\newlength{\rrsEntryBodyWidth}
+\setlength{\rrsEntryDateWidth}{2.25cm}
+\setlength{\rrsEntryBodyWidth}{\dimexpr\textwidth-\rrsEntryDateWidth-0.45cm\relax}
+\newcommand*{\rrsdatestyle}[1]{{\fontsize{8.1pt}{1em}\bodyfont\bfseries\color{rrsLinkBlue}#1}}
+\newcommand*{\rrsentritlestyle}[1]{{\fontsize{9.4pt}{1.15em}\bodyfont\bfseries\color{rrsInk}#1}}
+\newcommand*{\rrsmetastyle}[1]{{\fontsize{8.45pt}{1.15em}\bodyfontlight\color{rrsMutedBlue}#1}}
+\newcommand*{\rrscventry}[4]{%
+  \noindent\begin{tabular*}{\textwidth}{@{}p{\rrsEntryBodyWidth}@{\hspace{0.45cm}}>{\raggedleft\arraybackslash}p{\rrsEntryDateWidth}@{}}
+    \begin{minipage}[t]{\rrsEntryBodyWidth}
+      \rrsentritlestyle{#2}%
+      \ifstrempty{#3}{}{\\[0.35mm]\rrsmetastyle{#3}}%
+      \ifstrempty{#4}{}{\\[-2.3mm]#4}%
+    \end{minipage}
+    & \rrsdatestyle{#1}
+  \end{tabular*}\par\vspace{1.2mm}%
+}
+\newcommand*{\rrstextentry}[1]{%
+  \noindent\begin{minipage}[t]{\textwidth}
+    {\rrslistfont\raggedright #1}
+  \end{minipage}\par\vspace{1.2mm}%
+}
+\newcommand*{\rrsabout}[1]{%
+  \vspace{-0.5mm}
+  \noindent\begin{minipage}{\textwidth}
+    {\fontsize{8.85pt}{1.32em}\bodyfontlight\itshape\color{rrsInk}\selectfont #1}
+  \end{minipage}\par\vspace{2.2mm}
+}
+\newcommand*{\rrscontactsep}{\quad{\color{rrsSoftBlue}\textbar}\quad}
+\newcommand*{\rrscontact}[3]{%
+  \mbox{\href{#1}{\textcolor{rrsLinkBlue}{#2\hspace{0.25em}#3}}}%
+}
+\newcommand*{\rrsblueskyicon}{%
+  \tikz[baseline=-0.45ex,x=1ex,y=1ex]{%
+    \fill[rrsLinkBlue,rotate around={35:(-0.28,0.15)}] (-0.58,0.04) ellipse (0.22 and 0.43);
+    \fill[rrsLinkBlue,rotate around={-35:(0.28,0.15)}] (0.58,0.04) ellipse (0.22 and 0.43);
+    \fill[rrsLinkBlue,rotate around={-28:(-0.24,-0.25)}] (-0.28,-0.25) ellipse (0.14 and 0.27);
+    \fill[rrsLinkBlue,rotate around={28:(0.24,-0.25)}] (0.28,-0.25) ellipse (0.14 and 0.27);
+  }%
+}
+\newcommand*{\rrsyoutubeicon}{%
+  \tikz[baseline=-0.45ex,x=1ex,y=1ex]{%
+    \draw[rrsLinkBlue,line width=0.12ex,rounded corners=0.18ex] (-0.72,-0.42) rectangle (0.72,0.42);
+    \fill[rrsLinkBlue] (-0.18,-0.25) -- (-0.18,0.25) -- (0.32,0) -- cycle;
+  }%
+}
+\newcommand*{\rrssocialbar}{%
+  \begin{center}
+    {\fontsize{7.15pt}{1.25em}\bodyfont\selectfont
+    \rrscontact{mailto:$awesomecv-email$}{\faEnvelope}{$awesomecv-email$}%
+    \rrscontactsep
+    \rrscontact{https://orcid.org/$awesomecv-orcid$}{\aiOrcidSquare}{$awesomecv-orcid$}%
+    \rrscontactsep
+    \rrscontact{$awesomecv-scholar-url$}{\aiGoogleScholarSquare}{$awesomecv-scholar-label$}%
+    \rrscontactsep
+    \rrscontact{$awesomecv-researchgate-url$}{\aiResearchGateSquare}{$awesomecv-researchgate-label$}\\[0.55mm]
+    \rrscontact{$awesomecv-github-url$}{\faGithubSquare}{$awesomecv-github-label$}%
+    \rrscontactsep
+    \rrscontact{$awesomecv-twitter-url$}{\faTwitter}{$awesomecv-twitter-label$}%
+    \rrscontactsep
+    \rrscontact{$awesomecv-bluesky-url$}{\rrsblueskyicon}{$awesomecv-bluesky-label$}%
+    \rrscontactsep
+    \rrscontact{$awesomecv-youtube-url$}{\rrsyoutubeicon}{$awesomecv-youtube-label$}%
+    }
+  \end{center}\vspace{1.5mm}
+}
+\newenvironment{rrsentries}{\vspace{\acvSectionContentTopSkip}}{\vspace{0.5mm}}
+
+\name{$awesomecv-first-name$}{$awesomecv-last-name$}
+\position{$awesomecv-tagline$}
+\address{\rrscandidatestyle{$awesomecv-role$}\\[0.45mm]$awesomecv-affiliation$}
+\photo[circle,edge,left]{$awesomecv-photo$}
+\extrainfo{\phantom{.}}
+
+\makecvfooter
+  {\today}
+  {Ricardo Rey-Sáez~~~·~~~Curriculum Vitae}
+  {\thepage}
+
+\begin{document}
+\makecvheader[C]
+\vspace{-2mm}
+
+\rrsabout{Member of the \href{$awesomecv-lab-url$}{$awesomecv-lab-label$} at $awesomecv-affiliation$ (UAM). $awesomecv-about$ For more information, visit my \href{$awesomecv-website-url$}{$awesomecv-website-label$}.}
+
+\rrssocialbar
+
+$body$
+
+\end{document}
