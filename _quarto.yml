@@ -14,7 +14,7 @@ website:
   search: true
   page-navigation: true
   back-to-top-navigation: true
-  favicon: logosRRS/favicon.svg
+  favicon: logosRRS/home_light.svg
 
   navbar:
     logo: logosRRS/navbar_light.svg
