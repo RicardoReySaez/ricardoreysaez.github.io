@@ -1,0 +1,86 @@
+/*-- scss:defaults --*/
+/* Paleta LIGHT extraída de silviacanelon.com (valores del inspector) */
+
+/* Primarios / secundarios */
+$spc-primary:         #002642;
+$spc-primary-light:   #10335b;
+$spc-secondary:       #D96E34;
+$spc-secondary-light: #3E8EBC;
+
+/* Acentos */
+$spc-accent:          #002642;
+$spc-accent-light:    #EEF1E0;
+$spc-accent-dark:     #697935;
+
+/* Fondos */
+$spc-bg-0:            #FEFBF2;  /* body */
+$spc-bg-1:            #FAF0E3;  /* panels / code BG (ojo: NO el naranja) */
+$spc-bg-00:           rgba(0,0,0,0.08);
+
+/* Navbar */
+$spc-navbar-bg:       #10335b;
+$spc-navbar-border:   #b4c8dc;
+$spc-navbar-fg:       #FAF0E3;
+$spc-navbar-hover:        $spc-secondary !default;   // <-- use ORANGE (#D96E34)
+$spc-navbar-title-hover:  $spc-navbar-hover !default;
+/* Footer */
+$spc-footer-bg:       #fffbf2;
+$spc-footer-fg:       #2E4963;
+$spc-footer-link:     #3E8EBC;
+$spc-footer-link-hover:#D96E34;
+
+/* Social / hero & footer icons (LIGHT) */
+$spc-social:        #3E8EBC;                 
+$spc-social-hover:  #D96E34;
+
+
+/* Grises útiles */
+$spc-gray-300:        #dee2e6;
+$spc-gray-500:        #adb5bd;
+$spc-gray-600:        #6c757d;
+$spc-gray-800:        #343a40;
+
+/* Textos base (alias usados por tu tema) */
+$body-color:          $spc-primary; /* texto principal */
+$body-secondary:      #6C757D;      /* texto secundario (defínelo aquí) */
+
+/* Hero / Title banner (LIGHT) */
+$spc-hero-bg:         transparent;                /* fallback sin imagen */
+$spc-hero-overlay:    rgba($spc-bg-1, .35);       /* velo crema sutil */
+$spc-hero-text:       $spc-primary;               /* color del título */
+$spc-hero-subtext:    $body-secondary;            /* <-- variable existente */
+$spc-hero-border:     rgba($spc-hero-text, .12);  /* separadores finos */
+
+/* === NAVBAR interactive colors (LIGHT) === */
+/* Color de hover para TÍTULO y ENLACES de la navbar */
+$spc-navbar-hover:        $spc-secondary-light !default;  /* p.ej. #D96E34 */
+$spc-navbar-title-hover:  $spc-navbar-hover    !default;
+
+/* Sombras de la navbar (reposo y hover) */
+$spc-navbar-shadow:       rgba($spc-primary, 0.16) !default;  /* azul muy sutil */
+$spc-navbar-shadow-hover: rgba($spc-secondary, 0.26) !default;/* tono ámbar sutil */
+
+/* === CODE surfaces (LIGHT) === */
+$spc-code-bg:           #FEF9EE;
+$spc-code-fg:           $spc-primary;
+$spc-code-border:       $spc-bg-1;
+$spc-code-shadow:       rgba(0,0,0,.08);
+$spc-code-bleft:        $spc-bg-1;
+$spc-code-inline-bg:    $spc-accent;
+$spc-code-inline-fg:    $spc-bg-0;
+
+$spc-gutter-bg:         mix($spc-bg-1, #000, 4%);
+$spc-gutter-fg:         mix($spc-primary, $spc-bg-1, 50%);
+
+$spc-line-hl:           rgba(#3E8EBC, .12);
+$spc-selection:         rgba(#3E8EBC, .18);
+
+$spc-output-bg:         mix($spc-bg-1, #000, 2%);
+$spc-output-fg:         mix($spc-primary, $spc-bg-1, 85%);
+$spc-output-border:     mix($spc-bg-0, $spc-primary, 16%);
+
+$spc-msg-warn-bg:       rgba(#D96E34, .12);
+$spc-msg-warn-fg:       #D96E34;
+$spc-msg-err-bg:        rgba(#cc0000, .10);
+$spc-msg-err-fg:        #cc0000;
+

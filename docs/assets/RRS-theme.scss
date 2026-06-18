@@ -1,0 +1,355 @@
+/*=========================================================
+  RRS THEME — Quarto-compatible SCSS (consumes $spc-* colors)
+  REQUIREMENT: load colors-light/dark.scss BEFORE this file.
+=========================================================*/
+
+/*-- scss:functions --*/
+/* (Optional) Put custom SCSS functions here. */
+
+/*-- scss:mixins --*/
+/* (Optional) Put custom SCSS mixins here. */
+
+/*-- scss:uses --*/
+/* Do NOT import colors here (light/dark differ). Load them in YAML before this file. */
+
+/*-- scss:defaults --*/
+
+/* Map derived theme variables from your $spc-* palette */
+$primary:            $spc-primary-light !default;
+$secondary:          $spc-secondary-light !default;
+
+$primary-dark:       $spc-primary !default;
+$secondary-strong:   $spc-secondary !default;
+
+$accent:             $spc-accent !default;
+$accent-light:       $spc-accent-light !default;
+$accent-dark:        $spc-accent-dark !default;
+
+/* Base text & background */
+$body-bg:            if(variable-exists(spc-bg-0), $spc-bg-0, #fff) !default;
+$body-color:         if(variable-exists(body-color), $body-color, $spc-primary) !default;
+$body-secondary:     if(variable-exists(body-secondary), $body-secondary, mix($body-color, $body-bg, 40%)) !default;
+
+/* Code surfaces */
+$code-block-bg:      if(variable-exists(spc-bg-1), $spc-bg-1, mix($body-bg, #000, 4%)) !default;
+$code-block-border:  mix($body-bg, $body-color, 12%) !default;
+$code-inline-fg:     inherit !default;
+$code-inline-bg:     transparent !default;
+
+/* ToC accents */
+$toc-color:           $secondary !default;
+$toc-active-border:   $toc-color !default;
+$toc-inactive-border: mix($toc-color, $body-bg, 50%) !default;
+
+/* Navbar (from your palette) */
+$navbar-bg:            if(variable-exists(spc-navbar-bg), $spc-navbar-bg, $primary-dark) !default;
+$navbar-border:        if(variable-exists(spc-navbar-border), $spc-navbar-border, mix($navbar-bg, #fff, 70%)) !default;
+$navbar-fg:            if(variable-exists(spc-navbar-fg), $spc-navbar-fg, #fff) !default;
+$navbar-hover:         if(variable-exists(spc-navbar-hover), $spc-navbar-hover, $secondary) !default;
+$navbar-title-hover:   if(variable-exists(spc-navbar-title-hover), $spc-navbar-title-hover, $navbar-hover) !default;
+$navbar-shadow:        if(variable-exists(spc-navbar-shadow), $spc-navbar-shadow, rgba($navbar-bg, 0.16)) !default;
+$navbar-shadow-hover:  if(variable-exists(spc-navbar-shadow-hover), $spc-navbar-shadow-hover, rgba($secondary-strong, 0.26)) !default;
+
+/* Footer */
+$footer-bg:           if(variable-exists(spc-footer-bg), $spc-footer-bg, $body-bg) !default;
+$footer-fg:           if(variable-exists(spc-footer-fg), $spc-footer-fg, $primary-dark) !default;
+$footer-link:         if(variable-exists(spc-footer-link), $spc-footer-link, $secondary) !default;
+$footer-link-hover:   if(variable-exists(spc-footer-link-hover), $spc-footer-link-hover, $secondary-strong) !default;
+
+/* Hero */
+$hero-bg:             if(variable-exists(spc-hero-bg), $spc-hero-bg, transparent) !default;
+$hero-text:           if(variable-exists(spc-hero-text), $spc-hero-text, $primary-dark) !default;
+$hero-subtext:        if(variable-exists(spc-hero-subtext), $spc-hero-subtext, $body-secondary) !default;
+$hero-overlay:        if(variable-exists(spc-hero-overlay), $spc-hero-overlay, rgba($body-bg, .35)) !default;
+
+/* Utilities */
+$gray-200:            mix($primary, $body-bg, 60%) !default;
+$table-sep:           mix($primary, $body-bg, 25%) !default;
+$table-sep-light:     mix($primary, $body-bg, 50%) !default;
+$spc-trans:           .25s !default;
+
+/*-- scss:rules --*/
+
+/* Body */
+body { color: $body-color; background-color: $body-bg; }
+
+/* Links */
+a {
+  color: $secondary;
+  text-decoration: underline;
+  transition: color $spc-trans ease, background-color $spc-trans ease;
+}
+a:hover, a:focus { color: $secondary-strong; text-decoration: none; }
+
+/* Focus visibility */
+a:focus-visible, .btn:focus-visible, .nav-link:focus-visible, button:focus-visible {
+  outline: 2px solid mix($secondary, $body-bg, 20%);
+  outline-offset: 2px;
+}
+
+/* Tables */
+.table { --bs-table-border-color: #{$primary}; border-color: $primary; }
+.table caption { color: $body-secondary; }
+.table > :not(caption) > * > * { border-color: $table-sep; }
+.table-striped > tbody > tr:nth-of-type(odd) > * { background-color: mix($body-bg, $primary, 8%); }
+
+/* Navbar */
+.navbar {
+  background-color: $navbar-bg;
+  border-bottom: 1px solid $navbar-border;
+  box-shadow: 0 1px 6px $navbar-shadow;
+  transition: box-shadow $spc-trans ease, background-color $spc-trans ease;
+  &:hover { box-shadow: 0 6px 24px $navbar-shadow-hover; }
+}
+.navbar-nav .nav-link, .quarto-navbar-tools .nav-link {
+  color: $navbar-fg !important;
+  border-bottom: none !important;
+  text-decoration: none !important;
+  transition: color $spc-trans ease;
+  &:hover, &:focus { color: $navbar-hover !important; }
+  &.active, &.show, &[aria-current="page"] { color: $navbar-hover !important; }
+}
+.navbar-nav .nav-link i, .quarto-navbar-tools .nav-link i,
+.navbar-nav .nav-link svg, .quarto-navbar-tools .nav-link svg {
+  fill: currentColor; transition: color $spc-trans ease, fill $spc-trans ease;
+}
+.navbar-title {
+  font-size: 0.85em; font-weight: 500; color: $navbar-fg !important;
+  text-transform: uppercase; letter-spacing: .08em;
+  border-bottom: none !important; text-decoration: none !important;
+  transition: color $spc-trans ease;
+  &:hover, &:focus { color: $navbar-title-hover !important; }
+}
+.navbar-brand img, .navbar-brand > img.navbar-logo {
+  height: 40px; width: auto; vertical-align: middle; margin-right: .5em;
+}
+
+/* Color scheme toggle (container only) */
+.quarto-color-scheme-toggle .bi::before { content: ""; }
+.quarto-color-scheme-toggle .bi {
+  display: inline-flex; width: 1rem; height: 1rem;
+  align-items: center; justify-content: center;
+}
+.navbar .quarto-color-scheme-toggle:hover,
+.navbar .quarto-color-scheme-toggle:focus-visible,
+.navbar .quarto-color-scheme-toggle .q-scheme-icons:hover,
+.navbar .quarto-color-scheme-toggle .q-scheme-icons iconify-icon:hover { color: $navbar-hover !important; }
+.navbar .quarto-color-scheme-toggle .q-scheme-icons iconify-icon { color: inherit !important; fill: currentColor; }
+
+/* Fixed navbar spacing */
+.fixed-top { position: fixed; }
+body { padding-top: 4rem; }
+
+/* Footer */
+.nav-footer {
+  background-color: $footer-bg; color: $footer-fg;
+  a, .footer-icon, svg {
+    color: $footer-link; fill: currentColor;
+    &:hover, &:focus { color: $footer-link-hover; text-decoration: none; }
+  }
+  a.link-dark { color: $footer-link !important; }
+  a.link-dark:hover { color: $footer-link-hover !important; }
+}
+
+/* Social icons */
+.about-entity .about-links a.about-link {
+  color: $spc-social; transition: color $spc-trans ease; text-decoration: none !important;
+}
+.about-entity .about-links a.about-link:hover,
+.about-entity .about-links a.about-link:focus,
+.about-entity .about-links a.about-link:focus-visible { color: $spc-social-hover; outline: none; }
+.about-entity .about-links a.about-link i,
+.about-entity .about-links a.about-link svg,
+.about-entity .about-links a.about-link iconify-icon { color: currentColor; fill: currentColor; }
+
+.nav-footer-center a, .nav-footer-center .footer-icon, .nav-footer-center svg {
+  color: $spc-social; fill: currentColor; transition: color $spc-trans ease;
+}
+.nav-footer-center a:hover, .nav-footer-center .footer-icon:hover, .nav-footer-center a:focus { color: $spc-social-hover; }
+
+/* Hero / Title banner */
+.featured-image, .quarto-title-banner {
+  background-color: $hero-bg; background-size: cover; background-position: center;
+  color: $hero-text; box-shadow: inset 0 0 0 1000px $hero-overlay;
+  border-bottom: none !important;
+  padding-top: clamp(1.4rem, 3vw, 2.6rem);
+  padding-bottom: clamp(1rem, 2vw, 1.6rem);
+}
+.quarto-title-banner .title { color: $hero-text; }
+.quarto-title .description { color: $hero-subtext; }
+.quarto-title-meta { border-bottom: none !important; margin-bottom: 0; }
+.quarto-title-block { border-bottom: none !important; padding-bottom: 1rem; margin-bottom: 1.5rem; }
+
+/* ToC */
+.sidebar .toc .nav-link { border-left: 2px solid $toc-inactive-border; }
+.sidebar .toc .nav-link.active, .sidebar .toc .active > .nav-link {
+  border-left-color: $toc-active-border; color: $toc-color;
+}
+
+/* Cards */
+.card {
+  background: $code-block-bg; border: none; border-radius: 4px;
+  box-shadow: 1px 1px 10px $spc-bg-00;
+}
+.card-img { border-radius: 4px 4px 0 0; }
+
+/* Buttons & Pagination */
+.btn-primary {
+  color: $body-bg; background-color: $primary; border-color: $primary;
+  transition: background-color $spc-trans ease, border-color $spc-trans ease, color $spc-trans ease;
+}
+.btn-primary:hover { background-color: $secondary; border-color: $secondary; }
+.btn-secondary { color: $secondary; background: transparent; border-radius: 5px; }
+
+.page-link {
+  color: $primary;
+  transition: color $spc-trans ease, background-color $spc-trans ease, border-color $spc-trans ease;
+}
+.page-link:hover { color: $body-bg; background-color: $primary; border-color: $primary; }
+
+/* Categories */
+.quarto-category {
+  background-color: $primary; color: $body-bg; border-color: $primary;
+  &:hover { background-color: $body-bg; color: $primary; }
+}
+.listing-category {
+  color: $secondary !important; border-color: $secondary !important;
+  &:hover { background-color: $secondary; color: $body-bg !important; }
+}
+
+/* Blockquotes */
+.blockquote {
+  color: $spc-secondary-light;
+  border-left: 4px solid #C0C0C0;
+  font-style: oblique;
+}
+
+/* ------------------ CODE (chunks) ------------------ */
+div.sourceCode {
+  background-color: $spc-code-bg;
+  border: 1px solid $spc-code-border;
+  border-radius: 6px;
+  box-shadow: 0 2px 10px $spc-code-shadow;
+  overflow: auto;
+}
+pre code {
+  color: $spc-code-fg;
+  font-family: "JetBrains Mono", monospace;
+  font-size: .85rem; line-height: 1.4;
+}
+pre code::selection { background: $spc-selection; }
+
+/* Gutter / line numbers */
+pre.numberSource, .numberSource code { position: relative; }
+pre.numberSource code > span > a:first-child::before {
+  color: $spc-gutter-fg; background: $spc-gutter-bg;
+  border-right: 1px solid $spc-code-border;
+  padding: 0 .6em; margin-right: .6em;
+}
+
+/* Line highlight */
+.sourceCode span.highlight, .sourceCode .code-line:hover { background: $spc-line-hl; }
+
+/* Filename bar */
+.code-with-filename .code-with-filename-file {
+  color: $code-inline-fg;
+  background-color: $code-inline-bg;
+  border: 1px solid $spc-code-border; border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  font-family: "JetBrains Mono", monospace; font-size: .85rem;
+}
+.code-with-filename pre { border-radius: 0 0 6px 6px; }
+
+/* Copy / fold buttons */
+.code-tools-button, button.code-copy-button {
+  color: $spc-secondary; background: transparent;
+  border: 1px solid $spc-code-border; border-radius: 6px; font-size: .85rem;
+}
+.code-tools-button:hover, button.code-copy-button:hover {
+  color: $spc-primary; background: $spc-secondary; border-color: $spc-secondary;
+}
+
+/* ------------------ CODE OUTPUT ------------------ */
+/* reset internal boxes in output */
+.cell-output .sourceCode,
+.cell-output .sourceCode pre,
+.cell-output .sourceCode pre code {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+/* inherit color */
+.cell-output pre code { color: inherit !important; }
+
+/* sunken box */
+.cell-output {
+  background-color: $spc-bg-0;
+  border-top: 1px solid #CCCCCC;
+  border-bottom: 1px solid #CCCCCC;
+  border-radius: 0;
+  overflow: auto;
+  padding: 12px 0 0 0;
+}
+
+/* dark-mode contrast */
+html.dark .cell-output, body.quarto-dark .cell-output {
+  background-color: $spc-bg-0;
+  border-top: 1px solid #999999;
+  border-bottom: 1px solid #999999;
+}
+html.dark .cell-output,
+html.dark .cell-output pre,
+html.dark .cell-output pre code,
+body.quarto-dark .cell-output,
+body.quarto-dark .cell-output pre,
+body.quarto-dark .cell-output pre code { color: #f5eadf !important; }
+
+/* ------------------ INLINE CODE: CHIP GRIS ------------------ */
+/* Light: raise from black */
+html:not(.dark) :not(pre):not(.sourceCode) > code {
+  background: mix(#000, $body-bg, 6%) !important;
+  border: 1px solid mix(#000, $body-bg, 12%) !important;
+  color: mix($body-color, mix(#000, $body-bg, 6%), 85%) !important;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.90em; padding: 0 .28em;
+  border-radius: .22rem;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04);
+}
+/* Dark: neutral gray, no tint */
+$chip-dark-lift: 8%;
+$__dark-base-gray: desaturate($body-bg, 100%);
+$chip-bg-dark:     mix(#fff, $__dark-base-gray, $chip-dark-lift);
+$chip-border-dark: rgba(#fff, .18);
+$chip-fg-dark:     mix($spc-primary, $chip-bg-dark, 90%);
+
+html.dark :not(pre):not(.sourceCode) > code,
+body.quarto-dark :not(pre):not(.sourceCode) > code {
+  background: $chip-bg-dark !important;
+  border: 1px solid $chip-border-dark !important;
+  color: $chip-fg-dark !important;
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.90em; padding: 0 .28em;
+  border-radius: .22rem;
+  box-shadow: 0 1px 0 rgba(0,0,0,.18);
+}
+/* Hovers */
+html:not(.dark) :not(pre):not(.sourceCode) > code:hover {
+  background: mix(#000, mix(#000, $body-bg, 6%), 6%) !important;
+  border-color: mix(#000, mix(#000, $body-bg, 12%), 6%) !important;
+}
+html.dark :not(pre):not(.sourceCode) > code:hover,
+body.quarto-dark :not(pre):not(.sourceCode) > code:hover {
+  background: mix(#fff, $chip-bg-dark, 6%) !important;
+  border-color: rgba(#fff, .22) !important;
+}
+
+/* Responsive & reduced motion */
+@media screen and (max-width: 991.98px) {
+  .about-entity .about-links { flex-direction: row !important; justify-content: center !important; }
+  .nav-footer { flex-direction: row; }
+  .nav-footer-center { order: 1 !important; flex-basis: 100%; margin: 0 0 -1.2em 0; }
+  .nav-footer-right  { order: 2 !important; flex-basis: 100%; text-align: center; }
+  .nav-footer-left   { order: 3 !important; flex-basis: 100%; text-align: center; }
+  .navbar .quarto-navbar-tools { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }

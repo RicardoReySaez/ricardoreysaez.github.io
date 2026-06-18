@@ -10,7 +10,7 @@
 <atom:link href="https://ricardoreysaez.github.io/blog/index.xml" rel="self" type="application/rss+xml"/>
 <description>A personal blog for the things I learn, mostly about R, modelling, and statistical thinking.&lt;br&gt;
 </description>
-<generator>quarto-1.8.25</generator>
+<generator>quarto-1.7.27</generator>
 <lastBuildDate>Sun, 12 Oct 2025 22:00:00 GMT</lastBuildDate>
 <item>
   <title>What Is a Statistical Model? From Density to Likelihood</title>
@@ -73,7 +73,7 @@
 <p>Every model tells us how probability is spread across possible outcomes. With discrete data, the model assigns a probability to each outcome, which is fairly intuitive. With continuous data, individual points have probability zero, so the model specifies a probability density, describing how probability over ranges of values is allocated. Still, the message remains the same: for the same variable and units, higher probability values (with discrete data) or higher density values (with continuous data) correspond to outcomes to which the model assigns greater support, given its parameters and covariates. And this allows us to achieve two of the most fundamental goals in statistics: <strong>identify, within each model,</strong> <u><strong>the parameter values that maximize the joint likelihood of the whole dataset</strong></u>, and <u><strong>compare models</strong></u> by asking <strong>under which model the observed data have higher joint likelihood.</strong></p>
 <p>For example, imagine I have 100 observed values from an exponential distribution with rate <img src="https://latex.codecogs.com/png.latex?%5Clambda=2">:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Simulate exponential distribution values</span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -103,12 +103,12 @@ font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 </div>
 <p>We now want to see how three different models assign density values to the same data point under fixed reference parameters. For simplicity, we’ll focus on the first observation of our variable as the reference value. The models considered are a Normal (<img src="https://latex.codecogs.com/png.latex?%5Cmu=1.5">, <img src="https://latex.codecogs.com/png.latex?%5Csigma=1">), a <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2"> (<img src="https://latex.codecogs.com/png.latex?%5Cnu=2">), and an exponential (<img src="https://latex.codecogs.com/png.latex?%5Clambda=2">). The Normal and <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2"> parameter values were chosen arbitrarily, simply to illustrate the idea; the exponential one matches the parameter value used to generate the data.</p>
 <p>In <code>R</code>, <code><a href="https://rdrr.io/r/stats/Normal.html">dnorm()</a></code>, <code><a href="https://rdrr.io/r/stats/Chisquare.html">dchisq()</a></code>, and <code><a href="https://rdrr.io/r/stats/Exponential.html">dexp()</a></code> are density functions that return the value of the probability density at a given point given specific parameter values. The first argument is the point (e.g., <code>Y[1]</code>), and the remaining arguments set the parameters of the distribution (e.g., <code>mean</code> and <code>sd</code> for <code>dnorm</code>, <code>df</code> for <code>dchisq</code>, <code>rate</code> for <code>dexp</code>).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Compute density values at the same observed point</span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -185,7 +185,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     normal   chi_sq       exp
 1 0.2230692 0.404942 0.8604411</code></pre>
@@ -203,7 +203,7 @@ font-style: inherit;">)</span></span></code></pre></div></div>
 <p>These three density curves are, in fact, <u><strong>the models themselves</strong></u>. For our <span style="color:seagreen;"><strong>dependent variable</strong></span> (here, y, which takes only one observed value in this simple illustration) we have assigned a a <span style="color:#7E57C2;"><strong>probability distribution</strong></span> (in this case, three different ones), each depending on its own <span style="color:#9a2515;"><strong>parameters</strong></span> (which we deliberately fixed) and <span style="color:darkorange;"><strong>covariates</strong></span> (none in this example).</p>
 <p>What matters here isn’t “who wins”, but that <strong>each model speaks the same language</strong> at the very same data point: they all return a density that tells us how plausible that value is under each model. Naturally, this depends on the parameter values. We have set <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%202"> for the exponential model, matching the data-generating rate; within the same model, different parameter values will yield different densities at the same observed point.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Density values at the same observed point for different rates</span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -318,7 +318,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    exp_l1    exp_l2    exp_l3    exp_l4    exp_l5
 1 0.655912 0.8604411 0.8465605 0.7403589 0.6070129</code></pre>
@@ -335,7 +335,7 @@ font-style: inherit;">)</span></span></code></pre></div></div>
 </div>
 <p>We could keep trying numbers, right? In fact, we could pick the value of <img src="https://latex.codecogs.com/png.latex?%5Clambda"> that gives the highest density value for this first observed response. To see this more clearly, we will vary the rate parameter over a dense grid and check, for the first observation, which value gives the largest density. The code below builds the grid, evaluates the exponential density at that data point for each rate, and returns the rate with the highest value.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Grid with 9000 rate values</span></span>
 <span><span class="va" style="color: #111111;
@@ -390,7 +390,7 @@ font-style: inherit;">density_vals</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">]</span></span></code></pre></div></div>
+font-style: inherit;">]</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.371</code></pre>
 </div>
@@ -417,7 +417,7 @@ font-style: inherit;">]</span></span></code></pre></div></div>
 <p>For a fixed observation, <img src="https://latex.codecogs.com/png.latex?y">, higher density at that point under a given parameter value means higher likelihood, that is, greater compatibility with the data. In fact, we estimated the parameter value that maximized the density; the only difference is that here, instead of calling it density, we say it maximized the likelihood, even though the number is exactly the same<sup>2</sup>.</p>
 <p>In case any reader feels unsure at this point, here’s an even clearer illustration:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;"><a href="https://rdrr.io/r/stats/Exponential.html">dexp</a></span><span class="op" style="color: #5E5E5E;
 background-color: null;
@@ -431,7 +431,7 @@ font-style: inherit;">=</span> <span class="fl" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3678794</code></pre>
 </div>
@@ -445,7 +445,7 @@ font-style: inherit;">)</span></span></code></pre></div></div>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Cmathcal%7BL%7D%5Cleft(%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%5Cmid%7B%5Ccolor%7Bseagreen%7DY%7D%5Cright)%0A=%20%5Cprod%5En_%7Bi=1%7D%0A%7B%5Ccolor%7B#7E57C2%7D%5Cmathrm%7BExponential%7D%7D%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7Bseagreen%7DY_i%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%0A%5Cright)%0A"></p>
 <p>Don’t be intimidated by the strange and slightly dramatic look of the equation. Its apparent complexity contrasts with the absolute simplicity of how the very same idea is written in <code>R</code>: it’s just the product of the densities of all observations. Assuming <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%202">:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Likelihood</span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -466,7 +466,7 @@ font-style: inherit;">2</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.875431e-16</code></pre>
 </div>
@@ -476,7 +476,7 @@ font-style: inherit;">)</span></span></code></pre></div></div>
 <p>For our exponential example, this becomes <img src="https://latex.codecogs.com/png.latex?%0A%5Clog%20%5Cmathcal%7BL%7D%5Cleft(%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%5Cmid%7B%5Ccolor%7Bseagreen%7DY%7D%5Cright)%0A=%20%5Csum%5En_%7Bi=1%7D%0A%5Clog%5C!%5Cleft(%0A%20%20%7B%5Ccolor%7B#7E57C2%7D%5Cmathrm%7BExponential%7D%7D%5C!%5Cleft(%0A%20%20%20%20%7B%5Ccolor%7Bseagreen%7DY_i%7D%5Cmid%7B%5Ccolor%7B#9a2515%7D%5Clambda%7D%0A%20%20%5Cright)%0A%5Cright)%0A"></p>
 <p>As before, what looks heavy in notation turns out to be delightfully simple in <code>R</code>. The joint log-likelihood is just the sum of log-densities. For the exponential model evaluated at <img src="https://latex.codecogs.com/png.latex?%5Clambda%20=%202">:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Log-Likelihood</span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -501,14 +501,14 @@ font-style: inherit;">TRUE</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -35.25715</code></pre>
 </div>
 </div>
 <p>We can also illustrate how to compute the joint log-likelihood under different models evaluated at the same reference parameters:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Compute Log-Likelihoods assuming fixed parameter values</span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -597,7 +597,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     normal    chi_sq       exp
 1 -152.9833 -95.45769 -35.25715</code></pre>
@@ -606,7 +606,7 @@ font-style: inherit;">)</span></span></code></pre></div></div>
 <p>Here, higher (less negative) values indicate better model fit for these fixed parameter choices.</p>
 <p>This is a simple illustration but <strong>not a fair comparison between the three models</strong>, because we have not estimated the parameters using the same data. In fact, <u><strong>we have not estimated anything by maximum likelihood yet</strong></u>. The next code shows how to obtain <img src="https://latex.codecogs.com/png.latex?%5Clambda"> for the exponential model and <img src="https://latex.codecogs.com/png.latex?%5Cnu"><sup>3</sup> for the <img src="https://latex.codecogs.com/png.latex?%5Cchi%5E2"> model by computing the log-likelihood with all the data at once and choosing the value that maximizes it:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Grids with 49000 rate and nu values</span></span>
 <span><span class="va" style="color: #111111;
@@ -806,11 +806,11 @@ font-style: inherit;">ll_chisq_vals</span><span class="op" style="color: #5E5E5E
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">]</span></span></code></pre></div></div>
+font-style: inherit;">]</span></span></code></pre></div>
 </div>
 <p>For the normal distribution, we need to estimate two parameters: <img src="https://latex.codecogs.com/png.latex?%5Cmu"> and <img src="https://latex.codecogs.com/png.latex?%5Csigma">. To keep the illustration consistent with the other two models, we’ll estimate them “by brute force”: we create a matrix with two columns, one for <img src="https://latex.codecogs.com/png.latex?%5Cmu"> values and one for <img src="https://latex.codecogs.com/png.latex?%5Csigma"> values. Each row represents a combination of <img src="https://latex.codecogs.com/png.latex?%5Cmu"> and <img src="https://latex.codecogs.com/png.latex?%5Csigma"> where we evaluate the log-likelihood, and we then select the row that maximizes it.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Mu and sigma values</span></span>
 <span><span class="va" style="color: #111111;
@@ -1047,11 +1047,11 @@ font-style: inherit;">)</span>,<span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"sigma"</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">]</span></span></code></pre></div></div>
+font-style: inherit;">]</span></span></code></pre></div>
 </div>
 <p>With the maximum likelihood estimates obtained, we can compute the total log-likelihood for all data under each model using the estimated parameters. The following code returns a table with these three log-likelihoods.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Compute Log-Likelihoods using ML estimates</span></span>
 <span><span class="fu" style="color: #4758AB;
@@ -1140,7 +1140,7 @@ background-color: null;
 font-style: inherit;">)</span></span>
 <span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     normal    chi_sq       exp
 1 -75.87007 -59.26746 -35.15573</code></pre>
@@ -1158,7 +1158,7 @@ font-style: inherit;">)</span></span></code></pre></div></div>
 <p>The grid approach we used is useful for teaching but inefficient in practice. As the number of parameters grows, it quickly becomes computationally impossible. For this reason, maximum likelihood estimation is usually obtained using numerical optimization algorithms.</p>
 <p>We will not go into the details of these methods here, but it is useful to see how they work in practice. The code below shows how to use the <code>optim</code> function in <code>R</code> to estimate the parameters by maximum likelihood for the three models. The results are equivalent to those from the grid search, but this approach can generalize to a much wider range of situations.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
+<div class="sourceCode" id="cb20" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="co" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;"># Log-likelihood functions: gaussian model</span></span>
 <span><span class="va" style="color: #111111;
@@ -1777,7 +1777,7 @@ font-style: inherit;">)</span></span>
 <span></span>
 <span><span class="va" style="color: #111111;
 background-color: null;
-font-style: inherit;">MLE_table</span></span></code></pre></div></div>
+font-style: inherit;">MLE_table</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        model           param_1          param_2    logLik
 1      Normal     mu = 0.522859 sigma = 0.516706 -75.86575
@@ -1792,7 +1792,7 @@ font-style: inherit;">MLE_table</span></span></code></pre></div></div>
 <p>For the Normal distribution, the parameters that maximize the likelihood are the sample mean and the sample standard deviation (using <img src="https://latex.codecogs.com/png.latex?1/n"> instead of <img src="https://latex.codecogs.com/png.latex?1/(n-1)"> because here we want the value that maximizes the likelihood, not an unbiased estimator):</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%5Cmu_%5Ctext%7BML%7D=%5Cfrac%7B1%7D%7Bn%7D%5Ccdot%5Csum%5En_%7Bi=1%7DY_%7Bi%7D,%5Cqquad%20%5Chat%5Csigma_%5Ctext%7BML%7D=%5Csqrt%7B%5Cfrac%7B1%7D%7Bn%7D%5Csum%5En_%7Bi=1%7D%5Cleft(Y_i-%5Chat%5Cmu_%5Ctext%7BML%7D%5Cright)%5E2%7D%0A"></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
+<div class="sourceCode" id="cb22" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
@@ -1808,11 +1808,11 @@ font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5228594</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
+<div class="sourceCode" id="cb24" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
@@ -1846,7 +1846,7 @@ font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.5167061</code></pre>
 </div>
@@ -1854,7 +1854,7 @@ font-style: inherit;">)</span></span></code></pre></div></div>
 <p>For the Exponential distribution, the maximum likelihood estimator of the rate parameter <img src="https://latex.codecogs.com/png.latex?%5Clambda"> is also obtained directly:</p>
 <p><img src="https://latex.codecogs.com/png.latex?%0A%5Chat%5Clambda_%5Ctext%7BML%7D=%5Cfrac%7Bn%7D%7B%5Csum%5En_%7Bi=1%7DY_i%7D%0A"></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
+<div class="sourceCode" id="cb26" style="background: #f1f3f5;"><pre class="downlit sourceCode r code-with-copy"><code class="sourceCode R"><span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">(</span><span class="va" style="color: #111111;
 background-color: null;
@@ -1880,7 +1880,7 @@ font-style: inherit;">Y</span><span class="op" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">)</span><span class="op" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">)</span></span></code></pre></div></div>
+font-style: inherit;">)</span></span></code></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.91256</code></pre>
 </div>

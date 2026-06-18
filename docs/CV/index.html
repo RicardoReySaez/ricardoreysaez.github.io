@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.25">
+<meta name="generator" content="quarto-1.7.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="">
 
-<title>quarto-inputf18a558b98738956 – Ricardo Rey-Sáez</title>
+<title>quarto-inputa2f9da8c1520558b – Ricardo Rey-Sáez</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -34,18 +34,17 @@ ul.task-list li input[type="checkbox"] {
 <link href="../logosRRS/favicon.svg" rel="icon" type="image/svg+xml">
 <script src="../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-17272e19d34237b4445191b00a44da21.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-5d0bb37017ba0a20362ccd77de87586e.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-17272e19d34237b4445191b00a44da21.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c4fb88a7599af4a42f865486fd59166e.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark-53407440417a42589bb34d3db63da45b.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-c4fb88a7599af4a42f865486fd59166e.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-8c35ff85f976965d12a4325831ee74ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="../site_libs/bootstrap/bootstrap-dark-7519690125f7929e610e3ea9fd9637d6.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
-<link href="../site_libs/bootstrap/bootstrap-8c35ff85f976965d12a4325831ee74ec.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-45a6b78c17cd6d62274d9d2feb9953d0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark-ea3b4445e8606fefb2b206bb39935713.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../site_libs/bootstrap/bootstrap-45a6b78c17cd6d62274d9d2feb9953d0.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
 <script src="../site_libs/quarto-contrib/iconify-2.1.0/iconify-icon.min.js"></script>
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
@@ -108,7 +107,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
         toggleBodyColorMode(bsSheetEl);
       }
     }
-    const setColorSchemeToggle = (alternate) => {
+    window.setColorSchemeToggle = (alternate) => {
       const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
       for (let i=0; i < toggles.length; i++) {
         const toggle = toggles[i];
@@ -141,7 +140,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       }
       manageTransitions('#quarto-margin-sidebar .nav-link', true);
       // Switch the toggles
-      setColorSchemeToggle(alternate)
+      window.setColorSchemeToggle(alternate)
       // Hack to workaround the fact that safari doesn't
       // properly recolor the scrollbar when toggling (#1455)
       if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
@@ -181,7 +180,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
     const isFileUrl = () => {
       return window.location.protocol === 'file:';
     }
-    const hasAlternateSentinel = () => {
+    window.hasAlternateSentinel = () => {
       let styleSentinel = getColorSchemeSentinel();
       if (styleSentinel !== null) {
         return styleSentinel === "alternate";
@@ -209,7 +208,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
       const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
       let newTheme = '';
-      if(authorPrefersDark) {
+      if(darkModeDefault) {
         newTheme = isAlternate ? baseTheme : alternateTheme;
       } else {
         newTheme = isAlternate ? alternateTheme : baseTheme;
@@ -232,22 +231,20 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
         changeGiscusTheme();
       }
     };
-    const authorPrefersDark = false;
-    const darkModeDefault = authorPrefersDark;
+    const darkModeDefault = false;
       document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
       document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
     let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
     // Dark / light mode switch
     window.quartoToggleColorScheme = () => {
       // Read the current dark / light value
-      let toAlternate = !hasAlternateSentinel();
+      let toAlternate = !window.hasAlternateSentinel();
       toggleColorMode(toAlternate);
       setStyleSentinel(toAlternate);
       toggleGiscusIfUsed(toAlternate, darkModeDefault);
-      window.dispatchEvent(new Event('resize'));
     };
     // Switch to dark mode if need be
-    if (hasAlternateSentinel()) {
+    if (window.hasAlternateSentinel()) {
       toggleColorMode(true);
     } else {
       toggleColorMode(false);
@@ -260,8 +257,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../logosRRS/navbar_light.svg" alt="" class="navbar-logo light-content">
-    <img src="../logosRRS/navbar_light.svg" alt="" class="navbar-logo dark-content">
+    <img src="../logosRRS/navbar_light.svg" alt="" class="navbar-logo">
     </a>
     <a class="navbar-brand" href="../index.html">
     <span class="navbar-title">Ricardo Rey-Sáez</span>
@@ -440,7 +436,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
 </section>
 <section id="publications" class="level2">
 <h2 data-anchor-id="publications"><iconify-icon role="img" inline="" icon="ooui:articles-rtl" aria-label="Icon articles-rtl from ooui Iconify.design set." title="Icon articles-rtl from ooui Iconify.design set."></iconify-icon> Publications</h2>
-<p><u><strong>Rey-Sáez, R.</strong></u>, Franco-Martínez, A., Revuelta, J. &amp; Vadillo, M. A. (in press). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. <em>Psychological Methods</em>.</p>
+<p><u><strong>Rey-Sáez, R.</strong></u>, Franco-Martínez, A., Revuelta, J. &amp; Vadillo, M. A. (in press). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. <em>Psychological Methods</em>. Advance online publication. <a href="https://doi.org/10.1037/met0000846" class="uri">https://doi.org/10.1037/met0000846</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
 <p><a href="https://osf.io/5dutv/files/osfstorage" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/5dutv/files/osfstorage" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://github.com/RicardoReySaez/GenHFM/blob/main/Manuscript" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/5dutv/overview" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
 </div>
@@ -456,25 +452,25 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
 <div class="btn-group" role="group" aria-label="Open Science Links">
 <p><a href="https://osf.io/xzv9t/overview" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/xzv9t/overview" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://doi.org/10.1093/nc/niaf046" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/xzv9t" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
 </div>
-<p>Pacheco-Romero, A. M., Martín-García, Ó., <u><strong>Rey-Sáez, R.</strong></u>, Boemo, T., Blanco, I., Vázquez, C., &amp; Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. <em>Cognition and Emotion, 38</em>(4), 587–604. <a href="https://www.tandfonline.com/doi/epdf/10.1080/02699931.2024.2314066?needAccess=true">PDF</a></p>
+<p>Pacheco-Romero, A. M., Martín-García, Ó., <u><strong>Rey-Sáez, R.</strong></u>, Boemo, T., Blanco, I., Vázquez, C., &amp; Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. <em>Cognition and Emotion, 38</em>(4), 587–604. <a href="https://doi.org/10.1080/02699931.2024.2314066" class="uri">https://doi.org/10.1080/02699931.2024.2314066</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
 <p><a href="https://osf.io/qx4bg" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/g5zw9" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://www.tandfonline.com/doi/epdf/10.1080/02699931.2024.2314066?needAccess=true" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/qx4bg" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
 </div>
-<p>Gracia, E., Martín-Fernández, M., <u><strong>Rey-Sáez, R.</strong></u>, &amp; Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. <em>Psychology of Violence, 14</em>(2), 127–136. https://doi.org/10.1037/vio0000497</p>
+<p>Gracia, E., Martín-Fernández, M., <u><strong>Rey-Sáez, R.</strong></u>, &amp; Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. <em>Psychology of Violence, 14</em>(2), 127–136. <a href="https://doi.org/10.1037/vio0000497" class="uri">https://doi.org/10.1037/vio0000497</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
-<p><a href="https://mics.unicef.org/surveys" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="" class="btn-sm btn disabled btn-primary" title="code unavailable">Code</a> <a href="https://psycnet.apa.org/doiLanding?doi=10.1037%2Fvio0000497" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="" class="btn-sm btn disabled btn-primary" title="OSF unavailable">OSF</a></p>
+<p><a href="https://mics.unicef.org/surveys" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="" class="btn-sm btn disabled btn-primary" title="code unavailable">Code</a> <a href="https://www.researchgate.net/publication/376721907_Attitudes_Justifying_Partner_Violence_Against_Women_in_Latin-American_and_Caribbean_Countries_A_Measurement_Invariance_Study" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="" class="btn-sm btn disabled btn-primary" title="OSF unavailable">OSF</a></p>
 </div>
-<p>Vega-Sanz, M., <u><strong>Rey-Sáez, R.</strong></u>, Berástegui, A., &amp; Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. <em>American Journal of Perinatology, 41</em>(S 01), e2870–e2877. https://doi.org/10.1055/s-0043-1776062</p>
+<p>Vega-Sanz, M., <u><strong>Rey-Sáez, R.</strong></u>, Berástegui, A., &amp; Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. <em>American Journal of Perinatology, 41</em>(S 01), e2870–e2877. <a href="https://doi.org/10.1055/s-0043-1776062" class="uri">https://doi.org/10.1055/s-0043-1776062</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
 <p><a href="" class="btn-sm btn disabled btn-primary" title="data unavailable">Data</a> <a href="" class="btn-sm btn disabled btn-primary" title="code unavailable">Code</a> <a href="https://www.thieme-connect.de/products/ejournals/html/10.1055/s-0043-1776062" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="" class="btn-sm btn disabled btn-primary" title="OSF unavailable">OSF</a></p>
 </div>
-<p>Franco-Martínez, A., <u><strong>Rey-Sáez, R.</strong></u>, &amp; Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. PsyArXiv. https://doi.org/10.31234/osf.io/kmqy5</p>
+<p>Franco-Martínez, A., <u><strong>Rey-Sáez, R.</strong></u>, &amp; Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. <em>PsyArXiv</em>. <a href="https://doi.org/10.31234/osf.io/kmqy5" class="uri">https://doi.org/10.31234/osf.io/kmqy5</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
 <p><a href="https://osf.io/f2an4" class="btn-sm btn btn-primary" aria-label="Data">Data</a> <a href="https://osf.io/f2an4" class="btn-sm btn btn-primary" aria-label="Code">Code</a> <a href="https://osf.io/preprints/psyarxiv/kmqy5_v1" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="https://osf.io/7kce5" class="btn-sm btn btn-primary" aria-label="OSF project">OSF</a></p>
 </div>
-<p><u><strong>Rey-Sáez, R.</strong></u> (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. <em>R.E.M.A. Revista Electrónica de Metodología Aplicada, 24</em>(1), 41–44. <a href="https://reunido.uniovi.es/index.php/Rema/article/view/17634">PDF</a></p>
+<p><u><strong>Rey-Sáez, R.</strong></u> (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. <em>R.E.M.A. Revista Electrónica de Metodología Aplicada, 24</em>(1), 41–44. <a href="https://doi.org/10.17811/rema.24.1.2022.41-44" class="uri">https://doi.org/10.17811/rema.24.1.2022.41-44</a></p>
 <div class="btn-group" role="group" aria-label="Open Science Links">
-<p><a href="" class="btn-sm btn disabled btn-primary" title="data unavailable">Data</a> <a href="" class="btn-sm btn disabled btn-primary" title="code unavailable">Code</a> <a href="https://reunido.uniovi.es/index.php/Rema/article/view/17634" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="" class="btn-sm btn disabled btn-primary" title="OSF unavailable">OSF</a></p>
+<p><a href="" class="btn-sm btn disabled btn-primary" title="data unavailable">Data</a> <a href="" class="btn-sm btn disabled btn-primary" title="code unavailable">Code</a> <a href="https://doi.org/10.17811/rema.24.1.2022.41-44" class="btn-sm btn btn-primary" aria-label="PDF">PDF</a> <a href="" class="btn-sm btn disabled btn-primary" title="OSF unavailable">OSF</a></p>
 </div>
 </section>
 <section id="conference-presentations" class="level2">
@@ -522,7 +518,7 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       a.appendChild(i);
       window.document.body.appendChild(a);
     }
-    setColorSchemeToggle(hasAlternateSentinel())
+    window.setColorSchemeToggle(window.hasAlternateSentinel())
     const isCodeAnnotation = (el) => {
       for (const clz of el.classList) {
         if (clz.startsWith('code-annotation-')) {                     
@@ -565,14 +561,13 @@ gtag('config', 'G-EX8XBWJEYL', { 'anonymize_ip': true});
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
         }
-      }
-      return codeEl.innerText;
+        return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
