@@ -85,7 +85,7 @@
 
 ::: {.content-visible when-format="pdf"}
 
-1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J. & Vadillo, M. A. (in press). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. *Psychological Methods*. <https://doi.org/10.31234/osf.io/gv6k7_v2>
+1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J. & Vadillo, M. A. (in press). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. *Psychological Methods*. Advance online publication. <https://doi.org/10.1037/met0000846>
 1. Garre-Frutos, F., Martínez-López, P., Ariza, A., [**Rey-Sáez, R.**]{.underline}, Luque, D., Vadillo, M. A., & González, F. (2026, March 22). Explicit knowledge modulates Pavlovian attentional biases. *PsyArxiv*. <https://doi.org/10.31234/osf.io/uwge3_v2>
 1. [**Rey-Sáez, R.**]{.underline}, & Revuelta, J. (2026, March 5). An Efficient Rotation-Sign-Permutation Algorithm to Solve Rotational Indeterminacy in Bayesian Exploratory Factor Analysis. *PsyArxiv*. <https://doi.org/10.31234/osf.io/6drsw_v2>
 1. Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, Shanks, D. R., Soto, D., & Vadillo, M. A. (2026). Replicating the unconscious working memory effect: A multisite preregistered study. *Neuroscience of Consciousness*. <https://doi.org/10.1093/nc/niaf046>
@@ -93,13 +93,13 @@
 1. Gracia, E., Martín-Fernández, M., [**Rey-Sáez, R.**]{.underline}, & Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. *Psychology of Violence, 14*(2), 127–136. <https://doi.org/10.1037/vio0000497>
 1. Vega-Sanz, M., [**Rey-Sáez, R.**]{.underline}, Berástegui, A., & Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. *American Journal of Perinatology, 41*(S 01), e2870–e2877. <https://doi.org/10.1055/s-0043-1776062>
 1. Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, & Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. PsyArXiv. <https://doi.org/10.31234/osf.io/kmqy5>
-1. [**Rey-Sáez, R.**]{.underline} (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. *R.E.M.A. Revista Electrónica de Metodología Aplicada, 24*(1), 41–44. <https://reunido.uniovi.es/index.php/Rema/article/view/17634>
+1. [**Rey-Sáez, R.**]{.underline} (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. *R.E.M.A. Revista Electrónica de Metodología Aplicada, 24*(1), 41–44. <https://doi.org/10.17811/rema.24.1.2022.41-44>
 
 :::
 
 ::: {.content-visible when-format="html"}
 
-[**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J. & Vadillo, M. A. (in press). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. *Psychological Methods*.
+[**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J. & Vadillo, M. A. (in press). A Unified Framework for Psychometrics in Experimental Psychology: The Standardized Generalized Hierarchical Factor Model. *Psychological Methods*. Advance online publication. <https://doi.org/10.1037/met0000846>
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -143,7 +143,7 @@ Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, Shanks, D. R., Soto, D., 
 :::
 :::
 
-Pacheco-Romero, A. M., Martín-García, Ó., [**Rey-Sáez, R.**]{.underline}, Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. *Cognition and Emotion, 38*(4), 587–604. [PDF](https://www.tandfonline.com/doi/epdf/10.1080/02699931.2024.2314066?needAccess=true)
+Pacheco-Romero, A. M., Martín-García, Ó., [**Rey-Sáez, R.**]{.underline}, Boemo, T., Blanco, I., Vázquez, C., & Sánchez-López, Á. (2024). An integrative analysis of potential mechanisms of reduced positive affect in daily life in depression: an ESM study. *Cognition and Emotion, 38*(4), 587–604. <https://doi.org/10.1080/02699931.2024.2314066>
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -154,18 +154,18 @@ Pacheco-Romero, A. M., Martín-García, Ó., [**Rey-Sáez, R.**]{.underline}, Bo
 :::
 :::
 
-Gracia, E., Martín-Fernández, M., [**Rey-Sáez, R.**]{.underline}, & Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. *Psychology of Violence, 14*(2), 127–136. https://doi.org/10.1037/vio0000497
+Gracia, E., Martín-Fernández, M., [**Rey-Sáez, R.**]{.underline}, & Yount, K. M. (2024). Attitudes justifying partner violence against women in Latin-American and Caribbean countries: A measurement invariance study. *Psychology of Violence, 14*(2), 127–136. <https://doi.org/10.1037/vio0000497>
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
 [Data](https://mics.unicef.org/surveys){.btn-sm .btn .btn-primary aria-label="Data"}
 [Code](){.btn-sm .btn .disabled .btn-primary title="code unavailable"}
-[PDF](https://psycnet.apa.org/doiLanding?doi=10.1037%2Fvio0000497){.btn-sm .btn .btn-primary aria-label="PDF"}
+[PDF](https://www.researchgate.net/publication/376721907_Attitudes_Justifying_Partner_Violence_Against_Women_in_Latin-American_and_Caribbean_Countries_A_Measurement_Invariance_Study){.btn-sm .btn .btn-primary aria-label="PDF"}
 [OSF](){.btn-sm .btn .disabled .btn-primary title="OSF unavailable"}
 :::
 :::
 
-Vega-Sanz, M., [**Rey-Sáez, R.**]{.underline}, Berástegui, A., & Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. *American Journal of Perinatology, 41*(S 01), e2870–e2877. https://doi.org/10.1055/s-0043-1776062
+Vega-Sanz, M., [**Rey-Sáez, R.**]{.underline}, Berástegui, A., & Sánchez-López, Á. (2024). Difficulties in pregnancy adjustment as predictors of perinatal depression: Indirect effects through the role of brooding rumination and maternal–fetal bonding. *American Journal of Perinatology, 41*(S 01), e2870–e2877. <https://doi.org/10.1055/s-0043-1776062>
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -176,7 +176,7 @@ Vega-Sanz, M., [**Rey-Sáez, R.**]{.underline}, Berástegui, A., & Sánchez-Lóp
 :::
 :::
 
-Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, & Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. PsyArXiv. https://doi.org/10.31234/osf.io/kmqy5
+Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, & Castillejo, I. (2023). The seven wonderings of large language models as psychometric designers, refiners, and analysts. *PsyArXiv*. <https://doi.org/10.31234/osf.io/kmqy5>
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
@@ -187,13 +187,13 @@ Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, & Castillejo, I. (2023). 
 :::
 :::
 
-[**Rey-Sáez, R.**]{.underline} (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. *R.E.M.A. Revista Electrónica de Metodología Aplicada, 24*(1), 41–44. [PDF](https://reunido.uniovi.es/index.php/Rema/article/view/17634)
+[**Rey-Sáez, R.**]{.underline} (2022). Réplica a: Validación cruzada sobre una misma muestra: Una práctica sin fundamento. *R.E.M.A. Revista Electrónica de Metodología Aplicada, 24*(1), 41–44. <https://doi.org/10.17811/rema.24.1.2022.41-44>
 
 ::: {.content-visible when-format="html"}
 ::: {.btn-group role="group" aria-label="Open Science Links"}
 [Data](){.btn-sm .btn .disabled .btn-primary title="data unavailable"}
 [Code](){.btn-sm .btn .disabled .btn-primary title="code unavailable"}
-[PDF](https://reunido.uniovi.es/index.php/Rema/article/view/17634){.btn-sm .btn .btn-primary aria-label="PDF"}
+[PDF](https://doi.org/10.17811/rema.24.1.2022.41-44){.btn-sm .btn .btn-primary aria-label="PDF"}
 [OSF](){.btn-sm .btn .disabled .btn-primary title="OSF unavailable"}
 ::: 
 :::
