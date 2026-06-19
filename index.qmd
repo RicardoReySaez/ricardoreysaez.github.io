@@ -1,7 +1,7 @@
 ---
 title: "Ricardo Rey-Sáez"
 pagetitle: "Ricardo Rey-Sáez"
-subtitle: "**PhD Student | Psychometrics | Bayesian Statistics**" 
+subtitle: "**PhD Candidate | Psychometrics | Bayesian Statistics**" 
 image: logosRRS/home_light.png
 image-alt: "Logo with three greek letters: two rhos and one sigma"
 open-graph:
@@ -60,7 +60,7 @@ format:
 
 ::: {#hero-heading}
 
-I’m a PhD student in Psychology at Universidad Autónoma de Madrid, where I work on **developing and validating psychometric models for experimental data.** I also enjoy doing outreach in statistics for psychology. 
+I’m a PhD candidate in Psychology at Universidad Autónoma de Madrid, where I work on **developing and validating psychometric models for experimental data.** I also enjoy doing outreach in statistics for psychology. 
 
 The most unexpected plot twist in my journey is that, after a long time as a frequentist, I’ve finally surrendered to **the Bayesian dark side of probability.**
 
