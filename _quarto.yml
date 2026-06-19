@@ -14,7 +14,7 @@ website:
   search: true
   page-navigation: true
   back-to-top-navigation: true
-  favicon: logosRRS/favicon.svg
+  favicon: logosRRS/favicon-192.png
 
   navbar:
     logo: logosRRS/navbar_light.svg
@@ -59,6 +59,17 @@ format:
     code-link: true
     pagetitle: "{{< meta title >}}"
     lightbox: true
+    include-in-header:
+      - text: |
+          <script type="application/ld+json">
+          {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Ricardo Rey-Sáez",
+            "alternateName": "Ricardo Rey Saez",
+            "url": "https://ricardoreysaez.github.io/"
+          }
+          </script>
     include-after-body:
       - text: |
           <script>
