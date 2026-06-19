@@ -229,5 +229,19 @@
     "title": "Fast Hierarchical Models in Stan",
     "section": "Footnotes",
     "text": "Footnotes\n\nBürkner, P.-C. (2017). brms: An R package for Bayesian multilevel models using Stan. Journal of Statistical Software, 80(1), 1-28. https://doi.org/10.18637/jss.v080.i01↩︎\nWhitehead, P. S., Brewer, G. A., & Blais, C. (2019). Are cognitive control processes reliable? Journal of Experimental Psychology: Learning, Memory, and Cognition, 45(5), 765-778. https://doi.org/10.1037/xlm0000632. The public OSF project is available at https://osf.io/t9c6z/.↩︎\nCarpenter et al. (2017). Stan: A probabilistic programming language. Journal of Statistical Software, 76(1), 1-32. https://doi.org/10.18637/jss.v076.i01↩︎"
+  },
+  {
+    "objectID": "docs/Model diagrams/mod_diagrams_dark.html",
+    "href": "docs/Model diagrams/mod_diagrams_dark.html",
+    "title": "Bayesian and SEM model diagrams",
+    "section": "",
+    "text": "Back to top"
+  },
+  {
+    "objectID": "docs/Model diagrams/mod_diagrams.html",
+    "href": "docs/Model diagrams/mod_diagrams.html",
+    "title": "Bayesian and SEM model diagrams",
+    "section": "",
+    "text": "Back to top"
   }
 ]
