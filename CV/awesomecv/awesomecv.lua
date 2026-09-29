@@ -2,6 +2,7 @@ local current_section = nil
 
 local section_titles = {
   ["education"] = "Education",
+  ["international-research-visits"] = "International Research Visits",
   ["additional-training"] = "Additional Training",
   ["teaching-and-educational-activities"] = "Teaching and Educational Activities",
   ["textbooks"] = "Textbooks",
@@ -13,6 +14,7 @@ local section_titles = {
 
 local cventry_sections = {
   ["education"] = true,
+  ["international-research-visits"] = true,
   ["additional-training"] = true,
   ["teaching-and-educational-activities"] = true,
   ["awards"] = true,
@@ -73,7 +75,7 @@ local function split_date(text)
 end
 
 local function split_title_meta(text, section)
-  if section == "education" or section == "additional-training" then
+  if section == "education" or section == "international-research-visits" or section == "additional-training" then
     local title, meta = text:match("^(.+),%s+([^,]+)$")
     if title then
       return trim(title), trim(meta)

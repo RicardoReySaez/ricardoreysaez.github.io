@@ -14,16 +14,23 @@
 :::
 :::
 
-## {{< iconify fa6-solid:graduation-cap >}} Education
+## {{< iconify fa6-solid:graduation-cap >}} Education {#education}
 
 - 2024–present | **Ph.D.** *Psychology*, Universidad Autónoma de Madrid
   - Developing and validating psychometric models for the study of individual differences in experimental psychology.
 - 2020–2022 | **M.S.** *Quantitative Research Methods for Behavioral and Health Sciences*, Complutense University of Madrid
 - 2017–2020 | **B.S.** *Psychology*, Complutense University of Madrid
 
-## {{< iconify streamline:global-learning-remix >}} Additional Training
+## {{< iconify fa6-solid:plane-departure >}} International Research Visits {#international-research-visits}
 
-- 2024 | ***Bayesian Cognitive Modeling: A Practical Course***, University of Amsterdam
+- Mar–May 2026 | **Visiting Ph.D. Researcher**, Universiteit van Amsterdam
+  - Supervised by Dr. Dora Matzke (see the [Amsterdam Mathematical Psychology Lab](https://www.ampl-psych.com/))
+
+## {{< iconify streamline:global-learning-remix >}} Additional Training {#additional-training}
+
+- 2026 | ***Measuring Individual Differences in Experimental Psychology*** (2.5 hours), XV Conference of the Spanish Society for Experimental Psychology (SEPEX) and II Joint Meeting of the SEPEX and the Belgian Psychological Association (BAPS)
+- 2026 | ***How do I preregister my study? A hands-on workshop*** (2.5 hours), XV Conference of the Spanish Society for Experimental Psychology (SEPEX) and II Joint Meeting of the SEPEX and the Belgian Psychological Association (BAPS)
+- 2024 | ***Bayesian Cognitive Modeling: A Practical Course***, Universiteit van Amsterdam
 - 2023 | ***Practical Introduction to Advances in Exploratory Factor Analysis Applied to Item Analysis***, University of the Basque Country
 - 2022 | ***Introduction to Exploratory Graph Analysis (EGA) with R***, Zaragoza University
 - 2020 | ***Principles, Statistical and Computational Tools for Reproducible Data Science***, Harvard University (HarvardX) | [Verified Certificate](https://courses.edx.org/certificates/d9d5e1f33f6f4c4cb9a43da41912cfa6)
@@ -36,7 +43,7 @@
   - *Data Science: Wrangling* | [Verified Certificate](https://courses.edx.org/certificates/51759921d48a416186b5517318d72135)
   - *Data Science: Linear Regression* | [Verified Certificate](https://courses.edx.org/certificates/470c6bb6fe2b4fe8913208d5edda44a3)
 
-## {{< iconify fa6-solid:chalkboard-user >}} Teaching and Educational Activities
+## {{< iconify fa6-solid:chalkboard-user >}} Teaching and Educational Activities {#teaching-and-educational-activities}
 - 2025 | **Meta-analysis, Latent Class and Latent Profile Analysis**
   - Lead instructor, Advanced Statistical Training for Researchers
   - Organized by Deusto FamilyPsych, Deusto University
@@ -59,15 +66,16 @@
   - Workshop instructor, Faculty training
   - Organized by University of Costa Rica
 
-## {{< iconify fa6-solid:book >}} Textbooks
+## {{< iconify fa6-solid:book >}} Textbooks {#textbooks}
 
 - [**Rey-Sáez, R.**]{.underline}, & Estrada, E. (2023). ***Análisis de datos con R en Ciencias Sociales y de la Salud***. Editorial Síntesis: <https://www.sintesis.com/libro/analisis-de-datos-con-r-en-ciencias-sociales-y-de-la-salud>
 
-## {{< iconify fa6-solid:code >}} Software
+## {{< iconify fa6-solid:code >}} Software {#software}
 
 - [**BayesianEFA**](https://ricardoreysaez.github.io/BayesianEFA/). R package for Bayesian exploratory factor analysis. Source code: <https://github.com/RicardoReySaez/BayesianEFA>
+- [**uSDT**](https://ricardoreysaez.github.io/uSDT/). R package for hierarchical signal detection theory models in unconscious processing research. Co-developed with F. Garre-Frutos, A. Franco-Martínez, and M. A. Vadillo. Source code: <https://github.com/RicardoReySaez/uSDT>
 
-## {{< iconify dashicons:awards >}} Awards
+## {{< iconify dashicons:awards >}} Awards {#awards}
 
 - 2025 | [Best Oral Communication Award](https://sites.google.com/view/xiv-jornadas-aiidi-2025/inicio) | Ibero-American Association for Research on Individual Differences
   - Presentation Title: ***New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?***
@@ -81,7 +89,7 @@
   - Funding to carry out the research project ***The union of psychometrics and experimental psychology: Bayesian hierarchical models with common factors for response times***
   - Funding: €2,400
 
-## {{< iconify ooui:articles-rtl >}} Publications
+## {{< iconify ooui:articles-rtl >}} Publications {#publications}
 
 ::: {.content-visible when-format="pdf"}
 
@@ -200,8 +208,15 @@ Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, & Castillejo, I. (2023). 
 
 :::
 
-## {{< iconify game-icons:teacher >}} Conference Presentations
+## {{< iconify game-icons:teacher >}} Conference Presentations {#conference-presentations}
 
+1. [**Rey-Sáez, R.**]{.underline} (2026). *Experimental Psychometrics.* [Symposium Organizer] XV Conference of the Spanish Society for Experimental Psychology (SEPEX) and II Joint Meeting of the SEPEX and the Belgian Psychological Association (BAPS).
+1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2026). *Don’t Aggregate-then-Correlate, Model! Unleashing the Power of Generalized Hierarchical Factor Models in Experimental Psychology.* [Oral presentation] Symposium: *Experimental Psychometrics*. XV Conference of the Spanish Society for Experimental Psychology (SEPEX) and II Joint Meeting of the SEPEX and the Belgian Psychological Association (BAPS).
+1. Garre-Frutos, F., Franco-Martínez, A., Vadillo, M. A., & [**Rey-Sáez, R.**]{.underline} (2026). *A multilevel-signal detection framework for unconscious processing research.* [Oral presentation] Symposium: *Experimental Psychometrics*. XV Conference of the Spanish Society for Experimental Psychology (SEPEX) and II Joint Meeting of the SEPEX and the Belgian Psychological Association (BAPS).
+1. Garre-Frutos, F., Martínez-López, P., [**Rey-Sáez, R.**]{.underline}, Luque, D., Vadillo, M. A., & González, F. (2026). *Explicit knowledge modulates Pavlovian attentional biases.* [Oral presentation] Symposium: *Current Debates in Research on Habits*. XV Conference of the Spanish Society for Experimental Psychology (SEPEX) and II Joint Meeting of the SEPEX and the Belgian Psychological Association (BAPS).
+1. Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline}, Revuelta, J., & Vadillo, M. A. (2026). *Cuando el análisis factorial empezó a contestar preguntas de psicología experimental.* [Oral presentation] Symposium: *Nuevos desarrollos en Análisis Factorial*. XIX Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. [**Rey-Sáez, R.**]{.underline}, & Revuelta, J. (2026). *Rotaciones Oblicuas en AFE Bayesiano: superando a los métodos frecuentistas en su propio terreno.* [Oral presentation] Symposium: *Nuevos desarrollos en Análisis Factorial*. XIX Congreso de Metodología de las Ciencias Sociales y de la Salud.
+1. [**Rey-Sáez, R.**]{.underline} (2026). *Simultaneous Latent Dimensionality Assessment and Factor Loading Estimation in Sparse Bayesian Exploratory Factor Analysis.* [Oral presentation] XIX Congreso de Metodología de las Ciencias Sociales y de la Salud.
 1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2026). *A Multilevel Psychometric Framework for Experimental Tasks: The Generalized Hierarchical Factor Model* [Oral presentation] 15th International Multilevel Conference.
 1. Franco-Martínez, A., [**Rey-Sáez, R.**]{.underline} & Vadillo, M. A. (2026) *How do I start planning my multisite project? A tutorial on multilevel simulation-based power and sensitivity analysis* [Oral presentation] 15th International Multilevel Conference.
 1. [**Rey-Sáez, R.**]{.underline}, Franco-Martínez, A., Revuelta, J., & Vadillo, M. A. (2025). *New Hierarchical Models to Answer Old Psychometric Questions in Experimental Research: Which Task Best Measures Inhibition?* [Oral presentation] XIV Conference – Asociación Iberoamericana para la Investigación de las Diferencias Individuales (AIIDI).
