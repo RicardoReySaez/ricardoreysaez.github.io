@@ -73,7 +73,7 @@
 ## {{< iconify fa6-solid:code >}} Software {#software}
 
 - [**BayesianEFA**](https://ricardoreysaez.github.io/BayesianEFA/). R package for Bayesian exploratory factor analysis. Source code: <https://github.com/RicardoReySaez/BayesianEFA>
-- [**uSDT**](https://ricardoreysaez.github.io/uSDT/). R package for hierarchical signal detection theory models in unconscious processing research. Co-developed with F. Garre-Frutos, A. Franco-Martínez, and M. A. Vadillo. Source code: <https://github.com/RicardoReySaez/uSDT>
+- [**uSDT**](https://ricardoreysaez.github.io/uSDT/). R package for hierarchical signal detection theory models in unconscious processing research. Co-developed with F. Garre-Frutos, A. Franco-Martínez, and M. A. Vadillo. Available on CRAN: <https://CRAN.R-project.org/package=uSDT> (DOI: [10.32614/CRAN.package.uSDT](https://doi.org/10.32614/CRAN.package.uSDT)). Source code: <https://github.com/RicardoReySaez/uSDT>
 
 ## {{< iconify dashicons:awards >}} Awards {#awards}
 
